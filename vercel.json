@@ -14,7 +14,7 @@
       "config": {
         "distDir": "dist",
         "nodeVersion": "18.x",
-        "installCommand": "npm ci --include=optional --legacy-peer-deps --prefer-offline",
+        "installCommand": "npm install --include=optional --legacy-peer-deps --prefer-offline",
         "buildCommand": "npm run build:vercel"
       }
     }

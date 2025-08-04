@@ -11,7 +11,7 @@
     "build": "vite build --mode production",
     "build:dev": "vite build --mode development",
     "build:vercel": "npm install --include=optional --legacy-peer-deps && vite build",
-    "build:netlify": "npm ci --include=optional --legacy-peer-deps && vite build",
+    "build:netlify": "npm install --include=optional --legacy-peer-deps && vite build",
     "install:all": "npm install --include=dev --include=optional --legacy-peer-deps",
     "lint": "eslint .",
     "preview": "vite preview",

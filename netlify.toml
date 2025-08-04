@@ -2,8 +2,8 @@
   # Base directory (where your project is located)
   base = "."
   
-  # Build command - optimized for Rollup fix
-  command = "npm ci --include=optional --legacy-peer-deps && npm run build"
+  # Build command - optimized for Rollup fix with fallbacks
+  command = "npm install --include=optional --legacy-peer-deps && npm run build || npm install --legacy-peer-deps && npm run build || npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
