@@ -3,7 +3,7 @@
   base = "."
   
   # Build command
-  command = "npm install --include=dev && npm run build"
+  command = "npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
