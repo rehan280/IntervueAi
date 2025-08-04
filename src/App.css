@@ -67,3 +67,20 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Custom scrollbar styles for ResumeCustomizer */
+.customizer-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #8B5CF6 #1F2937;
+}
+.customizer-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  background: #1F2937;
+}
+.customizer-scrollbar::-webkit-scrollbar-thumb {
+  background: #8B5CF6;
+  border-radius: 8px;
+}
+.customizer-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6D28D9;
+}

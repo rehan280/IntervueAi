@@ -1,34 +1,96 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import DirectAnalysisTest from "./components/DirectAnalysisTest";
-import HowItWorks from "./pages/HowItWorks";
-import CodingPractice from "./components/CodingPractice";
-import AboutUs from "./pages/AboutUs";
-import ContactUs from "./pages/ContactUs";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+// Simple error boundary
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-if (!clerkPubKey) {
-  throw new Error("Missing Publishable Key");
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4 text-red-400">Error</h1>
+            <p className="text-xl">Something went wrong</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
 }
+
+// Lazy load components to identify which one causes issues
+const Header = React.lazy(() => import('./components/Header'));
+const Footer = React.lazy(() => import('./components/Footer'));
+const Hero = React.lazy(() => import('./components/Hero'));
+const AboutUs = React.lazy(() => import('./pages/AboutUs'));
+const ContactUs = React.lazy(() => import('./pages/ContactUs'));
+const CodingPractice = React.lazy(() => import('./components/CodingPractice'));
+const InterviewPractice = React.lazy(() => import('./pages/InterviewPractice'));
+const HowItWorks = React.lazy(() => import('./pages/HowItWorks'));
+const ResumeBuilder = React.lazy(() => import('./pages/ResumeBuilder'));
+const Login = React.lazy(() => import('./pages/Login'));
+
+// Loading component
+const Loading = () => (
+  <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
+);
 
 function App() {
   return (
-    <ClerkProvider publishableKey={clerkPubKey}>
+    <ErrorBoundary>
       <Router>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/test" element={<DirectAnalysisTest />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/coding-practice" element={<CodingPractice />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="App">
+          <React.Suspense fallback={<Loading />}>
+            <Header />
+          </React.Suspense>
+          <main className="pt-16">
+            <React.Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Hero />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/coding-practice" element={<CodingPractice />} />
+                <Route path="/interview-practice" element={<InterviewPractice />} />
+                <Route path="/resume-builder" element={<ResumeBuilder />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/login" element={<Login />} />
+              </Routes>
+            </React.Suspense>
+          </main>
+          <React.Suspense fallback={<Loading />}>
+            <Footer />
+          </React.Suspense>
+        </div>
       </Router>
-    </ClerkProvider>
+    </ErrorBoundary>
   );
 }
 

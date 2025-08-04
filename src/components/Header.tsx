@@ -1,68 +1,218 @@
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
-import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Menu, X, User, LogOut, ChevronDown } from 'lucide-react';
+import LoginModal from './LoginModal';
 
-const Header = () => {
-  const { isSignedIn, user } = useUser();
+const Header: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [userName, setUserName] = useState('John Doe');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileDropdown, setShowMobileDropdown] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setShowLoginModal(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserName('');
+  };
 
   return (
-    <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
-            <img src="/logo.png" alt="IntervueAi Logo" className="w-6 h-4 sm:w-7 sm:h-5 md:w-8 md:h-6 lg:w-10 lg:h-7 object-contain" />
-            <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              IntervueAi
-            </span>
-          </div>
-          
-          <nav className="hidden md:flex items-center gap-8">
-            <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-              How It Works
-            </Link>
-            <Link to="/test" className="text-muted-foreground hover:text-foreground transition-colors">
-              Test
-            </Link>
-            <Link to="/coding-practice" className="text-muted-foreground hover:text-foreground transition-colors">
-              Code Practice
-            </Link>
-            <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
-          </nav>
-          
-          <div className="flex items-center gap-3">
-            {isSignedIn ? (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-muted-foreground hidden md:block">
-                  Welcome, {user?.firstName || user?.emailAddresses[0]?.emailAddress}
-                </span>
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-8 h-8"
-                    }
-                  }}
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-hero backdrop-blur-sm border-b border-white/10">
+        <div className="bg-black/20">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
+              {/* Logo */}
+              <Link to="/" className="flex items-center">
+                <img 
+                  src="/logo.png" 
+                  alt="IntervueAi Logo" 
+                  className="h-8 w-auto object-contain"
                 />
+              </Link>
+
+              {/* Navigation */}
+              <nav className="hidden md:flex items-center space-x-8">
+                <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  Home
+                </Link>
+                <Link to="/interview-practice" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  Interview Practice
+                </Link>
+                <Link to="/coding-practice" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  Coding Practice
+                </Link>
+                <Link to="/resume-builder" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  Resume Builder
+                </Link>
+                <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  How It Works
+                </Link>
+                <div className="relative">
+                  <button
+                    className="flex items-center text-gray-300 hover:text-white transition-colors duration-200"
+                    onMouseEnter={() => setShowDropdown(true)}
+                    onMouseLeave={() => setShowDropdown(false)}
+                  >
+                    Our Pages
+                    <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  {showDropdown && (
+                    <div
+                      className="absolute top-full left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+                      onMouseEnter={() => setShowDropdown(true)}
+                      onMouseLeave={() => setShowDropdown(false)}
+                    >
+                      <div className="py-2">
+                        <Link
+                          to="/about"
+                          className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors duration-200"
+                          onClick={() => setShowDropdown(false)}
+                        >
+                          About Us
+                        </Link>
+                        <Link
+                          to="/contact"
+                          className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors duration-200"
+                          onClick={() => setShowDropdown(false)}
+                        >
+                          Contact Us
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </nav>
+
+              {/* CTA Button / User Menu */}
+              <div className="flex items-center space-x-4">
+                {isLoggedIn ? (
+                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2 bg-gray-800/50 px-3 py-2 rounded-lg">
+                      <User className="h-4 w-4 text-blue-400" />
+                      <span className="text-sm text-white">{userName}</span>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleLogout}
+                      className="border-gray-600 text-gray-300 hover:text-white hover:border-gray-500"
+                    >
+                      <LogOut className="h-4 w-4 mr-1" />
+                      Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={() => setShowLoginModal(true)}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    Get Started
+                  </Button>
+                )}
+                
+                {/* Mobile Menu Button */}
+                <button
+                  className="md:hidden p-2 text-gray-300 hover:text-white transition-colors duration-200"
+                  onClick={() => setShowMobileMenu(!showMobileMenu)}
+                >
+                  {showMobileMenu ? (
+                    <X className="h-6 w-6" />
+                  ) : (
+                    <Menu className="h-6 w-6" />
+                  )}
+                </button>
               </div>
-            ) : (
-              <SignInButton>
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                  Sign In
-                </Button>
-              </SignInButton>
-            )}
-            <Button variant="hero" size="sm">
-              Get Started
-            </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700">
+          <div className="container mx-auto px-4 py-4">
+            <nav className="flex flex-col space-y-4">
+              <Link 
+                to="/" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/interview-practice" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Interview Practice
+              </Link>
+              <Link 
+                to="/coding-practice" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Coding Practice
+              </Link>
+              <Link 
+                to="/resume-builder" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Resume Builder
+              </Link>
+              <Link 
+                to="/how-it-works" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                How It Works
+              </Link>
+              <div className="space-y-2">
+                <button
+                  className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                  onClick={() => setShowMobileDropdown(!showMobileDropdown)}
+                >
+                  <span>Our Pages</span>
+                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showMobileDropdown ? 'rotate-180' : ''}`} />
+                </button>
+                {showMobileDropdown && (
+                  <div className="pl-4 space-y-2 border-l border-gray-700">
+                    <Link 
+                      to="/about" 
+                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      About Us
+                    </Link>
+                    <Link 
+                      to="/contact" 
+                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      Contact Us
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </nav>
+          </div>
+        </div>
+      )}
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
+    </>
   );
 };
 

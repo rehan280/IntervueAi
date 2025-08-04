@@ -5,19 +5,21 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Loader2, Volume2 } from "lucide-react";
 import { geminiService } from "@/services/geminiService";
-import { voiceService } from "@/services/voiceService";
+
 
 interface InterviewResultsProps {
   results: {
     role: string;
     answers: string[];
     questions: string[];
-    score: number;
+    feedback: string[];
+    scores?: any[];
   };
-  onStartNew: () => void;
+  onRestart: () => void;
+  onBackToRoleSelection: () => void;
 }
 
-const InterviewResults = ({ results, onStartNew }: InterviewResultsProps) => {
+const InterviewResults = ({ results, onRestart, onBackToRoleSelection }: InterviewResultsProps) => {
   const [aiAssessment, setAiAssessment] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -56,10 +58,18 @@ const InterviewResults = ({ results, onStartNew }: InterviewResultsProps) => {
     
     setIsSpeaking(true);
     try {
-      await voiceService.speak(text, { rate: 0.9, pitch: 1, volume: 0.8 });
+      // Use browser's built-in speech synthesis
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      utterance.volume = 0.8;
+      
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      
+      speechSynthesis.speak(utterance);
     } catch (error) {
       console.error("Voice synthesis error:", error);
-    } finally {
       setIsSpeaking(false);
     }
   };
@@ -78,7 +88,7 @@ const InterviewResults = ({ results, onStartNew }: InterviewResultsProps) => {
     );
   }
 
-  const finalScore = aiAssessment?.overallScore || results.score;
+  const finalScore = aiAssessment?.overallScore || 7; // Default score
   const getScoreColor = (score: number) => {
     if (score >= 8) return "text-green-600";
     if (score >= 6) return "text-yellow-600";
@@ -296,14 +306,24 @@ const InterviewResults = ({ results, onStartNew }: InterviewResultsProps) => {
       </div>
 
       <div className="text-center">
-        <Button 
-          onClick={onStartNew}
-          variant="hero"
-          size="lg"
-          className="text-lg px-8 py-6 h-auto"
-        >
-          🚀 Start New Interview Practice
-        </Button>
+        <div className="flex gap-4 justify-center">
+          <Button 
+            onClick={onRestart}
+            variant="hero"
+            size="lg"
+            className="text-lg px-8 py-6 h-auto"
+          >
+            🔄 Practice Same Role Again
+          </Button>
+          <Button 
+            onClick={onBackToRoleSelection}
+            variant="outline"
+            size="lg"
+            className="text-lg px-8 py-6 h-auto"
+          >
+            🎯 Choose Different Role
+          </Button>
+        </div>
         <p className="text-muted-foreground mt-4">
           Keep practicing to improve your interview skills!
         </p>

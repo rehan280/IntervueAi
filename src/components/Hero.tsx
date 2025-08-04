@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Play, CheckCircle, Users, Brain, Target } from "lucide-react";
+import { Sparkles, Play, CheckCircle, Users, Brain, Target, Github, Linkedin, Mail, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import LoginModal from './LoginModal';
 
-interface HeroProps {
-  onStartInterview: () => void;
-}
-
-const Hero = ({ onStartInterview }: HeroProps) => {
+const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [imageError, setImageError] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  
+  const imageSources = [
+    '/rehan-kadri.png',
+    '/rehan-kadri.webp',
+    '/logo.png' // fallback to logo if needed
+  ];
+
+  const handleImageError = () => {
+    console.log(`Image ${imageSources[currentImageIndex]} failed to load`);
+    if (currentImageIndex < imageSources.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    } else {
+      setImageError(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +54,7 @@ const Hero = ({ onStartInterview }: HeroProps) => {
         <div className="container mx-auto text-center max-w-7xl">
           <Badge variant="secondary" className="mb-6 sm:mb-8 md:mb-10 text-sm sm:text-base md:text-lg font-medium px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white/10 text-white border-white/20">
             <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-2.5 md:mr-3" />
-            AI-POWERED INTERVIEW PRACTICE
+            NEXT-GEN AI INTERVIEW PREP
           </Badge>
           
           <div className="flex justify-center mb-6 sm:mb-8 md:mb-10">
@@ -58,14 +73,14 @@ const Hero = ({ onStartInterview }: HeroProps) => {
             <Button 
               variant="hero" 
               size="xl" 
-              onClick={onStartInterview}
               className="group text-lg"
+              onClick={() => setShowLoginModal(true)}
             >
               <Target className="w-5 h-5 mr-2" />
               Try IntervueAi
               <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </Button>
-            <Link to="/how-it-works">
+            <Link to="/about">
               <Button 
                 variant="outline-hero" 
                 size="xl"
@@ -165,6 +180,272 @@ const Hero = ({ onStartInterview }: HeroProps) => {
           </div>
         </div>
       </section>
+
+      {/* Coding Practice Showcase Section */}
+      <section className="relative bg-gradient-to-br from-slate-900 to-slate-800 py-16 md:py-20 px-4 w-full">
+        <div className="w-full max-w-none">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+              Master Coding Interviews
+            </h2>
+            <p className="text-lg md:text-xl text-gray-300">Practice with 40+ curated problems across multiple languages</p>
+            <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
+          </div>
+
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 w-full border border-slate-700">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Coding Problems Preview */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-white mb-6">Featured Problems</h3>
+                
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-700/50 hover:border-blue-500/50 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-white">Two Sum</h4>
+                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30">Easy</span>
+                    </div>
+                    <p className="text-gray-300 text-sm mb-3">Find two numbers that add up to a target value</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-blue-600/20 text-blue-300 text-xs rounded-full border border-blue-500/30">Core</span>
+                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30">Arrays</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-700/50 hover:border-purple-500/50 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-white">Python Lambda Functions</h4>
+                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30">Easy</span>
+                    </div>
+                    <p className="text-gray-300 text-sm mb-3">Master Python's functional programming features</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full border border-purple-500/30">Python</span>
+                      <span className="px-2 py-1 bg-orange-600/20 text-orange-300 text-xs rounded-full border border-orange-500/30">Lambda</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-700/50 hover:border-green-500/50 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-white">Java HashMap Operations</h4>
+                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30">Medium</span>
+                    </div>
+                    <p className="text-gray-300 text-sm mb-3">Learn Java Collections Framework</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-red-600/20 text-red-300 text-xs rounded-full border border-red-500/30">Java</span>
+                      <span className="px-2 py-1 bg-blue-600/20 text-blue-300 text-xs rounded-full border border-blue-500/30">HashMap</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-orange-900/30 to-red-900/30 border border-orange-700/50 hover:border-orange-500/50 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-white">C++ STL Algorithms</h4>
+                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30">Medium</span>
+                    </div>
+                    <p className="text-gray-300 text-sm mb-3">Master C++ Standard Template Library</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-blue-600/20 text-blue-300 text-xs rounded-full border border-blue-500/30">C++</span>
+                      <span className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full border border-purple-500/30">STL</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Features and Stats */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-white mb-6">Practice Features</h3>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  <div className="text-center p-4 rounded-xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30">
+                    <div className="text-3xl font-bold text-blue-400 mb-2">4</div>
+                    <div className="text-white font-medium">Languages</div>
+                    <div className="text-gray-400 text-sm">Python, Java, C++, C</div>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-gradient-to-r from-green-900/20 to-blue-900/20 border border-green-700/30">
+                    <div className="text-3xl font-bold text-green-400 mb-2">40+</div>
+                    <div className="text-white font-medium">Problems</div>
+                    <div className="text-gray-400 text-sm">Curated for interviews</div>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-gradient-to-r from-purple-900/20 to-pink-900/20 border border-purple-700/30">
+                    <div className="text-3xl font-bold text-purple-400 mb-2">3</div>
+                    <div className="text-white font-medium">Difficulty Levels</div>
+                    <div className="text-gray-400 text-sm">Easy, Medium, Hard</div>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-gradient-to-r from-orange-900/20 to-red-900/20 border border-orange-700/30">
+                    <div className="text-3xl font-bold text-orange-400 mb-2">∞</div>
+                    <div className="text-white font-medium">Practice Sessions</div>
+                    <div className="text-gray-400 text-sm">Unlimited attempts</div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-green-600/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1">Real-time Code Execution</h4>
+                      <p className="text-gray-400 text-sm">Run your code instantly and see results</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <Brain className="w-4 h-4 text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1">AI-Powered Feedback</h4>
+                      <p className="text-gray-400 text-sm">Get detailed analysis and improvement tips</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-purple-600/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <Target className="w-4 h-4 text-purple-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1">Interview-Focused</h4>
+                      <p className="text-gray-400 text-sm">Problems commonly asked in coding interviews</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <Link to="/coding-practice">
+                    <Button 
+                      variant="hero" 
+                      size="xl"
+                      className="w-full group text-xl sm:text-2xl py-6 sm:py-8 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      <Play className="w-6 h-6 sm:w-7 sm:h-7 mr-3" />
+                      Start Coding Practice
+                      <span className="ml-3 group-hover:translate-x-2 transition-transform duration-300">→</span>
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Developer Section */}
+      <section className="relative bg-gradient-to-br from-gray-900 to-gray-800 py-16 md:py-20 px-4 w-full">
+        <div className="w-full max-w-none">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Meet the Developer
+            </h2>
+            <p className="text-lg md:text-xl text-gray-300">The mind behind Intervue</p>
+            <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+          </div>
+
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 w-full border border-gray-700">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start">
+              {/* Developer Image */}
+              <div className="lg:col-span-1 order-1">
+                <div className="relative bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-3 md:p-4 shadow-lg border border-gray-600">
+                  {!imageError ? (
+                    <img
+                      src={imageSources[currentImageIndex]}
+                      alt="Rehan Firoz Kadri"
+                      className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg"
+                      style={{ objectPosition: 'center 15%' }}
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96 bg-gradient-to-br from-purple-800/50 to-blue-800/50 rounded-xl md:rounded-2xl shadow-lg flex items-center justify-center border border-gray-600">
+                      <div className="text-center">
+                        <User className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-purple-400 mx-auto mb-3 md:mb-4" />
+                        <p className="text-base sm:text-lg font-semibold text-gray-200">Rehan Firoz Kadri</p>
+                        <p className="text-xs sm:text-sm text-gray-400">Developer Image</p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-xl md:rounded-2xl"></div>
+                </div>
+              </div>
+
+              {/* Developer Information */}
+              <div className="lg:col-span-2 order-2 space-y-4 md:space-y-6">
+                <div>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">Rehan Firoz Kadri</h3>
+                  <div className="w-24 sm:w-32 md:w-40 h-1 md:h-2 bg-gradient-to-r from-blue-500 to-purple-500 mb-3 md:mb-4 rounded-full"></div>
+                  <p className="text-base sm:text-lg md:text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold mb-3 md:mb-4">
+                    Full Stack Developer • YouTuber • Blogger • SEO Expert
+                  </p>
+                </div>
+
+                <div className="text-gray-300 leading-relaxed space-y-3 md:space-y-4 text-sm sm:text-base">
+                  <p>
+                    I'm Rehan, a Computer Science Engineering student and the creator of Intervue. I'm passionate about using technology to solve real-world problems and help students and professionals unlock their potential. My work spans across full-stack development, AI-powered tools, and impactful content creation.
+                  </p>
+                  <p>
+                    As a YouTuber, I create documentaries that explore the intersection of society, business, and tech. Through my blogs and SEO work, I help brands and creators grow their online presence strategically. Intervue is my step toward creating a smarter, more accessible way to prepare for interviews using AI.
+                  </p>
+                  <p>
+                    My vision is to make interview preparation less stressful and more effective, empowering users with intelligent simulations, detailed feedback, and performance analytics.
+                  </p>
+                </div>
+
+                {/* Expertise Tags */}
+                <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6">
+                  <span className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-blue-900/50 to-purple-900/50 text-blue-300 rounded-full text-xs md:text-sm font-medium border border-blue-700/50 hover:border-blue-500/50 transition-colors duration-200">
+                    💡 AI Integration
+                  </span>
+                  <span className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-purple-900/50 to-pink-900/50 text-purple-300 rounded-full text-xs md:text-sm font-medium border border-purple-700/50 hover:border-purple-500/50 transition-colors duration-200">
+                    🌐 Web Development
+                  </span>
+                  <span className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-900/50 to-blue-900/50 text-green-300 rounded-full text-xs md:text-sm font-medium border border-green-700/50 hover:border-green-500/50 transition-colors duration-200">
+                    🧠 SEO & Content Strategy
+                  </span>
+                  <span className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-orange-900/50 to-red-900/50 text-orange-300 rounded-full text-xs md:text-sm font-medium border border-orange-700/50 hover:border-orange-500/50 transition-colors duration-200">
+                    🎥 Video Creation & Storytelling
+                  </span>
+                </div>
+
+                {/* Social Media Buttons */}
+                <div className="flex flex-wrap gap-3 md:gap-4">
+                  <a
+                    href="https://github.com/rehan280"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white rounded-lg transition-all duration-300 text-sm md:text-base border border-gray-600 hover:border-gray-500 shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-gray-500/20"
+                  >
+                    <Github className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform duration-300" />
+                    GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/rehan-kadri-27b5b8231/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white rounded-lg transition-all duration-300 text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-blue-500/30"
+                  >
+                    <Linkedin className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform duration-300" />
+                    LinkedIn
+                  </a>
+                  <a
+                    href="mailto:youtech280@gmail.com"
+                    className="group flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white rounded-lg transition-all duration-300 text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-purple-500/30"
+                  >
+                    <Mail className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform duration-300" />
+                    Contact
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={() => {
+          setShowLoginModal(false);
+          // Optionally navigate to interview practice after login
+          window.location.href = '/interview-practice';
+        }}
+      />
     </div>
   );
 };

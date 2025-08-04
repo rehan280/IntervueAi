@@ -6,21 +6,25 @@ interface CodeRunnerProps {
 }
 
 const CodeRunner: React.FC<CodeRunnerProps> = ({ className }) => {
-  const [code, setCode] = useState(`print("Hello, World!")
-x = 10
-y = 20
-print(f"Sum: {x + y}")`);
-  const [language, setLanguage] = useState('python');
+  const [code, setCode] = useState(`public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        int x = 10;
+        int y = 20;
+        System.out.println("Sum: " + (x + y));
+    }
+}`);
+  const [language, setLanguage] = useState('java');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const supportedLanguages = [
-    { value: 'python', label: 'Python' },
-    { value: 'javascript', label: 'JavaScript' },
     { value: 'java', label: 'Java' },
     { value: 'cpp', label: 'C++' },
     { value: 'c', label: 'C' },
+    { value: 'python', label: 'Python' },
+    { value: 'javascript', label: 'JavaScript' },
     { value: 'typescript', label: 'TypeScript' },
     { value: 'ruby', label: 'Ruby' },
     { value: 'go', label: 'Go' },
@@ -34,7 +38,7 @@ print(f"Sum: {x + y}")`);
     setError('');
 
     try {
-      const result = await codeExecutionService.executeCodeWithBackend(code, language);
+      const result = await codeExecutionService.executeCode(language, code);
       
       if (result.error) {
         setError(result.error);

@@ -3,192 +3,116 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Brain, Target, Star, Zap, Users, Shield, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const HowItWorks = () => {
-  const { isSignedIn, user } = useUser();
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 md:gap-3">
-              <img src="/logo.png" alt="IntervueAi Logo" className="w-6 h-4 sm:w-7 sm:h-5 md:w-8 md:h-6 lg:w-10 lg:h-7 object-contain" />
-              <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                IntervueAi
-              </span>
-            </div>
-            
-            <nav className="hidden md:flex items-center gap-8">
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
-                Home
-              </Link>
-              <Link to="/test" className="text-muted-foreground hover:text-foreground transition-colors">
-                Test
-              </Link>
-            </nav>
-            
-            <div className="flex items-center gap-3">
-              {isSignedIn ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted-foreground hidden md:block">
-                    Welcome, {user?.firstName || user?.emailAddresses[0]?.emailAddress}
-                  </span>
-                  <UserButton 
-                    appearance={{
-                      elements: {
-                        avatarBox: "w-8 h-8"
-                      }
-                    }}
-                  />
-                </div>
-              ) : (
-                <SignInButton>
-                  <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                    Sign In
-                  </Button>
-                </SignInButton>
-              )}
-              <Link to="/">
-                <Button variant="hero" size="sm">
-                  Start Interview
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            How IntervueAi Works
-          </h1>
-          <p className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-primary">
-            Train Smarter. Interview Better.
-          </p>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our advanced AI-powered system provides real-time interview evaluation and personalized feedback to help you excel in your job interviews.
-          </p>
-        </div>
+      <main className="flex-1 pt-16">
+        <div className="container mx-auto px-4 py-12">
+          {/* Hero Section */}
+          <div className="text-center mb-16">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              How IntervueAi Works
+            </h1>
+            <p className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-blue-400">
+              Train Smarter. Interview Better.
+            </p>
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+              Our advanced AI-powered system provides real-time interview evaluation and personalized feedback to help you excel in your job interviews.
+            </p>
+          </div>
 
         {/* Process Steps */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <Card className="border-border/50">
-            <CardHeader>
-              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-blue-500" />
-              </div>
-              <CardTitle className="text-xl">1. Select Your Role</CardTitle>
-              <CardDescription>
-                Choose from various job roles including Software Engineer, Data Scientist, Product Manager, and more.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Our system adapts questions and evaluation criteria based on your selected role to provide relevant feedback.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="p-6 rounded-xl bg-gradient-to-br from-blue-900/30 to-purple-900/30 border border-blue-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg group">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-white">1. Select Your Role</h3>
+            <p className="text-gray-300 mb-4">
+              Choose from various job roles including Software Engineer, Data Scientist, Product Manager, and more.
+            </p>
+            <p className="text-sm text-gray-400">
+              Our system adapts questions and evaluation criteria based on your selected role to provide relevant feedback.
+            </p>
+          </div>
 
-          <Card className="border-border/50">
-            <CardHeader>
-              <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
-                <Target className="w-6 h-6 text-green-500" />
-              </div>
-              <CardTitle className="text-xl">2. Answer Questions</CardTitle>
-              <CardDescription>
-                Respond to AI-generated interview questions tailored to your role and experience level.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Each question is designed to assess your technical knowledge, problem-solving skills, and communication abilities.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="p-6 rounded-xl bg-gradient-to-br from-green-900/30 to-blue-900/30 border border-green-700/50 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg group">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Target className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-white">2. Answer Questions</h3>
+            <p className="text-gray-300 mb-4">
+              Respond to AI-generated interview questions tailored to your role and experience level.
+            </p>
+            <p className="text-sm text-gray-400">
+              Each question is designed to assess your technical knowledge, problem-solving skills, and communication abilities.
+            </p>
+          </div>
 
-          <Card className="border-border/50">
-            <CardHeader>
-              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
-                <Star className="w-6 h-6 text-purple-500" />
-              </div>
-              <CardTitle className="text-xl">3. Get Instant Feedback</CardTitle>
-              <CardDescription>
-                Receive comprehensive evaluation with detailed scoring and actionable improvement suggestions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Our AI analyzes your answers across multiple criteria and provides personalized recommendations.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="p-6 rounded-xl bg-gradient-to-br from-purple-900/30 to-pink-900/30 border border-purple-700/50 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg group">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Star className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-white">3. Get Instant Feedback</h3>
+            <p className="text-gray-300 mb-4">
+              Receive comprehensive evaluation with detailed scoring and actionable improvement suggestions.
+            </p>
+            <p className="text-sm text-gray-400">
+              Our AI analyzes your answers across multiple criteria and provides personalized recommendations.
+            </p>
+          </div>
         </div>
 
         {/* Evaluation Criteria */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Evaluation Criteria</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Evaluation Criteria</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="border-border/50">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-blue-500" />
-                </div>
-                <CardTitle className="text-lg">Correctness</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Evaluates factual accuracy, technical knowledge, and logical understanding of concepts.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-700/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3 text-white">Correctness</h3>
+              <p className="text-sm text-gray-400">
+                Evaluates factual accuracy, technical knowledge, and logical understanding of concepts.
+              </p>
+            </div>
 
-            <Card className="border-border/50">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-8 h-8 text-green-500" />
-                </div>
-                <CardTitle className="text-lg">Relevance</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Assesses how well your answer directly addresses the question and stays on topic.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-900/20 to-blue-900/20 border border-green-700/30 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3 text-white">Relevance</h3>
+              <p className="text-sm text-gray-400">
+                Assesses how well your answer directly addresses the question and stays on topic.
+              </p>
+            </div>
 
-            <Card className="border-border/50">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-purple-500" />
-                </div>
-                <CardTitle className="text-lg">Depth & Detail</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Measures the level of detail, examples provided, and thoroughness of your response.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-700/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <BarChart3 className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3 text-white">Depth & Detail</h3>
+              <p className="text-sm text-gray-400">
+                Measures the level of detail, examples provided, and thoroughness of your response.
+              </p>
+            </div>
 
-            <Card className="border-border/50">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-orange-500" />
-                </div>
-                <CardTitle className="text-lg">Communication</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Evaluates clarity, structure, and professional presentation of your ideas.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-900/20 to-red-900/20 border border-orange-700/30 hover:border-orange-500/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3 text-white">Communication</h3>
+              <p className="text-sm text-gray-400">
+                Evaluates clarity, structure, and professional presentation of your ideas.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -348,7 +272,9 @@ const HowItWorks = () => {
             </CardContent>
           </Card>
         </div>
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };
