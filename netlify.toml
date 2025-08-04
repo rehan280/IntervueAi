@@ -2,8 +2,8 @@
   # Base directory (where your project is located)
   base = "."
   
-  # Build command - comprehensive install and build
-  command = "npm install --include=dev --include=optional --legacy-peer-deps && npm run build"
+  # Build command - optimized for Rollup fix
+  command = "npm ci --include=optional --legacy-peer-deps && npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
@@ -12,11 +12,14 @@
   # functions = "functions"
 
 [build.environment]
-  # Node.js version
+  # Node.js version - ensure compatibility
   NODE_VERSION = "18"
   
   # Environment variables for build
   NODE_ENV = "production"
+  
+  # Ensure npm includes optional dependencies
+  NPM_FLAGS = "--include=optional --legacy-peer-deps"
 
 # Redirects for SPA (Single Page Application)
 [[redirects]]
@@ -32,20 +35,51 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Add CSP for additional security
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;"
 
-# Cache static assets
+# Cache static assets with long-term caching
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Cache other static files
+# Cache JavaScript files
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Cache CSS files
 [[headers]]
   for = "*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable" 
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache images and other static files
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Handle API routes (if you have backend)
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-url.com/api/:splat"
+  status = 200
+  force = true 
