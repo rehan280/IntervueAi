@@ -2,8 +2,8 @@
   # Base directory (where your project is located)
   base = "."
   
-  # Simple, reliable build command
-  command = "npm install && npm run build"
+  # Most reliable build command
+  command = "npm install --legacy-peer-deps && npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
