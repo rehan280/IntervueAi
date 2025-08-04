@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "vite build --mode production",
     "build:dev": "vite build --mode development",
-    "build:vercel": "npm install --include=optional --legacy-peer-deps && vite build",
+    "build:vercel": "vite build --mode production",
     "build:netlify": "vite build",
     "install:all": "npm install --include=dev --include=optional --legacy-peer-deps",
     "lint": "eslint .",
