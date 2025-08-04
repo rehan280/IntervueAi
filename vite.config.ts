@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import rollupConfig from "./rollup.config.js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,7 +19,16 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      ...rollupConfig,
+      external: ['@rollup/rollup-linux-x64-gnu'],
+      onwarn(warning, warn) {
+        // Suppress warnings about missing optional dependencies
+        if (warning.code === 'UNRESOLVED_IMPORT' && 
+            warning.message && 
+            warning.message.includes('@rollup/rollup-linux-x64-gnu')) {
+          return;
+        }
+        warn(warning);
+      },
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],

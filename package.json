@@ -11,7 +11,7 @@
     "build": "vite build --mode production",
     "build:dev": "vite build --mode development",
     "build:vercel": "npm install --include=optional --legacy-peer-deps && vite build",
-    "build:netlify": "npm install --include=optional --legacy-peer-deps && vite build",
+    "build:netlify": "vite build",
     "install:all": "npm install --include=dev --include=optional --legacy-peer-deps",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -106,6 +106,7 @@
     "lovable-tagger": "^1.1.7",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.11",
+    "terser": "^5.43.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"

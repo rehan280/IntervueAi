@@ -2,8 +2,8 @@
   # Base directory (where your project is located)
   base = "."
   
-  # Build command - optimized for Rollup fix with fallbacks
-  command = "npm install --include=optional --legacy-peer-deps && npm run build || npm install --legacy-peer-deps && npm run build || npm run build"
+  # Simple, reliable build command
+  command = "npm install && npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
@@ -18,8 +18,8 @@
   # Environment variables for build
   NODE_ENV = "production"
   
-  # Ensure npm includes optional dependencies
-  NPM_FLAGS = "--include=optional --legacy-peer-deps"
+  # Build environment
+  NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 # Redirects for SPA (Single Page Application)
 [[redirects]]
