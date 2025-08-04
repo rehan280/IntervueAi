@@ -3,7 +3,7 @@
   base = "."
   
   # Build command
-  command = "npm run build:netlify"
+  command = "npm install --no-optional --legacy-peer-deps && npm run build"
   
   # Publish directory (where Vite outputs the built files)
   publish = "dist"
@@ -17,9 +17,6 @@
   
   # Environment variables for build
   NODE_ENV = "production"
-  
-  # Fix npm optional dependencies issue
-  NPM_FLAGS = "--no-optional --legacy-peer-deps"
 
 # Redirects for SPA (Single Page Application)
 [[redirects]]

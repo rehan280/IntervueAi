@@ -32,5 +32,9 @@ export default defineConfig({
   },
   define: {
     'process.env.NODE_ENV': '"production"'
+  },
+  // Fix for Netlify build issues
+  ssr: {
+    noExternal: ['@radix-ui/react-icons']
   }
 });
