@@ -67,11 +67,11 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <div className="App">
+        <div className="App w-full min-h-screen bg-gray-900 overflow-x-hidden">
           <React.Suspense fallback={<Loading />}>
             <Header />
           </React.Suspense>
-          <main className="pt-16">
+          <main className="pt-16 w-full">
             <React.Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Hero />} />

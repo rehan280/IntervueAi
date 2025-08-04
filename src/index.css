@@ -77,14 +77,27 @@
 @layer base {
   * {
     @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-inter antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    box-sizing: border-box;
   }
   
   html {
     @apply dark;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-inter antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #root {
+    width: 100%;
+    min-height: 100vh;
   }
 }
 
@@ -241,6 +254,39 @@
     /* Mobile-specific modal improvements */
     .modal-mobile {
       @apply p-4 max-h-[90vh] overflow-y-auto;
+    }
+    
+    /* Prevent horizontal scrolling */
+    body, html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    
+    /* Ensure containers don't overflow */
+    .container, .max-w-7xl, .max-w-6xl, .max-w-4xl {
+      width: 100%;
+      max-width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      box-sizing: border-box;
+    }
+    
+    /* Fix mobile grid layouts */
+    .grid {
+      width: 100%;
+      grid-template-columns: 1fr;
+    }
+    
+    /* Ensure buttons don't overflow */
+    button {
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+    
+    /* Fix mobile text overflow */
+    h1, h2, h3, h4, h5, h6, p, span, div {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
   }
   

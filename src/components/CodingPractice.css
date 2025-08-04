@@ -6,6 +6,8 @@
   margin: 0 auto;
   padding: 0.5rem;
   animation: fadeInUp 0.6s ease-out;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -20,6 +22,8 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   animation: fadeInUp 0.8s ease-out;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 1024px) {
@@ -34,6 +38,8 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -49,6 +55,8 @@
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .enhanced-card:hover {
@@ -64,6 +72,8 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .problem-description-card:hover {
@@ -82,6 +92,8 @@
   border-bottom: 1px solid hsl(210, 20%, 18%);
   background: linear-gradient(90deg, hsl(210, 20%, 10%) 0%, hsl(210, 20%, 8%) 100%);
   border-radius: 12px 12px 0 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -96,6 +108,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  width: 100%;
 }
 
 .problem-actions {
@@ -103,6 +116,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  width: 100%;
 }
 
 /* Badge improvements */
@@ -115,6 +129,7 @@
   letter-spacing: 0.5px;
   border: 1px solid transparent;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -150,6 +165,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -163,6 +179,8 @@
 .problem-content {
   padding: 1rem;
   line-height: 1.6;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -177,6 +195,8 @@
   margin-bottom: 1.5rem;
   line-height: 1.7;
   text-align: justify;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -188,6 +208,8 @@
 /* Examples section */
 .examples-section {
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .examples-title {
@@ -198,6 +220,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -218,6 +241,8 @@
   padding: 0.75rem;
   margin-bottom: 1rem;
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -251,6 +276,8 @@
   gap: 0.5rem;
   font-size: 0.75rem;
   color: hsl(210, 20%, 75%);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -263,6 +290,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .example-label {
@@ -285,11 +313,15 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   border: 1px solid hsl(210, 20%, 15%);
+  flex: 1;
+  word-break: break-word;
 }
 
 /* Constraints section */
 .constraints-section {
   margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .constraints-title {
@@ -300,6 +332,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -319,6 +352,8 @@
   margin: 0;
   display: grid;
   gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .constraint-item {
@@ -332,6 +367,8 @@
   font-size: 0.75rem;
   color: hsl(210, 20%, 75%);
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -365,6 +402,7 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -428,6 +466,8 @@
   transition: all 0.2s ease;
   resize: vertical;
   min-height: 240px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -460,6 +500,8 @@
   font-size: 0.75rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -496,6 +538,8 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {

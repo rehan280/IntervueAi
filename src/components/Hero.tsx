@@ -49,8 +49,8 @@ const Hero = () => {
       ></div>
       
       {/* Hero section */}
-      <section className="relative pt-2 pb-6 sm:pt-4 sm:pb-8 md:pt-6 md:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center">
-        <div className="container mx-auto text-center max-w-7xl">
+      <section className="relative pt-2 pb-6 sm:pt-4 sm:pb-8 md:pt-6 md:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center w-full">
+        <div className="w-full max-w-7xl mx-auto text-center">
           <Badge variant="secondary" className="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-xs sm:text-sm md:text-base lg:text-lg font-medium px-3 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-white/10 text-white border-white/20">
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 mr-1.5 sm:mr-2 md:mr-2.5 lg:mr-3" />
             <span className="hidden sm:inline">NEXT-GEN AI INTERVIEW PREP</span>
@@ -69,22 +69,22 @@ const Hero = () => {
             Crack your next interview with AI-powered mock tests, coding challenges, and real-time feedback.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 w-full">
             <Button 
               variant="hero" 
               size="xl" 
-              className="group text-sm sm:text-base md:text-lg"
+              className="group text-sm sm:text-base md:text-lg w-full sm:w-auto"
               onClick={() => navigate('/interview-practice')}
             >
               <Target className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
               Try IntervueAi
               <span className="ml-1.5 sm:ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </Button>
-            <Link to="/about">
+            <Link to="/about" className="w-full sm:w-auto">
               <Button 
                 variant="outline-hero" 
                 size="xl"
-                className="text-sm sm:text-base md:text-lg"
+                className="text-sm sm:text-base md:text-lg w-full"
               >
                 <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
                 <span className="hidden sm:inline">See How it Works</span>
@@ -94,7 +94,7 @@ const Hero = () => {
           </div>
           
           {/* Enhanced features showcase */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8 w-full max-w-4xl mx-auto">
             <div className="text-center p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
               <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">14</div>
               <div className="text-white/80 font-medium text-xs sm:text-sm">Job Roles</div>

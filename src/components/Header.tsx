@@ -34,10 +34,10 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-hero backdrop-blur-sm border-b border-white/10">
-        <div className="bg-black/20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-hero backdrop-blur-sm border-b border-white/10 w-full">
+        <div className="bg-black/20 w-full">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 w-full">
               {/* Logo */}
               <Link to="/" className="flex items-center flex-shrink-0">
                 <img 
@@ -143,45 +143,45 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex flex-col space-y-3 sm:space-y-4">
+        <div className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700 w-full">
+          <div className="w-full max-w-7xl mx-auto px-4 py-4">
+            <nav className="flex flex-col space-y-3 sm:space-y-4 w-full">
               <Link 
                 to="/" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Home
               </Link>
               <Link 
                 to="/interview-practice" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Interview Practice
               </Link>
               <Link 
                 to="/coding-practice" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Coding Practice
               </Link>
               <Link 
                 to="/resume-builder" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Resume Builder
               </Link>
               <Link 
                 to="/how-it-works" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
                 onClick={() => setShowMobileMenu(false)}
               >
                 How It Works
               </Link>
-              <div className="space-y-2">
+              <div className="space-y-2 w-full">
                 <button
                   className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
                   onClick={() => setShowMobileDropdown(!showMobileDropdown)}
@@ -190,17 +190,17 @@ const Header: React.FC = () => {
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showMobileDropdown ? 'rotate-180' : ''}`} />
                 </button>
                 {showMobileDropdown && (
-                  <div className="pl-4 space-y-2 border-l border-gray-700">
+                  <div className="pl-4 space-y-2 border-l border-gray-700 w-full">
                     <Link 
                       to="/about" 
-                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base"
+                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base w-full"
                       onClick={() => setShowMobileMenu(false)}
                     >
                       About Us
                     </Link>
                     <Link 
                       to="/contact" 
-                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base"
+                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base w-full"
                       onClick={() => setShowMobileMenu(false)}
                     >
                       Contact Us

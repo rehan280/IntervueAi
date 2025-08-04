@@ -19,63 +19,58 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "source": "/api/(.*)",
+      "destination": "backend/server.js"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
+      "source": "/favicon.ico",
+      "destination": "/favicon.ico"
     },
     {
-      "src": "/logo.png",
-      "dest": "/logo.png"
+      "source": "/logo.png",
+      "destination": "/logo.png"
     },
     {
-      "src": "/favicon.svg",
-      "dest": "/favicon.svg"
+      "source": "/favicon.svg",
+      "destination": "/favicon.svg"
     },
     {
-      "src": "/favicon-32x32.png",
-      "dest": "/favicon-32x32.png"
+      "source": "/favicon-32x32.png",
+      "destination": "/favicon-32x32.png"
     },
     {
-      "src": "/logo.svg",
-      "dest": "/logo.svg"
+      "source": "/logo.svg",
+      "destination": "/logo.svg"
     },
     {
-      "src": "/placeholder.svg",
-      "dest": "/placeholder.svg"
+      "source": "/placeholder.svg",
+      "destination": "/placeholder.svg"
     },
     {
-      "src": "/rehan-kadri.png",
-      "dest": "/rehan-kadri.png"
+      "source": "/rehan-kadri.png",
+      "destination": "/rehan-kadri.png"
     },
     {
-      "src": "/rehan-kadri.webp",
-      "dest": "/rehan-kadri.webp"
+      "source": "/rehan-kadri.webp",
+      "destination": "/rehan-kadri.webp"
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "backend/server.js": {
-      "maxDuration": 30
-    }
   },
   "headers": [
     {

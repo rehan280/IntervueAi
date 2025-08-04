@@ -2112,18 +2112,18 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="coding-practice-container">
-        <div className="coding-practice-grid">
+    <div className="min-h-screen bg-gray-900 w-full">
+      <div className="coding-practice-container w-full">
+        <div className="coding-practice-grid w-full">
           {/* Left Panel - Problems */}
-          <div className="left-panel">
+          <div className="left-panel w-full">
             {/* Category Selector */}
-            <Card className="enhanced-card">
+            <Card className="enhanced-card w-full">
               <CardHeader className="p-4 sm:p-6">
                 <CardTitle className="text-base sm:text-lg text-white">Categories</CardTitle>
               </CardHeader>
               <CardContent className="p-4 sm:p-6">
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   {categories.map((category) => (
                     <Button
                       key={category.id}
@@ -2144,9 +2144,9 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
             </Card>
 
             {/* Problems List */}
-            <Card className="enhanced-card">
+            <Card className="enhanced-card w-full">
               <CardHeader className="p-4 sm:p-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between w-full">
                   <CardTitle className="text-base sm:text-lg text-white">Problems</CardTitle>
                   <Badge className="category-badge text-xs">
                     {filteredProblems.length} problems
@@ -2154,18 +2154,18 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                 </div>
               </CardHeader>
               <CardContent className="p-4 sm:p-6">
-                <div className="space-y-2 max-h-48 sm:max-h-64 overflow-y-auto">
+                <div className="space-y-2 max-h-48 sm:max-h-64 overflow-y-auto w-full">
                   {filteredProblems.map((problem) => (
                     <div
                       key={problem.id}
-                      className={`p-2 sm:p-3 rounded-lg cursor-pointer transition-all duration-200 ${
+                      className={`p-2 sm:p-3 rounded-lg cursor-pointer transition-all duration-200 w-full ${
                         selectedProblem?.id === problem.id
                           ? 'bg-gradient-to-r from-purple-600 to-purple-700 border border-purple-500 shadow-lg'
                           : 'hover:bg-gray-700 text-gray-300 hover:shadow-md'
                       }`}
                       onClick={() => setSelectedProblem(problem)}
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between w-full">
                         <span className={`font-medium text-xs sm:text-sm ${selectedProblem?.id === problem.id ? 'text-white' : 'text-gray-300'}`}>{problem.title}</span>
                         <Badge className={`difficulty-badge ${problem.difficulty} text-xs`}>
                           {problem.difficulty}
@@ -2179,7 +2179,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
 
             {/* Problem Description */}
             {selectedProblem && (
-              <Card className="problem-description-card">
+              <Card className="problem-description-card w-full">
                 <CardHeader className="problem-header p-3 sm:p-4">
                   <div className="problem-badges">
                     <Badge className={`difficulty-badge ${selectedProblem.difficulty} text-xs`}>
