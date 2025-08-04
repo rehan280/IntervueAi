@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import rollupConfig from "./rollup.config.js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,6 +20,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      ...rollupConfig,
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
