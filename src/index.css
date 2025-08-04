@@ -121,3 +121,152 @@
     transition: var(--transition-smooth);
   }
 }
+
+/* Mobile-specific responsive improvements */
+@layer utilities {
+  /* Mobile-first responsive text sizing */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm md:text-base;
+  }
+  
+  .text-responsive-sm {
+    @apply text-sm sm:text-base md:text-lg;
+  }
+  
+  .text-responsive-base {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+  
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+  
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+  
+  /* Mobile-first responsive spacing */
+  .space-responsive-xs {
+    @apply space-y-1 sm:space-y-2 md:space-y-3;
+  }
+  
+  .space-responsive-sm {
+    @apply space-y-2 sm:space-y-3 md:space-y-4;
+  }
+  
+  .space-responsive-base {
+    @apply space-y-3 sm:space-y-4 md:space-y-6;
+  }
+  
+  .space-responsive-lg {
+    @apply space-y-4 sm:space-y-6 md:space-y-8;
+  }
+  
+  /* Mobile-first responsive padding */
+  .p-responsive-xs {
+    @apply p-2 sm:p-3 md:p-4;
+  }
+  
+  .p-responsive-sm {
+    @apply p-3 sm:p-4 md:p-6;
+  }
+  
+  .p-responsive-base {
+    @apply p-4 sm:p-6 md:p-8;
+  }
+  
+  .p-responsive-lg {
+    @apply p-6 sm:p-8 md:p-12;
+  }
+  
+  /* Mobile-first responsive margins */
+  .m-responsive-xs {
+    @apply m-2 sm:m-3 md:m-4;
+  }
+  
+  .m-responsive-sm {
+    @apply m-3 sm:m-4 md:m-6;
+  }
+  
+  .m-responsive-base {
+    @apply m-4 sm:m-6 md:m-8;
+  }
+  
+  .m-responsive-lg {
+    @apply m-6 sm:m-8 md:m-12;
+  }
+  
+  /* Mobile-specific improvements */
+  @media (max-width: 640px) {
+    /* Improve touch targets on mobile */
+    button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Improve form elements on mobile */
+    input, textarea, select {
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Better mobile scrolling */
+    .overflow-y-auto {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Improve mobile navigation */
+    nav a {
+      padding: 0.75rem 1rem;
+    }
+    
+    /* Better mobile card spacing */
+    .card {
+      margin-bottom: 1rem;
+    }
+    
+    /* Mobile-specific button sizing */
+    .btn-mobile {
+      @apply px-4 py-2 text-sm;
+    }
+    
+    /* Mobile-specific input sizing */
+    .input-mobile {
+      @apply px-3 py-2 text-base;
+    }
+    
+    /* Mobile-specific modal improvements */
+    .modal-mobile {
+      @apply p-4 max-h-[90vh] overflow-y-auto;
+    }
+  }
+  
+  /* Tablet improvements */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    /* Better tablet layout */
+    .tablet-grid {
+      @apply grid-cols-1 md:grid-cols-2;
+    }
+    
+    /* Tablet-specific spacing */
+    .tablet-spacing {
+      @apply space-y-4 md:space-y-6;
+    }
+  }
+  
+  /* Desktop improvements */
+  @media (min-width: 1025px) {
+    /* Desktop-specific layouts */
+    .desktop-grid {
+      @apply grid-cols-1 lg:grid-cols-3;
+    }
+    
+    /* Desktop-specific spacing */
+    .desktop-spacing {
+      @apply space-y-6 lg:space-y-8;
+    }
+  }
+}

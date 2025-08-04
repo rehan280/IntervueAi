@@ -1,0 +1,64 @@
+# Git Prompt Configuration for VS Code
+# This file contains Git prompt settings for enhanced development experience
+
+# Git Status Symbols
+GIT_PROMPT_SYMBOLS="
+  branch='⎇'
+  ahead='↑'
+  behind='↓'
+  diverged='↕'
+  untracked='?'
+  stashed='≡'
+  modified='!'
+  staged='+'
+  renamed='➜'
+  deleted='✖'
+  clean='✓'
+"
+
+# Git Status Colors
+GIT_PROMPT_COLORS="
+  prefix='\033[1;36m'      # Cyan
+  suffix='\033[0m'         # Reset
+  branch='\033[1;32m'      # Green
+  ahead='\033[1;33m'       # Yellow
+  behind='\033[1;31m'      # Red
+  diverged='\033[1;35m'    # Magenta
+  untracked='\033[1;37m'   # White
+  stashed='\033[1;34m'     # Blue
+  modified='\033[1;33m'    # Yellow
+  staged='\033[1;32m'      # Green
+  renamed='\033[1;36m'     # Cyan
+  deleted='\033[1;31m'     # Red
+  clean='\033[1;32m'       # Green
+"
+
+# Git Prompt Format
+GIT_PROMPT_FORMAT="
+  %{${GIT_PROMPT_COLORS[prefix]}%}git:(%{${GIT_PROMPT_COLORS[branch]}%}%b%{${GIT_PROMPT_COLORS[suffix]}%})
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[ahead]}%}%A%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[behind]}%}%B%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[diverged]}%}%C%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[stashed]}%}%S%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[modified]}%}%M%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[staged]}%}%U%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[untracked]}%}%N%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[renamed]}%}%R%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[deleted]}%}%D%{${GIT_PROMPT_COLORS[suffix]}%}
+  %{${GIT_PROMPT_COLORS[prefix]}%}%{${GIT_PROMPT_COLORS[clean]}%}%C%{${GIT_PROMPT_COLORS[suffix]}%}
+"
+
+# Git Status Information
+GIT_PROMPT_INFO="
+  %b    # Current branch
+  %A    # Number of commits ahead of remote
+  %B    # Number of commits behind remote
+  %C    # Number of commits diverged from remote
+  %S    # Number of stashed changes
+  %M    # Number of modified files
+  %U    # Number of staged files
+  %N    # Number of untracked files
+  %R    # Number of renamed files
+  %D    # Number of deleted files
+  %C    # Clean working directory indicator
+" 

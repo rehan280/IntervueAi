@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: 'dist',
     rollupOptions: {
       external: ['@rollup/rollup-linux-x64-gnu'],
       onwarn(warning, warn) {
@@ -40,6 +41,7 @@ export default defineConfig({
     target: 'es2015',
     minify: 'terser',
     sourcemap: false,
+    chunkSizeWarningLimit: 1000,
   },
   define: {
     'process.env.NODE_ENV': '"production"'

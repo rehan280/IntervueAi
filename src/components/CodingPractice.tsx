@@ -2119,17 +2119,17 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
           <div className="left-panel">
             {/* Category Selector */}
             <Card className="enhanced-card">
-              <CardHeader>
-                <CardTitle className="text-lg text-white">Categories</CardTitle>
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-base sm:text-lg text-white">Categories</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 sm:p-6">
                 <div className="space-y-2">
                   {categories.map((category) => (
                     <Button
                       key={category.id}
                       variant={selectedCategory === category.id ? "default" : "outline"}
                       size="sm"
-                      className={`w-full justify-start transition-all duration-200 ${
+                      className={`w-full justify-start transition-all duration-200 text-xs sm:text-sm ${
                         selectedCategory === category.id 
                           ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg' 
                           : 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:shadow-md'
@@ -2145,20 +2145,20 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
 
             {/* Problems List */}
             <Card className="enhanced-card">
-              <CardHeader>
+              <CardHeader className="p-4 sm:p-6">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-white">Problems</CardTitle>
-                  <Badge className="category-badge">
+                  <CardTitle className="text-base sm:text-lg text-white">Problems</CardTitle>
+                  <Badge className="category-badge text-xs">
                     {filteredProblems.length} problems
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2 max-h-64 overflow-y-auto">
+              <CardContent className="p-4 sm:p-6">
+                <div className="space-y-2 max-h-48 sm:max-h-64 overflow-y-auto">
                   {filteredProblems.map((problem) => (
                     <div
                       key={problem.id}
-                      className={`p-3 rounded-lg cursor-pointer transition-all duration-200 ${
+                      className={`p-2 sm:p-3 rounded-lg cursor-pointer transition-all duration-200 ${
                         selectedProblem?.id === problem.id
                           ? 'bg-gradient-to-r from-purple-600 to-purple-700 border border-purple-500 shadow-lg'
                           : 'hover:bg-gray-700 text-gray-300 hover:shadow-md'
@@ -2166,8 +2166,8 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       onClick={() => setSelectedProblem(problem)}
                     >
                       <div className="flex items-center justify-between">
-                        <span className={`font-medium ${selectedProblem?.id === problem.id ? 'text-white' : 'text-gray-300'}`}>{problem.title}</span>
-                        <Badge className={`difficulty-badge ${problem.difficulty}`}>
+                        <span className={`font-medium text-xs sm:text-sm ${selectedProblem?.id === problem.id ? 'text-white' : 'text-gray-300'}`}>{problem.title}</span>
+                        <Badge className={`difficulty-badge ${problem.difficulty} text-xs`}>
                           {problem.difficulty}
                         </Badge>
                       </div>
@@ -2180,12 +2180,12 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
             {/* Problem Description */}
             {selectedProblem && (
               <Card className="problem-description-card">
-                <CardHeader className="problem-header">
+                <CardHeader className="problem-header p-3 sm:p-4">
                   <div className="problem-badges">
-                    <Badge className={`difficulty-badge ${selectedProblem.difficulty}`}>
+                    <Badge className={`difficulty-badge ${selectedProblem.difficulty} text-xs`}>
                       {selectedProblem.difficulty}
                     </Badge>
-                    <Badge className="category-badge">
+                    <Badge className="category-badge text-xs">
                       {selectedProblem.category}
                     </Badge>
                   </div>
@@ -2197,7 +2197,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                         console.log('Button clicked!');
                         handleShowSolution();
                       }}
-                      className="action-button secondary"
+                      className="action-button secondary text-xs"
                       disabled={!selectedProblem?.solutions}
                     >
                       <Eye className="w-4 h-4 mr-1" />

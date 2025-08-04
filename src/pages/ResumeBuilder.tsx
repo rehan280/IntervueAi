@@ -271,33 +271,33 @@ const ResumeBuilder: React.FC = () => {
       <div className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-xl animate-pulse"></div>
       
-      <div className="relative container mx-auto px-4 py-8">
+      <div className="relative container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-6">
-              <img src="/logo.png" alt="IntervueAi Logo" className="w-24 h-14 object-contain" />
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="flex justify-center mb-4 sm:mb-6">
+              <img src="/logo.png" alt="IntervueAi Logo" className="w-20 h-12 sm:w-24 sm:h-14 object-contain" />
             </div>
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
               Resume Builder
             </h1>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-2">
               Create a professional resume that stands out to employers with our AI-powered builder
             </p>
             {isSaving && (
-              <div className="mt-4 flex items-center justify-center space-x-2 text-green-400">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-400"></div>
-                <span className="text-sm">Auto-saving...</span>
+              <div className="mt-3 sm:mt-4 flex items-center justify-center space-x-2 text-green-400">
+                <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-green-400"></div>
+                <span className="text-xs sm:text-sm">Auto-saving...</span>
               </div>
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {/* Form Section */}
             <div className="lg:col-span-2">
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl">
-                <CardHeader className="border-b border-white/10">
-                  <CardTitle className="text-white text-xl font-semibold">Resume Information</CardTitle>
+                <CardHeader className="border-b border-white/10 p-4 sm:p-6">
+                  <CardTitle className="text-white text-lg sm:text-xl font-semibold">Resume Information</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

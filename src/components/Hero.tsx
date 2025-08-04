@@ -49,68 +49,70 @@ const Hero = () => {
       ></div>
       
       {/* Hero section */}
-      <section className="relative pt-2 pb-6 sm:pt-4 sm:pb-8 md:pt-6 md:pb-10 px-4 overflow-hidden min-h-screen flex items-center">
+      <section className="relative pt-2 pb-6 sm:pt-4 sm:pb-8 md:pt-6 md:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center">
         <div className="container mx-auto text-center max-w-7xl">
-          <Badge variant="secondary" className="mb-6 sm:mb-8 md:mb-10 text-sm sm:text-base md:text-lg font-medium px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white/10 text-white border-white/20">
-            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-2.5 md:mr-3" />
-            NEXT-GEN AI INTERVIEW PREP
+          <Badge variant="secondary" className="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-xs sm:text-sm md:text-base lg:text-lg font-medium px-3 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-white/10 text-white border-white/20">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 mr-1.5 sm:mr-2 md:mr-2.5 lg:mr-3" />
+            <span className="hidden sm:inline">NEXT-GEN AI INTERVIEW PREP</span>
+            <span className="sm:hidden">AI INTERVIEW PREP</span>
           </Badge>
           
-          <div className="flex justify-center mb-6 sm:mb-8 md:mb-10">
-            <img src="/logo.png" alt="IntervueAi Logo" className="w-32 h-18 sm:w-40 sm:h-22 md:w-48 md:h-27 lg:w-56 lg:h-31 object-contain" />
+          <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
+            <img src="/logo.png" alt="IntervueAi Logo" className="w-24 h-14 sm:w-32 sm:h-18 md:w-40 md:h-22 lg:w-48 lg:h-27 xl:w-56 xl:h-31 object-contain" />
           </div>
           
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold mb-4 sm:mb-5 md:mb-6 text-white/90 leading-tight">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-white/90 leading-tight px-2 sm:px-4">
             Train Smarter. Interview Better.
           </p>
           
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 md:mb-10 max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 mb-4 sm:mb-6 md:mb-8 lg:mb-10 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-2xl xl:max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
             Crack your next interview with AI-powered mock tests, coding challenges, and real-time feedback.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center mb-8 sm:mb-10 md:mb-12">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
             <Button 
               variant="hero" 
               size="xl" 
-              className="group text-lg"
+              className="group text-sm sm:text-base md:text-lg"
               onClick={() => navigate('/interview-practice')}
             >
-              <Target className="w-5 h-5 mr-2" />
+              <Target className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
               Try IntervueAi
-              <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              <span className="ml-1.5 sm:ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </Button>
             <Link to="/about">
               <Button 
                 variant="outline-hero" 
                 size="xl"
-                className="text-lg"
+                className="text-sm sm:text-base md:text-lg"
               >
-                <Play className="w-5 h-5 mr-2" />
-                See How it Works
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <span className="hidden sm:inline">See How it Works</span>
+                <span className="sm:hidden">How it Works</span>
               </Button>
             </Link>
           </div>
           
           {/* Enhanced features showcase */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-            <div className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-2xl font-bold text-white mb-1">14</div>
-              <div className="text-white/80 font-medium text-sm">Job Roles</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8">
+            <div className="text-center p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">14</div>
+              <div className="text-white/80 font-medium text-xs sm:text-sm">Job Roles</div>
               <div className="text-xs text-white/60 mt-1">10 Questions Each</div>
             </div>
-            <div className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-2xl font-bold text-white mb-1">AI</div>
-              <div className="text-white/80 font-medium text-sm">Powered</div>
+            <div className="text-center p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">AI</div>
+              <div className="text-white/80 font-medium text-xs sm:text-sm">Powered</div>
               <div className="text-xs text-white/60 mt-1">Gemini AI Feedback</div>
             </div>
-            <div className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-2xl font-bold text-white mb-1">∞</div>
-              <div className="text-white/80 font-medium text-sm">Unlimited</div>
+            <div className="text-center p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">∞</div>
+              <div className="text-white/80 font-medium text-xs sm:text-sm">Unlimited</div>
               <div className="text-xs text-white/60 mt-1">Practice Sessions</div>
             </div>
-            <div className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-2xl font-bold text-white mb-1">🎤</div>
-              <div className="text-white/80 font-medium text-sm">Voice Support</div>
+            <div className="text-center p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">🎤</div>
+              <div className="text-white/80 font-medium text-xs sm:text-sm">Voice Support</div>
               <div className="text-xs text-white/60 mt-1">Audio Feedback</div>
             </div>
           </div>
