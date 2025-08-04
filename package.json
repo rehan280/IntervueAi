@@ -10,10 +10,19 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:vercel": "npm install --no-optional --legacy-peer-deps && vite build",
+    "build:netlify": "npm ci --no-optional --legacy-peer-deps && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "npm run build && vercel --prod",
     "deploy:dev": "vercel"
+  },
+  "overrides": {
+    "rollup": {
+      "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.9.5"
+      }
+    }
   },
   "dependencies": {
     "@11labs/react": "^0.1.4",

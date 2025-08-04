@@ -26,5 +26,11 @@ export default defineConfig({
         },
       },
     },
+    target: 'es2015',
+    minify: 'terser',
+    sourcemap: false,
   },
+  define: {
+    'process.env.NODE_ENV': '"production"'
+  }
 });
