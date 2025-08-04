@@ -15,7 +15,7 @@
         "distDir": "dist",
         "nodeVersion": "18.x",
         "installCommand": "npm install",
-        "buildCommand": "npm run build:vercel"
+        "buildCommand": "npm run build"
       }
     }
   ],
