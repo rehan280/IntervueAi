@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 import codeExecutionService from "@/services/codeExecutionService";
 import { additionalProblems } from "./additional_problems";
@@ -2029,6 +2031,86 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
     { id: 'c', name: 'C-Specific' }
   ];
 
+  const handleDownloadPDF = () => {
+    if (!selectedProblem) return;
+    const doc = new jsPDF();
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text(selectedProblem.title, 10, 15);
+    
+    // Description
+    doc.setFontSize(12);
+    doc.text('Description:', 10, 25);
+    doc.text(selectedProblem.description, 10, 33, { maxWidth: 190 });
+    
+    // Examples
+    let y = 45;
+    doc.text('Examples:', 10, y);
+    y += 8;
+    selectedProblem.examples.forEach((ex, idx) => {
+      doc.text(`Example ${idx + 1}:`, 12, y);
+      y += 6;
+      doc.text(`Input: ${ex.input}`, 14, y);
+      y += 6;
+      doc.text(`Output: ${ex.output}`, 14, y);
+      y += 6;
+      if (ex.explanation) {
+        doc.text(`Explanation: ${ex.explanation}`, 14, y);
+        y += 6;
+      }
+      y += 2;
+    });
+    
+    // Constraints
+    doc.text('Constraints:', 10, y);
+    y += 8;
+    selectedProblem.constraints.forEach((c) => {
+      doc.text(`• ${c}`, 14, y);
+      y += 6;
+    });
+    
+    // Solution Code - Always include if available
+    if (selectedProblem.solutions) {
+      y += 5;
+      doc.text('Solution Code:', 10, y);
+      y += 8;
+      
+      // Get solution for selected language, fallback to first available
+      let solution = selectedProblem.solutions[selectedLanguage];
+      if (!solution) {
+        const availableSolutions = Object.keys(selectedProblem.solutions);
+        if (availableSolutions.length > 0) {
+          solution = selectedProblem.solutions[availableSolutions[0]];
+        }
+      }
+      
+      if (solution) {
+        doc.setFont('courier', 'normal');
+        doc.setFontSize(10);
+        const lines = solution.split('\n');
+        lines.forEach((line) => {
+          if (y > 280) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text(line, 14, y);
+          y += 5;
+        });
+      } else {
+        doc.setFontSize(12);
+        doc.text('No solution available for this problem.', 14, y);
+      }
+    } else {
+      y += 5;
+      doc.text('Solution Code:', 10, y);
+      y += 8;
+      doc.text('No solution available for this problem.', 14, y);
+    }
+    
+    doc.save(`${selectedProblem.title.replace(/\s+/g, '_')}_solution.pdf`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="coding-practice-container">
@@ -2121,7 +2203,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       <Eye className="w-4 h-4 mr-1" />
                       See Solution
                     </Button>
-                    <Button variant="outline" size="sm" className="action-button secondary">
+                    <Button variant="outline" size="sm" className="action-button secondary" onClick={handleDownloadPDF}>
                       <Download className="w-4 h-4 mr-1" />
                       Download PDF
                     </Button>

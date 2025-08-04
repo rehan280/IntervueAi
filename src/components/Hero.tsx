@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Play, CheckCircle, Users, Brain, Target, Github, Linkedin, Mail, User } from "lucide-react";
-import { Link } from "react-router-dom";
-import LoginModal from './LoginModal';
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigate = useNavigate();
   
   const imageSources = [
     '/rehan-kadri.png',
@@ -74,7 +73,7 @@ const Hero = () => {
               variant="hero" 
               size="xl" 
               className="group text-lg"
-              onClick={() => setShowLoginModal(true)}
+              onClick={() => navigate('/interview-practice')}
             >
               <Target className="w-5 h-5 mr-2" />
               Try IntervueAi
@@ -436,16 +435,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Login Modal */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLoginSuccess={() => {
-          setShowLoginModal(false);
-          // Optionally navigate to interview practice after login
-          window.location.href = '/interview-practice';
-        }}
-      />
+
     </div>
   );
 };

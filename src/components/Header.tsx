@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, User, LogOut, ChevronDown } from 'lucide-react';
-import LoginModal from './LoginModal';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [userName, setUserName] = useState('John Doe');
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);
+  const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-    setShowLoginModal(false);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName('');
+  };
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
+    setShowDropdown(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    dropdownTimeout.current = setTimeout(() => {
+      setShowDropdown(false);
+    }, 200); // 200ms delay
   };
 
   return (
@@ -54,11 +64,9 @@ const Header: React.FC = () => {
                 <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors duration-200">
                   How It Works
                 </Link>
-                <div className="relative">
+                <div className="relative" onMouseEnter={handleDropdownMouseEnter} onMouseLeave={handleDropdownMouseLeave}>
                   <button
                     className="flex items-center text-gray-300 hover:text-white transition-colors duration-200"
-                    onMouseEnter={() => setShowDropdown(true)}
-                    onMouseLeave={() => setShowDropdown(false)}
                   >
                     Our Pages
                     <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
@@ -66,8 +74,6 @@ const Header: React.FC = () => {
                   {showDropdown && (
                     <div
                       className="absolute top-full left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
-                      onMouseEnter={() => setShowDropdown(true)}
-                      onMouseLeave={() => setShowDropdown(false)}
                     >
                       <div className="py-2">
                         <Link
@@ -110,7 +116,7 @@ const Header: React.FC = () => {
                   </div>
                 ) : (
                   <Button
-                    onClick={() => setShowLoginModal(true)}
+                    onClick={() => navigate('/interview-practice')}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Get Started
@@ -206,12 +212,6 @@ const Header: React.FC = () => {
         </div>
       )}
 
-      {/* Login Modal */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLoginSuccess={handleLoginSuccess}
-      />
     </>
   );
 };

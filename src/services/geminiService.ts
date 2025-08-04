@@ -1,13 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// For development purposes - In production, use Supabase Edge Functions
-const GEMINI_API_KEY = "AIzaSyBqEE3tx-mSDU3CvUy_ffTjb2TODb9u17I";
+// Use environment variable for API key
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBqEE3tx-mSDU3CvUy_ffTjb2TODb9u17I";
 
 class GeminiService {
   private genAI: GoogleGenerativeAI;
   private model: any;
 
   constructor() {
+    if (!GEMINI_API_KEY) {
+      console.warn("⚠️ GEMINI_API_KEY not found in environment variables");
+    }
     this.genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
     this.model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
   }

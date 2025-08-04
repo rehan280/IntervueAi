@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Your Gemini API key (store this in environment variables in production)
-const GEMINI_API_KEY = "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
 
 // Piston API configuration for code execution
 const PISTON_API_URL = 'https://emkc.org/api/v2/piston/execute';

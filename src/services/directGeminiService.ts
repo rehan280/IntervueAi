@@ -17,7 +17,7 @@ interface GeminiResponse {
 }
 
 export class DirectGeminiService {
-  private apiKey = "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
+  private apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
   private baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
   async analyzeAnswer(question: string, answer: string, role: string): Promise<string> {

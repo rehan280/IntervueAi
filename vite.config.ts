@@ -9,9 +9,22 @@ export default defineConfig({
     port: 8080,
   },
   plugins: [react()],
+  optimizeDeps: {
+    include: ["jspdf", "jspdf-autotable"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+        },
+      },
     },
   },
 });
