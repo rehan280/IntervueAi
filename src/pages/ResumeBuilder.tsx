@@ -301,97 +301,111 @@ const ResumeBuilder: React.FC = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 md:p-6">
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-white/10 border border-white/20 text-xs sm:text-sm gap-1 sm:gap-2 overflow-hidden">
-                      <TabsTrigger value="personal" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Personal</TabsTrigger>
-                      <TabsTrigger value="education" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Education</TabsTrigger>
-                      <TabsTrigger value="experience" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Experience</TabsTrigger>
-                      <TabsTrigger value="skills" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Skills</TabsTrigger>
-                      <TabsTrigger value="projects" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Projects</TabsTrigger>
+                    <TabsList className="flex w-full flex-wrap sm:flex-nowrap bg-white/10 border border-white/20 text-xs sm:text-sm gap-1 sm:gap-2 p-1 sm:p-2 rounded-lg">
+                      <TabsTrigger value="personal" className="flex-1 text-white data-[state=active]:bg-white/20 data-[state=active]:text-white hover:bg-white/10 transition-all duration-200 text-xs sm:text-sm px-2 py-3 sm:px-4 sm:py-3 min-h-[48px] sm:min-h-[52px] rounded-md font-medium whitespace-nowrap">
+                        <span className="hidden sm:inline">Personal</span>
+                        <span className="sm:hidden">Info</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="education" className="flex-1 text-white data-[state=active]:bg-white/20 data-[state=active]:text-white hover:bg-white/10 transition-all duration-200 text-xs sm:text-sm px-2 py-3 sm:px-4 sm:py-3 min-h-[48px] sm:min-h-[52px] rounded-md font-medium whitespace-nowrap">
+                        <span className="hidden sm:inline">Education</span>
+                        <span className="sm:hidden">Edu</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="experience" className="flex-1 text-white data-[state=active]:bg-white/20 data-[state=active]:text-white hover:bg-white/10 transition-all duration-200 text-xs sm:text-sm px-2 py-3 sm:px-4 sm:py-3 min-h-[48px] sm:min-h-[52px] rounded-md font-medium whitespace-nowrap">
+                        <span className="hidden sm:inline">Experience</span>
+                        <span className="sm:hidden">Exp</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="skills" className="flex-1 text-white data-[state=active]:bg-white/20 data-[state=active]:text-white hover:bg-white/10 transition-all duration-200 text-xs sm:text-sm px-2 py-3 sm:px-4 sm:py-3 min-h-[48px] sm:min-h-[52px] rounded-md font-medium whitespace-nowrap">
+                        Skills
+                      </TabsTrigger>
+                      <TabsTrigger value="projects" className="flex-1 text-white data-[state=active]:bg-white/20 data-[state=active]:text-white hover:bg-white/10 transition-all duration-200 text-xs sm:text-sm px-2 py-3 sm:px-4 sm:py-3 min-h-[48px] sm:min-h-[52px] rounded-md font-medium whitespace-nowrap">
+                        <span className="hidden sm:inline">Projects</span>
+                        <span className="sm:hidden">Proj</span>
+                      </TabsTrigger>
                     </TabsList>
 
                     {/* Personal Information */}
-                    <TabsContent value="personal" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                    <TabsContent value="personal" className="space-y-4 sm:space-y-6 md:space-y-8 mt-4 sm:mt-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">First Name</label>
+                          <label className="text-white text-sm sm:text-base font-medium">First Name</label>
                           <Input
                             value={personalInfo.firstName}
                             onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="John"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Last Name</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Last Name</label>
                           <Input
                             value={personalInfo.lastName}
                             onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="Doe"
                           />
                         </div>
                         <div className="md:col-span-2 space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Job Title</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Job Title</label>
                           <Input
                             value={personalInfo.jobTitle}
                             onChange={(e) => setPersonalInfo({...personalInfo, jobTitle: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10 w-full"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg w-full"
                             placeholder="Software Engineer, Data Scientist, etc."
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Email</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Email</label>
                           <Input
                             value={personalInfo.email}
                             onChange={(e) => setPersonalInfo({...personalInfo, email: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="john.doe@email.com"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Phone</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Phone</label>
                           <Input
                             value={personalInfo.phone}
                             onChange={(e) => setPersonalInfo({...personalInfo, phone: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="+1 (555) 123-4567"
                           />
                         </div>
                         <div className="md:col-span-2 space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Address</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Address</label>
                           <Input
                             value={personalInfo.address}
                             onChange={(e) => setPersonalInfo({...personalInfo, address: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="City, State, Country"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">LinkedIn</label>
+                          <label className="text-white text-sm sm:text-base font-medium">LinkedIn</label>
                           <Input
                             value={personalInfo.linkedin}
                             onChange={(e) => setPersonalInfo({...personalInfo, linkedin: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="linkedin.com/in/johndoe"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Website</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Website</label>
                           <Input
                             value={personalInfo.website}
                             onChange={(e) => setPersonalInfo({...personalInfo, website: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base h-12 sm:h-14 rounded-lg"
                             placeholder="johndoe.com"
                           />
                         </div>
                         <div className="md:col-span-2 space-y-2">
-                          <label className="text-white text-xs sm:text-sm font-medium">Professional Summary</label>
+                          <label className="text-white text-sm sm:text-base font-medium">Professional Summary</label>
                           <Textarea
                             value={personalInfo.summary}
                             onChange={(e) => setPersonalInfo({...personalInfo, summary: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm min-h-[80px] sm:min-h-[100px]"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-sm sm:text-base min-h-[120px] sm:min-h-[140px] rounded-lg"
                             placeholder="Brief professional summary..."
-                            rows={3}
+                            rows={4}
                           />
                         </div>
                       </div>
@@ -399,12 +413,12 @@ const ResumeBuilder: React.FC = () => {
 
                     {/* Education */}
                     <TabsContent value="education" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
-                        <h3 className="text-white text-base sm:text-lg font-semibold">Education</h3>
-                        <Button onClick={addEducation} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <h3 className="text-white text-lg sm:text-xl font-semibold">Education</h3>
+                        <Button onClick={addEducation} variant="outline-hero" className="text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 w-full sm:w-auto rounded-lg">
+                          <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Education</span>
-                          <span className="sm:hidden">Add</span>
+                          <span className="sm:hidden">Add Education</span>
                         </Button>
                       </div>
                       {education.map((edu, index) => (
@@ -493,12 +507,12 @@ const ResumeBuilder: React.FC = () => {
 
                     {/* Experience */}
                     <TabsContent value="experience" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
-                        <h3 className="text-white text-base sm:text-lg font-semibold">Work Experience</h3>
-                        <Button onClick={addExperience} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <h3 className="text-white text-lg sm:text-xl font-semibold">Work Experience</h3>
+                        <Button onClick={addExperience} variant="outline-hero" className="text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 w-full sm:w-auto rounded-lg">
+                          <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Experience</span>
-                          <span className="sm:hidden">Add</span>
+                          <span className="sm:hidden">Add Experience</span>
                         </Button>
                       </div>
                        {experience.map((exp, index) => (
@@ -588,12 +602,12 @@ const ResumeBuilder: React.FC = () => {
 
                     {/* Skills */}
                     <TabsContent value="skills" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
-                        <h3 className="text-white text-base sm:text-lg font-semibold">Skills</h3>
-                        <Button onClick={addSkill} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <h3 className="text-white text-lg sm:text-xl font-semibold">Skills</h3>
+                        <Button onClick={addSkill} variant="outline-hero" className="text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 w-full sm:w-auto rounded-lg">
+                          <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Skill</span>
-                          <span className="sm:hidden">Add</span>
+                          <span className="sm:hidden">Add Skill</span>
                         </Button>
                       </div>
                       {skills.map((skill, index) => (
@@ -640,12 +654,12 @@ const ResumeBuilder: React.FC = () => {
 
                     {/* Projects */}
                     <TabsContent value="projects" className="space-y-4 sm:space-y-6">
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
-                        <h3 className="text-white text-base sm:text-lg font-semibold">Projects</h3>
-                        <Button onClick={addProject} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <h3 className="text-white text-lg sm:text-xl font-semibold">Projects</h3>
+                        <Button onClick={addProject} variant="outline-hero" className="text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 w-full sm:w-auto rounded-lg">
+                          <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Project</span>
-                          <span className="sm:hidden">Add</span>
+                          <span className="sm:hidden">Add Project</span>
                         </Button>
                       </div>
                        {projects.map((project, index) => (
@@ -717,40 +731,40 @@ const ResumeBuilder: React.FC = () => {
                   <CardTitle className="text-white text-base sm:text-lg md:text-xl font-semibold">Resume Preview</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-6">
-                  <div className="space-y-3 sm:space-y-4">
+                  <div className="space-y-4 sm:space-y-5">
                     <Button 
                       onClick={() => setShowTemplateSelector(true)}
                       variant="premium"
-                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
+                      className="w-full text-base sm:text-lg min-h-[56px] sm:min-h-[60px] px-6 sm:px-8 py-4 sm:py-4 overflow-hidden font-medium rounded-lg"
                     >
-                      <Palette className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <Palette className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Choose Template</span>
                       <span className="sm:hidden truncate">Template</span>
                     </Button>
                     <Button 
                       onClick={() => setShowCustomizer(true)}
                       variant="hero"
-                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
+                      className="w-full text-base sm:text-lg min-h-[56px] sm:min-h-[60px] px-6 sm:px-8 py-4 sm:py-4 overflow-hidden font-medium rounded-lg"
                     >
-                      <Settings className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <Settings className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Customize Resume</span>
                       <span className="sm:hidden truncate">Customize</span>
                     </Button>
                     <Button 
                       onClick={previewResume} 
                       variant="outline-hero"
-                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
+                      className="w-full text-base sm:text-lg min-h-[56px] sm:min-h-[60px] px-6 sm:px-8 py-4 sm:py-4 overflow-hidden font-medium rounded-lg"
                     >
-                      <Eye className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <Eye className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Preview Resume</span>
                       <span className="sm:hidden truncate">Preview</span>
                     </Button>
                     <Button 
                       onClick={generateResume} 
                       variant="hero"
-                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
+                      className="w-full text-base sm:text-lg min-h-[56px] sm:min-h-[60px] px-6 sm:px-8 py-4 sm:py-4 overflow-hidden font-medium rounded-lg"
                     >
-                      <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <Download className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Generate PDF</span>
                       <span className="sm:hidden truncate">PDF</span>
                     </Button>
@@ -775,9 +789,9 @@ const ResumeBuilder: React.FC = () => {
                           setProjects([]);
                         }
                       }}
-                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
+                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-base sm:text-lg min-h-[56px] sm:min-h-[60px] px-6 sm:px-8 py-4 sm:py-4 overflow-hidden font-medium rounded-lg"
                     >
-                      <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <Trash2 className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Clear Form</span>
                       <span className="sm:hidden truncate">Clear</span>
                     </Button>
