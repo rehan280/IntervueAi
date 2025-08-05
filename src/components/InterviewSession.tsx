@@ -78,191 +78,957 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
     console.log("InterviewSession useEffect triggered for role:", role);
     const loadQuestions = async () => {
       try {
-        // Role-specific questions database
-        const roleQuestionsMap: Record<string, string[]> = {
+        // Role-specific questions database with variations
+        const roleQuestionsMap: Record<string, string[][]> = {
           "software-developer": [
-            "Tell me about a challenging technical problem you solved and the approach you took.",
-            "How do you stay updated with the latest programming languages and frameworks?",
-            "Describe a time when you had to work with a difficult team member or stakeholder.",
-            "What's your experience with code review processes and best practices?",
-            "How do you handle debugging complex issues in production environments?",
-            "Tell me about a project where you had to learn a new technology quickly.",
-            "What's your approach to writing clean, maintainable code?",
-            "How do you prioritize tasks when working on multiple projects?",
-            "Describe a situation where you had to make a technical decision that others disagreed with.",
-            "What's your experience with agile development methodologies?"
+            [
+              "Tell me about a challenging technical problem you solved and the approach you took.",
+              "Can you walk me through a particularly difficult technical challenge you've faced and how you tackled it?",
+              "I'd like to hear about a complex technical problem you encountered. What was your approach to solving it?",
+              "Could you share an example of a challenging technical issue you resolved? What was your methodology?"
+            ],
+            [
+              "How do you stay updated with the latest programming languages and frameworks?",
+              "What's your approach to keeping up with new programming languages and frameworks in this fast-evolving field?",
+              "How do you ensure you're staying current with the latest developments in programming languages and frameworks?",
+              "Could you tell me about your strategy for staying up-to-date with emerging programming technologies?"
+            ],
+            [
+              "Describe a time when you had to work with a difficult team member or stakeholder.",
+              "Tell me about a situation where you had to collaborate with someone who was challenging to work with.",
+              "Have you ever had to work with a difficult colleague or stakeholder? How did you handle that?",
+              "Could you share an experience where you had to manage a challenging working relationship?"
+            ],
+            [
+              "What's your experience with code review processes and best practices?",
+              "How do you approach code reviews? What best practices do you follow?",
+              "Tell me about your experience with code review processes and how you ensure quality.",
+              "What's your perspective on code review best practices and how do you implement them?"
+            ],
+            [
+              "How do you handle debugging complex issues in production environments?",
+              "What's your approach to debugging when you encounter complex issues in production?",
+              "How do you go about troubleshooting complex problems in live production environments?",
+              "Could you walk me through your debugging process when facing complex production issues?"
+            ],
+            [
+              "Tell me about a project where you had to learn a new technology quickly.",
+              "Have you ever had to rapidly learn a new technology for a project? How did you approach it?",
+              "Can you share an experience where you needed to quickly master a new technology?",
+              "What's your strategy when you need to learn a new technology under time pressure?"
+            ],
+            [
+              "What's your approach to writing clean, maintainable code?",
+              "How do you ensure your code is clean and maintainable for future developers?",
+              "What principles do you follow when writing code to make it maintainable?",
+              "Could you tell me about your approach to writing code that's both clean and maintainable?"
+            ],
+            [
+              "How do you prioritize tasks when working on multiple projects?",
+              "What's your method for prioritizing work when you're juggling multiple projects?",
+              "How do you approach task prioritization when you have several projects on your plate?",
+              "Could you share your strategy for managing priorities across multiple concurrent projects?"
+            ],
+            [
+              "Describe a situation where you had to make a technical decision that others disagreed with.",
+              "Have you ever had to make a technical decision that was met with disagreement? How did you handle it?",
+              "Tell me about a time when you made a technical decision that others didn't agree with.",
+              "Could you share an experience where you had to defend a technical decision against opposition?"
+            ],
+            [
+              "What's your experience with agile development methodologies?",
+              "How do you work within agile development frameworks? What's your experience been like?",
+              "Tell me about your experience with agile methodologies and how you've adapted to them.",
+              "What's your perspective on agile development and how have you implemented it in your work?"
+            ]
           ],
           "frontend-developer": [
-            "How do you ensure your web applications are responsive and accessible?",
-            "Tell me about your experience with modern JavaScript frameworks like React, Vue, or Angular.",
-            "How do you optimize frontend performance and loading times?",
-            "Describe a challenging UI/UX problem you solved.",
-            "What's your approach to state management in large applications?",
-            "How do you handle cross-browser compatibility issues?",
-            "Tell me about your experience with CSS preprocessors and modern CSS features.",
-            "How do you test your frontend code and ensure quality?",
-            "What's your experience with build tools and deployment processes?",
-            "How do you stay updated with frontend development trends?"
+            [
+              "How do you ensure your web applications are responsive and accessible?",
+              "What's your approach to making web applications both responsive and accessible to all users?",
+              "How do you go about ensuring your web applications work well across devices and for users with disabilities?",
+              "Could you tell me about your strategy for creating responsive and accessible web applications?"
+            ],
+            [
+              "Tell me about your experience with modern JavaScript frameworks like React, Vue, or Angular.",
+              "What's your experience been like with modern JavaScript frameworks such as React, Vue, or Angular?",
+              "How do you work with modern JavaScript frameworks? Which ones are you most comfortable with?",
+              "Could you share your experience with contemporary JavaScript frameworks and how you've used them?"
+            ],
+            [
+              "How do you optimize frontend performance and loading times?",
+              "What techniques do you use to optimize frontend performance and reduce loading times?",
+              "How do you approach performance optimization for frontend applications?",
+              "Could you walk me through your process for improving frontend performance and speed?"
+            ],
+            [
+              "Describe a challenging UI/UX problem you solved.",
+              "Can you tell me about a particularly challenging UI/UX problem you encountered and how you resolved it?",
+              "What's an example of a difficult UI/UX challenge you've faced and how did you approach it?",
+              "Could you share a story about a complex UI/UX problem you solved?"
+            ],
+            [
+              "What's your approach to state management in large applications?",
+              "How do you handle state management when working on large-scale applications?",
+              "What's your strategy for managing state in complex frontend applications?",
+              "Could you tell me about your approach to state management in large applications?"
+            ],
+            [
+              "How do you handle cross-browser compatibility issues?",
+              "What's your process for ensuring cross-browser compatibility in your applications?",
+              "How do you approach solving cross-browser compatibility challenges?",
+              "Could you share your strategy for handling cross-browser compatibility issues?"
+            ],
+            [
+              "Tell me about your experience with CSS preprocessors and modern CSS features.",
+              "What's your experience been like with CSS preprocessors and modern CSS capabilities?",
+              "How do you work with CSS preprocessors and modern CSS features?",
+              "Could you tell me about your experience with advanced CSS tools and features?"
+            ],
+            [
+              "How do you test your frontend code and ensure quality?",
+              "What's your approach to testing frontend code and maintaining quality standards?",
+              "How do you ensure the quality of your frontend code through testing?",
+              "Could you walk me through your frontend testing strategy and quality assurance process?"
+            ],
+            [
+              "What's your experience with build tools and deployment processes?",
+              "How do you work with build tools and manage deployment processes for frontend applications?",
+              "What's your experience with build tools and how do you handle deployment?",
+              "Could you share your experience with build tools and deployment workflows?"
+            ],
+            [
+              "How do you stay updated with frontend development trends?",
+              "What's your approach to staying current with frontend development trends and best practices?",
+              "How do you keep up with the latest developments in frontend technology?",
+              "Could you tell me about how you stay informed about frontend development trends?"
+            ]
           ],
           "backend-developer": [
-            "Tell me about your experience with database design and optimization.",
-            "How do you handle security concerns in your backend applications?",
-            "Describe a time when you had to scale an application to handle increased load.",
-            "What's your experience with API design and documentation?",
-            "How do you handle error handling and logging in production systems?",
-            "Tell me about your experience with microservices architecture.",
-            "How do you ensure data consistency in distributed systems?",
-            "What's your approach to testing backend services?",
-            "How do you handle database migrations and version control?",
-            "Tell me about your experience with cloud platforms and deployment."
+            [
+              "Tell me about your experience with database design and optimization.",
+              "What's your experience been like with database design and performance optimization?",
+              "How do you approach database design and what's your experience with optimization?",
+              "Could you share your experience with designing and optimizing databases?"
+            ],
+            [
+              "How do you handle security concerns in your backend applications?",
+              "What's your approach to addressing security concerns in backend development?",
+              "How do you ensure security when building backend applications?",
+              "Could you tell me about your strategy for handling security in backend systems?"
+            ],
+            [
+              "Describe a time when you had to scale an application to handle increased load.",
+              "Have you ever had to scale an application to accommodate increased traffic? How did you approach it?",
+              "Can you share an experience where you needed to scale an application for higher load?",
+              "What's your approach to scaling applications when they need to handle more traffic?"
+            ],
+            [
+              "What's your experience with API design and documentation?",
+              "How do you approach API design and what's your experience with documentation?",
+              "Tell me about your experience designing APIs and creating documentation for them.",
+              "Could you share your approach to API design and documentation practices?"
+            ],
+            [
+              "How do you handle error handling and logging in production systems?",
+              "What's your strategy for error handling and logging in production environments?",
+              "How do you approach error handling and logging when working with production systems?",
+              "Could you tell me about your process for managing errors and logging in production?"
+            ],
+            [
+              "Tell me about your experience with microservices architecture.",
+              "What's your experience been like working with microservices architecture?",
+              "How do you work with microservices and what challenges have you encountered?",
+              "Could you share your experience with microservices architecture and implementation?"
+            ],
+            [
+              "How do you ensure data consistency in distributed systems?",
+              "What's your approach to maintaining data consistency across distributed systems?",
+              "How do you handle data consistency challenges in distributed architectures?",
+              "Could you tell me about your strategy for ensuring data consistency in distributed systems?"
+            ],
+            [
+              "What's your approach to testing backend services?",
+              "How do you approach testing when working with backend services?",
+              "What's your strategy for testing backend services and ensuring quality?",
+              "Could you walk me through your approach to testing backend services?"
+            ],
+            [
+              "How do you handle database migrations and version control?",
+              "What's your process for managing database migrations and version control?",
+              "How do you approach database migrations and version control in your projects?",
+              "Could you share your experience with database migrations and version control practices?"
+            ],
+            [
+              "Tell me about your experience with cloud platforms and deployment.",
+              "What's your experience been like with cloud platforms and deployment processes?",
+              "How do you work with cloud platforms and what's your deployment experience?",
+              "Could you tell me about your experience with cloud platforms and deployment strategies?"
+            ]
           ],
           "data-scientist": [
-            "Tell me about a data analysis project where you discovered unexpected insights.",
-            "How do you handle missing or inconsistent data in your analysis?",
-            "Describe your experience with machine learning model development and deployment.",
-            "How do you communicate complex statistical findings to non-technical stakeholders?",
-            "What's your approach to feature engineering and selection?",
-            "Tell me about your experience with big data technologies and tools.",
-            "How do you validate and test your machine learning models?",
-            "What's your experience with data visualization and storytelling?",
-            "How do you stay updated with the latest developments in AI and ML?",
-            "Describe a time when you had to explain a complex algorithm to a business team."
+            [
+              "Tell me about a data analysis project where you discovered unexpected insights.",
+              "Can you share an example of a data analysis project where you uncovered surprising insights?",
+              "Have you ever worked on a data analysis project that revealed unexpected findings?",
+              "Could you walk me through a data analysis project where you discovered insights that weren't initially obvious?"
+            ],
+            [
+              "How do you handle missing or inconsistent data in your analysis?",
+              "What's your approach to dealing with missing or inconsistent data during analysis?",
+              "How do you tackle challenges with missing or inconsistent data in your work?",
+              "Could you tell me about your strategy for handling data quality issues in your analysis?"
+            ],
+            [
+              "Describe your experience with machine learning model development and deployment.",
+              "What's your experience been like developing and deploying machine learning models?",
+              "How do you approach machine learning model development and what's your deployment experience?",
+              "Could you share your experience with the end-to-end process of ML model development and deployment?"
+            ],
+            [
+              "How do you communicate complex statistical findings to non-technical stakeholders?",
+              "What's your approach to explaining complex statistical results to business stakeholders?",
+              "How do you bridge the gap between technical statistical findings and business understanding?",
+              "Could you tell me about your strategy for communicating statistical insights to non-technical audiences?"
+            ],
+            [
+              "What's your approach to feature engineering and selection?",
+              "How do you approach feature engineering and what's your process for feature selection?",
+              "What's your methodology for feature engineering and how do you decide which features to use?",
+              "Could you walk me through your approach to feature engineering and selection?"
+            ],
+            [
+              "Tell me about your experience with big data technologies and tools.",
+              "What's your experience been like working with big data technologies and tools?",
+              "How do you work with big data technologies and what tools are you most comfortable with?",
+              "Could you share your experience with big data technologies and the tools you've used?"
+            ],
+            [
+              "How do you validate and test your machine learning models?",
+              "What's your approach to validating and testing machine learning models?",
+              "How do you ensure the quality and reliability of your ML models through validation and testing?",
+              "Could you tell me about your process for validating and testing machine learning models?"
+            ],
+            [
+              "What's your experience with data visualization and storytelling?",
+              "How do you approach data visualization and what's your experience with data storytelling?",
+              "What's your experience creating visualizations and telling stories with data?",
+              "Could you share your experience with data visualization and storytelling techniques?"
+            ],
+            [
+              "How do you stay updated with the latest developments in AI and ML?",
+              "What's your approach to staying current with AI and ML developments?",
+              "How do you keep up with the latest trends and developments in artificial intelligence and machine learning?",
+              "Could you tell me about how you stay informed about AI and ML advancements?"
+            ],
+            [
+              "Describe a time when you had to explain a complex algorithm to a business team.",
+              "Have you ever had to explain a complex algorithm to non-technical business stakeholders?",
+              "Can you share an experience where you needed to break down a complex algorithm for business understanding?",
+              "What's your approach to explaining complex algorithms to business teams?"
+            ]
           ],
           "product-manager": [
-            "Tell me about a product you managed from conception to launch.",
-            "How do you prioritize features when you have limited resources?",
-            "Describe a time when you had to make a difficult product decision with incomplete data.",
-            "How do you gather and analyze user feedback to inform product decisions?",
-            "Tell me about your experience working with cross-functional teams.",
-            "How do you handle competing priorities from different stakeholders?",
-            "What's your approach to defining and measuring product success metrics?",
-            "Tell me about a time when a product launch didn't go as planned.",
-            "How do you stay updated with market trends and competitor analysis?",
-            "Describe your experience with agile product development methodologies."
-          ],
-          "ui-ux-designer": [
-            "Tell me about a design project where you had to balance user needs with business constraints.",
-            "How do you conduct user research and incorporate findings into your designs?",
-            "Describe your design process from initial concept to final deliverable.",
-            "How do you handle feedback and criticism on your designs?",
-            "Tell me about your experience with design systems and component libraries.",
-            "How do you ensure your designs are accessible to users with disabilities?",
-            "What's your approach to prototyping and user testing?",
-            "Tell me about a time when you had to design for a complex user workflow.",
-            "How do you stay updated with design trends and best practices?",
-            "Describe your experience working with developers to implement your designs."
-          ],
-          "devops-engineer": [
-            "Tell me about your experience with CI/CD pipeline implementation and optimization.",
-            "How do you handle infrastructure scaling and performance monitoring?",
-            "Describe a time when you had to troubleshoot a critical production issue.",
-            "What's your experience with containerization and orchestration tools?",
-            "How do you ensure security in your infrastructure and deployment processes?",
-            "Tell me about your experience with cloud platforms and services.",
-            "How do you handle configuration management and infrastructure as code?",
-            "What's your approach to monitoring and alerting in production environments?",
-            "Tell me about your experience with disaster recovery and backup strategies.",
-            "How do you stay updated with DevOps tools and best practices?"
-          ],
-          "ai-ml-engineer": [
-            "Tell me about a machine learning model you developed and deployed to production.",
-            "How do you handle model drift and retraining in production systems?",
-            "Describe your experience with deep learning frameworks and architectures.",
-            "How do you ensure your ML models are fair and unbiased?",
-            "What's your approach to feature engineering and data preprocessing?",
-            "Tell me about your experience with MLOps and model lifecycle management.",
-            "How do you handle the trade-off between model accuracy and interpretability?",
-            "What's your experience with real-time inference and model serving?",
-            "How do you validate and test your machine learning models?",
-            "Tell me about your experience with big data technologies for ML applications."
-          ],
-          "hr-executive": [
-            "Tell me about your experience with recruitment and talent acquisition processes.",
-            "How do you handle difficult employee relations situations?",
-            "Describe your approach to performance management and employee development.",
-            "What's your experience with HR policies and compliance requirements?",
-            "How do you stay updated with employment laws and regulations?",
-            "Tell me about a time when you had to mediate a conflict between employees.",
-            "What's your approach to building a positive company culture?",
-            "How do you handle sensitive employee information and maintain confidentiality?",
-            "Tell me about your experience with HR technology and systems.",
-            "How do you measure the effectiveness of HR programs and initiatives?"
-          ],
-          "sales-executive": [
-            "Tell me about your most successful sales achievement and how you accomplished it.",
-            "How do you handle rejection and maintain motivation in sales?",
-            "Describe your sales process and how you qualify leads.",
-            "What's your experience with CRM systems and sales tools?",
-            "How do you build and maintain relationships with clients?",
-            "Tell me about a time when you had to overcome a major sales objection.",
-            "What's your approach to understanding customer needs and pain points?",
-            "How do you handle competitive situations and differentiate your product?",
-            "Tell me about your experience with sales forecasting and pipeline management.",
-            "How do you stay motivated and achieve your sales targets?"
-          ],
-          "marketing-manager": [
-            "Tell me about a successful marketing campaign you managed from concept to execution.",
-            "How do you measure the ROI of marketing campaigns and initiatives?",
-            "Describe your experience with digital marketing channels and strategies.",
-            "What's your approach to understanding target audiences and market research?",
-            "How do you stay updated with marketing trends and best practices?",
-            "Tell me about a time when you had to pivot a marketing strategy due to market changes.",
-            "What's your experience with marketing automation and analytics tools?",
-            "How do you collaborate with other departments to align marketing efforts?",
-            "Tell me about your experience with brand management and positioning.",
-            "How do you handle budget constraints while maximizing marketing impact?"
-          ],
-          "cybersecurity-analyst": [
-            "Tell me about a security incident you investigated and how you resolved it.",
-            "How do you stay updated with the latest cybersecurity threats and trends?",
-            "Describe your experience with security tools and technologies.",
-            "What's your approach to vulnerability assessment and penetration testing?",
-            "How do you handle security breaches and incident response?",
-            "Tell me about your experience with compliance frameworks like SOC 2 or ISO 27001.",
-            "What's your approach to security awareness training and education?",
-            "How do you balance security requirements with business needs?",
-            "Tell me about your experience with threat intelligence and monitoring.",
-            "How do you communicate security risks to non-technical stakeholders?"
-          ],
-          "business-analyst": [
-            "Tell me about a complex business problem you analyzed and the solution you proposed.",
-            "How do you gather and document business requirements from stakeholders?",
-            "Describe your experience with data analysis and business intelligence tools.",
-            "What's your approach to process improvement and optimization?",
-            "How do you handle conflicting requirements from different stakeholders?",
-            "Tell me about a time when you had to present complex data to senior management.",
-            "What's your experience with project management and agile methodologies?",
-            "How do you ensure the solutions you propose align with business objectives?",
-            "Tell me about your experience with user acceptance testing and validation.",
-            "How do you stay updated with industry trends and best practices?"
-          ],
-          "finance-analyst": [
-            "Tell me about a financial analysis project that had significant business impact.",
-            "How do you ensure accuracy and attention to detail in financial reporting?",
-            "Describe your experience with financial modeling and forecasting.",
-            "What's your approach to variance analysis and identifying trends?",
-            "How do you handle tight deadlines and multiple reporting requirements?",
-            "Tell me about a time when you identified a financial risk or opportunity.",
-            "What's your experience with financial systems and ERP software?",
-            "How do you communicate complex financial information to non-financial stakeholders?",
-            "Tell me about your experience with budgeting and cost analysis.",
-            "How do you stay updated with accounting standards and regulations?"
+            [
+              "Tell me about a product you managed from conception to launch.",
+              "Can you walk me through a product you managed from initial concept through to launch?",
+              "What's an example of a product you've managed through the entire lifecycle?",
+              "Could you share your experience managing a product from conception to market launch?"
+            ],
+            [
+              "How do you prioritize features when you have limited resources?",
+              "What's your approach to feature prioritization when resources are constrained?",
+              "How do you make decisions about which features to prioritize when you have limited resources?",
+              "Could you tell me about your strategy for prioritizing features under resource constraints?"
+            ],
+            [
+              "Describe a time when you had to make a difficult product decision with incomplete data.",
+              "Have you ever had to make a tough product decision without having all the data you needed?",
+              "Can you share an experience where you had to make a product decision with limited information?",
+              "What's your approach to making product decisions when you don't have complete data?"
+            ],
+            [
+              "How do you gather and analyze user feedback to inform product decisions?",
+              "What's your process for collecting and analyzing user feedback to guide product decisions?",
+              "How do you approach gathering user feedback and using it to make product decisions?",
+              "Could you walk me through your approach to user feedback collection and analysis?"
+            ],
+            [
+              "Tell me about your experience working with cross-functional teams.",
+              "What's your experience been like working with cross-functional teams?",
+              "How do you collaborate with cross-functional teams and what challenges have you encountered?",
+              "Could you share your experience working with diverse cross-functional teams?"
+            ],
+            [
+              "How do you handle competing priorities from different stakeholders?",
+              "What's your approach to managing competing priorities from various stakeholders?",
+              "How do you navigate situations where different stakeholders have conflicting priorities?",
+              "Could you tell me about your strategy for handling competing stakeholder priorities?"
+            ],
+            [
+              "What's your approach to defining and measuring product success metrics?",
+              "How do you approach defining success metrics for your products?",
+              "What's your methodology for establishing and measuring product success metrics?",
+              "Could you walk me through your approach to defining and tracking product success metrics?"
+            ],
+            [
+              "Tell me about a time when a product launch didn't go as planned.",
+              "Have you ever experienced a product launch that didn't go according to plan?",
+              "Can you share an experience where a product launch faced unexpected challenges?",
+              "What happened when a product launch didn't go as expected and how did you handle it?"
+            ],
+            [
+              "How do you stay updated with market trends and competitor analysis?",
+              "What's your approach to staying current with market trends and analyzing competitors?",
+              "How do you keep up with market trends and what's your process for competitor analysis?",
+              "Could you tell me about your strategy for monitoring market trends and competitive landscape?"
+            ],
+            [
+              "Describe your experience with agile product development methodologies.",
+              "What's your experience been like with agile product development methodologies?",
+              "How do you work within agile frameworks for product development?",
+              "Could you share your experience with agile methodologies in product development?"
+            ],
+            "ui-ux-designer": [
+              [
+                "Tell me about a design project where you had to balance user needs with business constraints.",
+                "Can you share an example of a design project where you had to balance user requirements with business limitations?",
+                "What's your experience with design projects that required balancing user needs against business constraints?",
+                "Could you walk me through a design project where you had to navigate user needs and business requirements?"
+              ],
+              [
+                "How do you conduct user research and incorporate findings into your designs?",
+                "What's your approach to user research and how do you integrate those findings into your design work?",
+                "How do you go about conducting user research and what's your process for incorporating insights?",
+                "Could you tell me about your user research methodology and how you apply findings to designs?"
+              ],
+              [
+                "Describe your design process from initial concept to final deliverable.",
+                "Can you walk me through your design process from the initial concept stage to the final deliverable?",
+                "What's your design process like, from the beginning concept to the final output?",
+                "Could you share your design workflow from initial concept through to final deliverable?"
+              ],
+              [
+                "How do you handle feedback and criticism on your designs?",
+                "What's your approach to receiving and processing feedback on your design work?",
+                "How do you typically handle criticism and feedback on your designs?",
+                "Could you tell me about how you manage feedback and criticism on your design projects?"
+              ],
+              [
+                "Tell me about your experience with design systems and component libraries.",
+                "What's your experience been like working with design systems and component libraries?",
+                "How do you work with design systems and what's your experience with component libraries?",
+                "Could you share your experience with design systems and component library implementation?"
+              ],
+              [
+                "How do you ensure your designs are accessible to users with disabilities?",
+                "What's your approach to ensuring accessibility in your designs for users with disabilities?",
+                "How do you go about making your designs accessible to users with different abilities?",
+                "Could you tell me about your strategy for creating accessible designs?"
+              ],
+              [
+                "What's your approach to prototyping and user testing?",
+                "How do you approach prototyping and what's your process for user testing?",
+                "What's your methodology for prototyping and conducting user testing?",
+                "Could you walk me through your approach to prototyping and user testing?"
+              ],
+              [
+                "Tell me about a time when you had to design for a complex user workflow.",
+                "Can you share an experience where you had to design for a particularly complex user workflow?",
+                "What's an example of a complex user workflow you've designed for?",
+                "Could you walk me through a time when you designed for a complex user workflow?"
+              ],
+              [
+                "How do you stay updated with design trends and best practices?",
+                "What's your approach to staying current with design trends and industry best practices?",
+                "How do you keep up with the latest design trends and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about design trends and best practices?"
+              ],
+              [
+                "Describe your experience working with developers to implement your designs.",
+                "What's your experience been like collaborating with developers to bring your designs to life?",
+                "How do you work with developers and what's your experience with design implementation?",
+                "Could you share your experience working with development teams to implement designs?"
+              ]
+            ],
+            "devops-engineer": [
+              [
+                "Tell me about your experience with CI/CD pipeline implementation and optimization.",
+                "What's your experience been like implementing and optimizing CI/CD pipelines?",
+                "How do you approach CI/CD pipeline implementation and what's your optimization experience?",
+                "Could you share your experience with CI/CD pipeline setup and optimization?"
+              ],
+              [
+                "How do you handle infrastructure scaling and performance monitoring?",
+                "What's your approach to infrastructure scaling and how do you handle performance monitoring?",
+                "How do you go about scaling infrastructure and what's your monitoring strategy?",
+                "Could you tell me about your approach to infrastructure scaling and performance monitoring?"
+              ],
+              [
+                "Describe a time when you had to troubleshoot a critical production issue.",
+                "Can you share an experience where you had to troubleshoot a critical production problem?",
+                "What's an example of a critical production issue you've had to resolve?",
+                "Could you walk me through a time when you had to troubleshoot a critical production issue?"
+              ],
+              [
+                "What's your experience with containerization and orchestration tools?",
+                "How do you work with containerization and what's your experience with orchestration tools?",
+                "What's your experience been like with containerization and orchestration technologies?",
+                "Could you share your experience with containerization and orchestration tools?"
+              ],
+              [
+                "How do you ensure security in your infrastructure and deployment processes?",
+                "What's your approach to ensuring security in infrastructure and deployment workflows?",
+                "How do you go about maintaining security in your infrastructure and deployment processes?",
+                "Could you tell me about your strategy for securing infrastructure and deployment processes?"
+              ],
+              [
+                "Tell me about your experience with cloud platforms and services.",
+                "What's your experience been like working with cloud platforms and various services?",
+                "How do you work with cloud platforms and what services are you most familiar with?",
+                "Could you share your experience with cloud platforms and the services you've used?"
+              ],
+              [
+                "How do you handle configuration management and infrastructure as code?",
+                "What's your approach to configuration management and implementing infrastructure as code?",
+                "How do you go about configuration management and what's your experience with IaC?",
+                "Could you tell me about your strategy for configuration management and infrastructure as code?"
+              ],
+              [
+                "What's your approach to monitoring and alerting in production environments?",
+                "How do you approach monitoring and what's your strategy for alerting in production?",
+                "What's your methodology for monitoring and alerting in production environments?",
+                "Could you walk me through your approach to monitoring and alerting in production?"
+              ],
+              [
+                "Tell me about your experience with disaster recovery and backup strategies.",
+                "What's your experience been like with disaster recovery planning and backup strategies?",
+                "How do you approach disaster recovery and what's your experience with backup strategies?",
+                "Could you share your experience with disaster recovery and backup implementation?"
+              ],
+              [
+                "How do you stay updated with DevOps tools and best practices?",
+                "What's your approach to staying current with DevOps tools and industry best practices?",
+                "How do you keep up with the latest DevOps tools and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about DevOps tools and best practices?"
+              ]
+            ],
+            "ai-ml-engineer": [
+              [
+                "Tell me about a machine learning model you developed and deployed to production.",
+                "Can you share an example of a machine learning model you've developed and successfully deployed?",
+                "What's an example of an ML model you've built and deployed to production?",
+                "Could you walk me through a machine learning model you developed and deployed?"
+              ],
+              [
+                "How do you handle model drift and retraining in production systems?",
+                "What's your approach to managing model drift and implementing retraining in production?",
+                "How do you go about handling model drift and what's your retraining strategy?",
+                "Could you tell me about your approach to model drift and retraining in production?"
+              ],
+              [
+                "Describe your experience with deep learning frameworks and architectures.",
+                "What's your experience been like working with deep learning frameworks and various architectures?",
+                "How do you work with deep learning frameworks and what architectures are you most familiar with?",
+                "Could you share your experience with deep learning frameworks and architectures?"
+              ],
+              [
+                "How do you ensure your ML models are fair and unbiased?",
+                "What's your approach to ensuring fairness and reducing bias in your machine learning models?",
+                "How do you go about making sure your ML models are fair and unbiased?",
+                "Could you tell me about your strategy for ensuring model fairness and reducing bias?"
+              ],
+              [
+                "What's your approach to feature engineering and data preprocessing?",
+                "How do you approach feature engineering and what's your process for data preprocessing?",
+                "What's your methodology for feature engineering and how do you handle data preprocessing?",
+                "Could you walk me through your approach to feature engineering and data preprocessing?"
+              ],
+              [
+                "Tell me about your experience with MLOps and model lifecycle management.",
+                "What's your experience been like with MLOps and managing the machine learning model lifecycle?",
+                "How do you work with MLOps and what's your experience with model lifecycle management?",
+                "Could you share your experience with MLOps and model lifecycle management?"
+              ],
+              [
+                "How do you handle the trade-off between model accuracy and interpretability?",
+                "What's your approach to balancing model accuracy with interpretability requirements?",
+                "How do you navigate the trade-off between accuracy and interpretability in your models?",
+                "Could you tell me about your strategy for balancing accuracy and interpretability?"
+              ],
+              [
+                "What's your experience with real-time inference and model serving?",
+                "How do you work with real-time inference and what's your experience with model serving?",
+                "What's your experience been like with real-time inference and model serving systems?",
+                "Could you share your experience with real-time inference and model serving?"
+              ],
+              [
+                "How do you validate and test your machine learning models?",
+                "What's your approach to validating and testing machine learning models?",
+                "How do you go about validating and testing your ML models?",
+                "Could you walk me through your process for validating and testing machine learning models?"
+              ],
+              [
+                "Tell me about your experience with big data technologies for ML applications.",
+                "What's your experience been like working with big data technologies for machine learning applications?",
+                "How do you work with big data technologies and what's your experience with ML applications?",
+                "Could you share your experience with big data technologies for machine learning?"
+              ]
+            ],
+            "hr-executive": [
+              [
+                "Tell me about your experience with recruitment and talent acquisition processes.",
+                "What's your experience been like with recruitment and talent acquisition?",
+                "How do you approach recruitment and what's your experience with talent acquisition?",
+                "Could you share your experience with recruitment and talent acquisition processes?"
+              ],
+              [
+                "How do you handle difficult employee relations situations?",
+                "What's your approach to managing difficult employee relations scenarios?",
+                "How do you go about handling challenging employee relations situations?",
+                "Could you tell me about your strategy for managing difficult employee relations?"
+              ],
+              [
+                "Describe your approach to performance management and employee development.",
+                "What's your approach to performance management and how do you handle employee development?",
+                "How do you approach performance management and what's your strategy for employee development?",
+                "Could you walk me through your approach to performance management and employee development?"
+              ],
+              [
+                "What's your experience with HR policies and compliance requirements?",
+                "How do you work with HR policies and what's your experience with compliance requirements?",
+                "What's your experience been like with HR policies and ensuring compliance?",
+                "Could you share your experience with HR policies and compliance management?"
+              ],
+              [
+                "How do you stay updated with employment laws and regulations?",
+                "What's your approach to staying current with employment laws and regulatory changes?",
+                "How do you keep up with employment laws and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about employment laws and regulations?"
+              ],
+              [
+                "Tell me about a time when you had to mediate a conflict between employees.",
+                "Can you share an experience where you had to mediate a conflict between team members?",
+                "What's an example of a time when you had to mediate an employee conflict?",
+                "Could you walk me through a time when you had to mediate a conflict between employees?"
+              ],
+              [
+                "What's your approach to building a positive company culture?",
+                "How do you approach building and maintaining a positive company culture?",
+                "What's your strategy for fostering a positive company culture?",
+                "Could you tell me about your approach to building a positive company culture?"
+              ],
+              [
+                "How do you handle sensitive employee information and maintain confidentiality?",
+                "What's your approach to handling sensitive employee information while maintaining confidentiality?",
+                "How do you go about managing sensitive employee information and ensuring confidentiality?",
+                "Could you tell me about your strategy for handling sensitive employee information?"
+              ],
+              [
+                "Tell me about your experience with HR technology and systems.",
+                "What's your experience been like working with HR technology and various systems?",
+                "How do you work with HR technology and what systems are you most familiar with?",
+                "Could you share your experience with HR technology and systems?"
+              ],
+              [
+                "How do you measure the effectiveness of HR programs and initiatives?",
+                "What's your approach to measuring the effectiveness of HR programs and initiatives?",
+                "How do you go about evaluating the success of HR programs and initiatives?",
+                "Could you tell me about your strategy for measuring HR program effectiveness?"
+              ]
+            ],
+            "sales-executive": [
+              [
+                "Tell me about your most successful sales achievement and how you accomplished it.",
+                "Can you share your most significant sales achievement and how you made it happen?",
+                "What's your biggest sales success story and how did you achieve it?",
+                "Could you walk me through your most successful sales achievement?"
+              ],
+              [
+                "How do you handle rejection and maintain motivation in sales?",
+                "What's your approach to handling rejection and staying motivated in sales?",
+                "How do you go about dealing with rejection and maintaining motivation?",
+                "Could you tell me about your strategy for handling rejection in sales?"
+              ],
+              [
+                "Describe your sales process and how you qualify leads.",
+                "What's your sales process like and how do you go about qualifying leads?",
+                "How do you approach your sales process and what's your lead qualification strategy?",
+                "Could you walk me through your sales process and lead qualification approach?"
+              ],
+              [
+                "What's your experience with CRM systems and sales tools?",
+                "How do you work with CRM systems and what's your experience with sales tools?",
+                "What's your experience been like with CRM systems and various sales tools?",
+                "Could you share your experience with CRM systems and sales tools?"
+              ],
+              [
+                "How do you build and maintain relationships with clients?",
+                "What's your approach to building and maintaining strong client relationships?",
+                "How do you go about building and sustaining relationships with your clients?",
+                "Could you tell me about your strategy for building and maintaining client relationships?"
+              ],
+              [
+                "Tell me about a time when you had to overcome a major sales objection.",
+                "Can you share an experience where you had to overcome a significant sales objection?",
+                "What's an example of a major sales objection you've had to overcome?",
+                "Could you walk me through a time when you overcame a major sales objection?"
+              ],
+              [
+                "What's your approach to understanding customer needs and pain points?",
+                "How do you approach understanding customer needs and identifying pain points?",
+                "What's your methodology for understanding customer needs and pain points?",
+                "Could you tell me about your approach to understanding customer needs?"
+              ],
+              [
+                "How do you handle competitive situations and differentiate your product?",
+                "What's your approach to handling competitive situations and product differentiation?",
+                "How do you go about managing competitive situations and differentiating your product?",
+                "Could you tell me about your strategy for handling competitive situations?"
+              ],
+              [
+                "Tell me about your experience with sales forecasting and pipeline management.",
+                "What's your experience been like with sales forecasting and managing sales pipelines?",
+                "How do you work with sales forecasting and what's your pipeline management experience?",
+                "Could you share your experience with sales forecasting and pipeline management?"
+              ],
+              [
+                "How do you stay motivated and achieve your sales targets?",
+                "What's your approach to staying motivated and hitting your sales targets?",
+                "How do you go about maintaining motivation and achieving your sales goals?",
+                "Could you tell me about your strategy for staying motivated and achieving targets?"
+              ]
+            ],
+            "marketing-manager": [
+              [
+                "Tell me about a successful marketing campaign you managed from concept to execution.",
+                "Can you share an example of a successful marketing campaign you managed end-to-end?",
+                "What's an example of a successful marketing campaign you've managed from start to finish?",
+                "Could you walk me through a successful marketing campaign you managed?"
+              ],
+              [
+                "How do you measure the ROI of marketing campaigns and initiatives?",
+                "What's your approach to measuring ROI for marketing campaigns and initiatives?",
+                "How do you go about measuring the return on investment for marketing efforts?",
+                "Could you tell me about your strategy for measuring marketing ROI?"
+              ],
+              [
+                "Describe your experience with digital marketing channels and strategies.",
+                "What's your experience been like with digital marketing channels and various strategies?",
+                "How do you work with digital marketing channels and what strategies are you most familiar with?",
+                "Could you share your experience with digital marketing channels and strategies?"
+              ],
+              [
+                "What's your approach to understanding target audiences and market research?",
+                "How do you approach understanding target audiences and conducting market research?",
+                "What's your methodology for understanding target audiences and market research?",
+                "Could you walk me through your approach to target audience analysis and market research?"
+              ],
+              [
+                "How do you stay updated with marketing trends and best practices?",
+                "What's your approach to staying current with marketing trends and industry best practices?",
+                "How do you keep up with marketing trends and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about marketing trends and best practices?"
+              ],
+              [
+                "Tell me about a time when you had to pivot a marketing strategy due to market changes.",
+                "Can you share an experience where you had to pivot a marketing strategy because of market changes?",
+                "What's an example of a time when you had to pivot a marketing strategy?",
+                "Could you walk me through a time when you had to pivot a marketing strategy?"
+              ],
+              [
+                "What's your experience with marketing automation and analytics tools?",
+                "How do you work with marketing automation and what's your experience with analytics tools?",
+                "What's your experience been like with marketing automation and analytics platforms?",
+                "Could you share your experience with marketing automation and analytics tools?"
+              ],
+              [
+                "How do you collaborate with other departments to align marketing efforts?",
+                "What's your approach to collaborating with other departments and aligning marketing efforts?",
+                "How do you go about working with other departments to ensure marketing alignment?",
+                "Could you tell me about your strategy for cross-departmental collaboration in marketing?"
+              ],
+              [
+                "Tell me about your experience with brand management and positioning.",
+                "What's your experience been like with brand management and positioning strategies?",
+                "How do you work with brand management and what's your experience with positioning?",
+                "Could you share your experience with brand management and positioning?"
+              ],
+              [
+                "How do you handle budget constraints while maximizing marketing impact?",
+                "What's your approach to managing budget constraints while maximizing marketing impact?",
+                "How do you go about handling budget limitations while maximizing marketing effectiveness?",
+                "Could you tell me about your strategy for maximizing marketing impact with budget constraints?"
+              ]
+            ],
+            "cybersecurity-analyst": [
+              [
+                "Tell me about a security incident you investigated and how you resolved it.",
+                "Can you share an example of a security incident you investigated and resolved?",
+                "What's an example of a security incident you've investigated and how did you handle it?",
+                "Could you walk me through a security incident you investigated and resolved?"
+              ],
+              [
+                "How do you stay updated with the latest cybersecurity threats and trends?",
+                "What's your approach to staying current with cybersecurity threats and emerging trends?",
+                "How do you keep up with the latest cybersecurity threats and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about cybersecurity threats and trends?"
+              ],
+              [
+                "Describe your experience with security tools and technologies.",
+                "What's your experience been like working with security tools and various technologies?",
+                "How do you work with security tools and what technologies are you most familiar with?",
+                "Could you share your experience with security tools and technologies?"
+              ],
+              [
+                "What's your approach to vulnerability assessment and penetration testing?",
+                "How do you approach vulnerability assessment and what's your process for penetration testing?",
+                "What's your methodology for vulnerability assessment and penetration testing?",
+                "Could you walk me through your approach to vulnerability assessment and penetration testing?"
+              ],
+              [
+                "How do you handle security breaches and incident response?",
+                "What's your approach to handling security breaches and managing incident response?",
+                "How do you go about managing security breaches and what's your incident response strategy?",
+                "Could you tell me about your strategy for handling security breaches and incident response?"
+              ],
+              [
+                "Tell me about your experience with compliance frameworks like SOC 2 or ISO 27001.",
+                "What's your experience been like working with compliance frameworks such as SOC 2 or ISO 27001?",
+                "How do you work with compliance frameworks and what's your experience with SOC 2 or ISO 27001?",
+                "Could you share your experience with compliance frameworks like SOC 2 or ISO 27001?"
+              ],
+              [
+                "What's your approach to security awareness training and education?",
+                "How do you approach security awareness training and what's your education strategy?",
+                "What's your methodology for security awareness training and education programs?",
+                "Could you walk me through your approach to security awareness training and education?"
+              ],
+              [
+                "How do you balance security requirements with business needs?",
+                "What's your approach to balancing security requirements with business objectives?",
+                "How do you go about balancing security needs with business requirements?",
+                "Could you tell me about your strategy for balancing security and business needs?"
+              ],
+              [
+                "Tell me about your experience with threat intelligence and monitoring.",
+                "What's your experience been like working with threat intelligence and monitoring systems?",
+                "How do you work with threat intelligence and what's your monitoring experience?",
+                "Could you share your experience with threat intelligence and monitoring?"
+              ],
+              [
+                "How do you communicate security risks to non-technical stakeholders?",
+                "What's your approach to communicating security risks to non-technical stakeholders?",
+                "How do you go about explaining security risks to business stakeholders?",
+                "Could you tell me about your strategy for communicating security risks to non-technical audiences?"
+              ]
+            ],
+            "business-analyst": [
+              [
+                "Tell me about a complex business problem you analyzed and the solution you proposed.",
+                "Can you share an example of a complex business problem you analyzed and solved?",
+                "What's an example of a complex business problem you've analyzed and what solution did you propose?",
+                "Could you walk me through a complex business problem you analyzed and resolved?"
+              ],
+              [
+                "How do you gather and document business requirements from stakeholders?",
+                "What's your approach to gathering and documenting business requirements from stakeholders?",
+                "How do you go about collecting and documenting business requirements?",
+                "Could you tell me about your strategy for gathering and documenting business requirements?"
+              ],
+              [
+                "Describe your experience with data analysis and business intelligence tools.",
+                "What's your experience been like working with data analysis and business intelligence tools?",
+                "How do you work with data analysis tools and what's your experience with BI platforms?",
+                "Could you share your experience with data analysis and business intelligence tools?"
+              ],
+              [
+                "What's your approach to process improvement and optimization?",
+                "How do you approach process improvement and what's your optimization strategy?",
+                "What's your methodology for process improvement and optimization?",
+                "Could you walk me through your approach to process improvement and optimization?"
+              ],
+              [
+                "How do you handle conflicting requirements from different stakeholders?",
+                "What's your approach to managing conflicting requirements from various stakeholders?",
+                "How do you go about handling conflicting requirements from different stakeholders?",
+                "Could you tell me about your strategy for managing conflicting stakeholder requirements?"
+              ],
+              [
+                "Tell me about a time when you had to present complex data to senior management.",
+                "Can you share an experience where you had to present complex data to senior management?",
+                "What's an example of a time when you had to present complex data to senior leaders?",
+                "Could you walk me through a time when you presented complex data to senior management?"
+              ],
+              [
+                "What's your experience with project management and agile methodologies?",
+                "How do you work with project management and what's your experience with agile methodologies?",
+                "What's your experience been like with project management and agile frameworks?",
+                "Could you share your experience with project management and agile methodologies?"
+              ],
+              [
+                "How do you ensure the solutions you propose align with business objectives?",
+                "What's your approach to ensuring your proposed solutions align with business objectives?",
+                "How do you go about making sure your solutions align with business goals?",
+                "Could you tell me about your strategy for aligning solutions with business objectives?"
+              ],
+              [
+                "Tell me about your experience with user acceptance testing and validation.",
+                "What's your experience been like with user acceptance testing and validation processes?",
+                "How do you work with user acceptance testing and what's your validation experience?",
+                "Could you share your experience with user acceptance testing and validation?"
+              ],
+              [
+                "How do you stay updated with industry trends and best practices?",
+                "What's your approach to staying current with industry trends and best practices?",
+                "How do you keep up with industry trends and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about industry trends and best practices?"
+              ]
+            ],
+            "finance-analyst": [
+              [
+                "Tell me about a financial analysis project that had significant business impact.",
+                "Can you share an example of a financial analysis project that made a significant business impact?",
+                "What's an example of a financial analysis project you worked on that had major business impact?",
+                "Could you walk me through a financial analysis project that had significant business impact?"
+              ],
+              [
+                "How do you ensure accuracy and attention to detail in financial reporting?",
+                "What's your approach to ensuring accuracy and maintaining attention to detail in financial reporting?",
+                "How do you go about ensuring accuracy and attention to detail in your financial reports?",
+                "Could you tell me about your strategy for ensuring accuracy in financial reporting?"
+              ],
+              [
+                "Describe your experience with financial modeling and forecasting.",
+                "What's your experience been like with financial modeling and forecasting processes?",
+                "How do you work with financial modeling and what's your forecasting experience?",
+                "Could you share your experience with financial modeling and forecasting?"
+              ],
+              [
+                "What's your approach to variance analysis and identifying trends?",
+                "How do you approach variance analysis and what's your process for identifying trends?",
+                "What's your methodology for variance analysis and trend identification?",
+                "Could you walk me through your approach to variance analysis and trend identification?"
+              ],
+              [
+                "How do you handle tight deadlines and multiple reporting requirements?",
+                "What's your approach to managing tight deadlines and multiple reporting requirements?",
+                "How do you go about handling tight deadlines when you have multiple reports due?",
+                "Could you tell me about your strategy for managing tight deadlines and multiple reporting requirements?"
+              ],
+              [
+                "Tell me about a time when you identified a financial risk or opportunity.",
+                "Can you share an experience where you identified a financial risk or opportunity?",
+                "What's an example of a time when you identified a financial risk or opportunity?",
+                "Could you walk me through a time when you identified a financial risk or opportunity?"
+              ],
+              [
+                "What's your experience with financial systems and ERP software?",
+                "How do you work with financial systems and what's your experience with ERP software?",
+                "What's your experience been like with financial systems and ERP platforms?",
+                "Could you share your experience with financial systems and ERP software?"
+              ],
+              [
+                "How do you communicate complex financial information to non-financial stakeholders?",
+                "What's your approach to communicating complex financial information to non-financial stakeholders?",
+                "How do you go about explaining complex financial information to business stakeholders?",
+                "Could you tell me about your strategy for communicating complex financial information to non-financial audiences?"
+              ],
+              [
+                "Tell me about your experience with budgeting and cost analysis.",
+                "What's your experience been like with budgeting processes and cost analysis?",
+                "How do you work with budgeting and what's your experience with cost analysis?",
+                "Could you share your experience with budgeting and cost analysis?"
+              ],
+              [
+                "How do you stay updated with accounting standards and regulations?",
+                "What's your approach to staying current with accounting standards and regulatory changes?",
+                "How do you keep up with accounting standards and what's your process for staying updated?",
+                "Could you tell me about how you stay informed about accounting standards and regulations?"
+              ]
+            ]
           ]
         };
 
         // Get questions for the selected role, or use default questions
-        const roleQuestions = roleQuestionsMap[role] || [
-          `Tell me about your experience with ${role} technologies.`,
-          `What challenges have you faced in your ${role} projects?`,
-          `How do you stay updated with ${role} industry trends?`,
-          `Describe a complex ${role} problem you solved.`,
-          `What are your strengths as a ${role}?`,
-          `How do you handle difficult situations in your ${role} work?`,
-          `Tell me about a time when you had to learn something new quickly.`,
-          `What's your approach to problem-solving in ${role} contexts?`,
-          `How do you collaborate with team members in ${role} projects?`,
-          `What are your career goals in the ${role} field?`
-        ];
+        let roleQuestions: string[] = [];
+        
+        if (roleQuestionsMap[role]) {
+          // Select a random variation for each question
+          roleQuestions = roleQuestionsMap[role].map(questionVariations => {
+            const randomIndex = Math.floor(Math.random() * questionVariations.length);
+            return questionVariations[randomIndex];
+          });
+        } else {
+          // Default questions with variations
+          const defaultQuestionVariations = [
+            [
+              "Tell me about yourself and your experience in this field.",
+              "To begin, could you tell me a bit about yourself and how your experience aligns with this role?",
+              "I'd like to start by learning more about your background and experience in this field.",
+              "Could you walk me through your professional background and how it relates to this position?"
+            ],
+            [
+              "What are your greatest strengths and how do they apply to this position?",
+              "What would you say are your key strengths and how do they translate to this role?",
+              "Could you tell me about your main strengths and how they would benefit this position?",
+              "What are your strongest qualities and how do they align with what we're looking for?"
+            ],
+            [
+              "Describe a challenging situation you faced and how you handled it.",
+              "Can you share an example of a difficult situation you encountered and how you managed it?",
+              "Tell me about a challenging scenario you've faced and what your approach was.",
+              "Could you walk me through a tough situation you handled and how you resolved it?"
+            ],
+            [
+              "Why are you interested in this role and our company?",
+              "What draws you to this particular role and what interests you about our company?",
+              "Could you tell me what attracted you to this position and our organization?",
+              "What's your motivation for pursuing this role and what appeals to you about our company?"
+            ],
+            [
+              "Tell me about a time when you had to work under pressure.",
+              "Can you share an experience where you had to perform under significant pressure?",
+              "What's an example of a time when you had to work under pressure and how did you handle it?",
+              "Could you describe a situation where you had to work under pressure and what your approach was?"
+            ],
+            [
+              "How do you handle feedback and criticism?",
+              "What's your approach to receiving and processing feedback and criticism?",
+              "How do you typically respond to feedback and criticism in your work?",
+              "Could you tell me about how you handle feedback and criticism from others?"
+            ],
+            [
+              "Describe a time when you had to learn something new quickly.",
+              "Can you share an experience where you needed to learn something new in a short timeframe?",
+              "What's an example of a time when you had to rapidly learn a new skill or technology?",
+              "Could you walk me through a situation where you had to learn something new quickly?"
+            ],
+            [
+              "What motivates you in your work?",
+              "What drives you and keeps you motivated in your professional work?",
+              "What are the key factors that motivate you in your career?",
+              "Could you tell me about what motivates you and keeps you engaged in your work?"
+            ],
+            [
+              "How do you prioritize tasks when everything seems urgent?",
+              "What's your approach to prioritizing when you have multiple urgent tasks?",
+              "How do you handle situations where everything appears to be a priority?",
+              "Could you share your strategy for prioritizing tasks when everything seems urgent?"
+            ],
+            [
+              "Where do you see yourself in 5 years and how does this role fit your goals?",
+              "What are your career goals for the next 5 years and how does this position align with them?",
+              "Could you tell me about your 5-year career vision and how this role fits into that?",
+              "What's your career trajectory for the next 5 years and how does this opportunity fit?"
+            ]
+          ];
+          
+          roleQuestions = defaultQuestionVariations.map(questionVariations => {
+            const randomIndex = Math.floor(Math.random() * questionVariations.length);
+            return questionVariations[randomIndex];
+          });
+        }
         
         console.log("Questions loaded:", roleQuestions);
         if (!roleQuestions || roleQuestions.length === 0) {
