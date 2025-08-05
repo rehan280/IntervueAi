@@ -954,7 +954,7 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
         let roleQuestions: string[] = [];
         
         if (roleQuestionsMap[role]) {
-          // Select a random variation for each question
+          // Select a random variation for each question to ensure variety
           roleQuestions = roleQuestionsMap[role].map(questionVariations => {
             const randomIndex = Math.floor(Math.random() * questionVariations.length);
             return questionVariations[randomIndex];
