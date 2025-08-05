@@ -254,7 +254,7 @@ const ResumeBuilder: React.FC = () => {
   }, [personalInfo, education, experience, skills, projects]);
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
+    <div className="relative min-h-screen w-full overflow-x-hidden max-w-full">
       {/* Background gradient with logo blend */}
       <div className="absolute inset-0 bg-gradient-hero"></div>
       <div 
@@ -271,8 +271,8 @@ const ResumeBuilder: React.FC = () => {
       <div className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-xl animate-pulse"></div>
       
-      <div className="relative w-full max-w-full px-2 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
-        <div className="w-full max-w-6xl mx-auto">
+      <div className="relative w-full max-w-full px-2 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 overflow-hidden">
+        <div className="w-full max-w-6xl mx-auto overflow-hidden">
           {/* Header */}
           <div className="text-center mb-4 sm:mb-6 md:mb-8">
             <div className="flex justify-center mb-3 sm:mb-4 md:mb-6">
@@ -292,7 +292,7 @@ const ResumeBuilder: React.FC = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 overflow-hidden">
             {/* Form Section */}
             <div className="lg:col-span-2">
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl w-full">
@@ -301,23 +301,23 @@ const ResumeBuilder: React.FC = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 md:p-6">
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="grid w-full grid-cols-5 bg-white/10 border border-white/20 text-xs sm:text-sm">
-                      <TabsTrigger value="personal" className="text-white data-[state=active]:bg-white/20 truncate">Personal</TabsTrigger>
-                      <TabsTrigger value="education" className="text-white data-[state=active]:bg-white/20 truncate">Education</TabsTrigger>
-                      <TabsTrigger value="experience" className="text-white data-[state=active]:bg-white/20 truncate">Experience</TabsTrigger>
-                      <TabsTrigger value="skills" className="text-white data-[state=active]:bg-white/20 truncate">Skills</TabsTrigger>
-                      <TabsTrigger value="projects" className="text-white data-[state=active]:bg-white/20 truncate">Projects</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-white/10 border border-white/20 text-xs sm:text-sm gap-1 sm:gap-2 overflow-hidden">
+                      <TabsTrigger value="personal" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Personal</TabsTrigger>
+                      <TabsTrigger value="education" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Education</TabsTrigger>
+                      <TabsTrigger value="experience" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Experience</TabsTrigger>
+                      <TabsTrigger value="skills" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Skills</TabsTrigger>
+                      <TabsTrigger value="projects" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Projects</TabsTrigger>
                     </TabsList>
 
                     {/* Personal Information */}
-                    <TabsContent value="personal" className="space-y-4 sm:space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <TabsContent value="personal" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                         <div className="space-y-2">
                           <label className="text-white text-xs sm:text-sm font-medium">First Name</label>
                           <Input
                             value={personalInfo.firstName}
                             onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="John"
                           />
                         </div>
@@ -326,7 +326,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.lastName}
                             onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="Doe"
                           />
                         </div>
@@ -335,7 +335,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.jobTitle}
                             onChange={(e) => setPersonalInfo({...personalInfo, jobTitle: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10 w-full"
                             placeholder="Software Engineer, Data Scientist, etc."
                           />
                         </div>
@@ -344,7 +344,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.email}
                             onChange={(e) => setPersonalInfo({...personalInfo, email: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="john.doe@email.com"
                           />
                         </div>
@@ -353,7 +353,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.phone}
                             onChange={(e) => setPersonalInfo({...personalInfo, phone: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="+1 (555) 123-4567"
                           />
                         </div>
@@ -362,7 +362,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.address}
                             onChange={(e) => setPersonalInfo({...personalInfo, address: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="City, State, Country"
                           />
                         </div>
@@ -371,7 +371,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.linkedin}
                             onChange={(e) => setPersonalInfo({...personalInfo, linkedin: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="linkedin.com/in/johndoe"
                           />
                         </div>
@@ -380,7 +380,7 @@ const ResumeBuilder: React.FC = () => {
                           <Input
                             value={personalInfo.website}
                             onChange={(e) => setPersonalInfo({...personalInfo, website: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                             placeholder="johndoe.com"
                           />
                         </div>
@@ -389,16 +389,16 @@ const ResumeBuilder: React.FC = () => {
                           <Textarea
                             value={personalInfo.summary}
                             onChange={(e) => setPersonalInfo({...personalInfo, summary: e.target.value})}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm min-h-[80px] sm:min-h-[100px]"
                             placeholder="Brief professional summary..."
-                            rows={4}
+                            rows={3}
                           />
                         </div>
                       </div>
                     </TabsContent>
 
                     {/* Education */}
-                    <TabsContent value="education" className="space-y-4 sm:space-y-6">
+                    <TabsContent value="education" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Education</h3>
                         <Button onClick={addEducation} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
@@ -410,7 +410,7 @@ const ResumeBuilder: React.FC = () => {
                       {education.map((edu, index) => (
                         <Card key={edu.id} className="bg-white/10 backdrop-blur-sm border-white/20 shadow-lg w-full">
                           <CardContent className="p-3 sm:p-4 md:p-6">
-                            <div className="flex justify-between items-start mb-4 sm:mb-6">
+                            <div className="flex justify-between items-start mb-3 sm:mb-4 md:mb-6">
                               <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Education #{index + 1}</h4>
                               <Button
                                 variant="destructive"
@@ -427,7 +427,7 @@ const ResumeBuilder: React.FC = () => {
                                 <Input
                                   value={edu.institution}
                                   onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                   placeholder="University Name"
                                 />
                               </div>
@@ -436,7 +436,7 @@ const ResumeBuilder: React.FC = () => {
                                 <Input
                                   value={edu.degree}
                                   onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                   placeholder="Bachelor's"
                                 />
                               </div>
@@ -445,7 +445,7 @@ const ResumeBuilder: React.FC = () => {
                                 <Input
                                   value={edu.field}
                                   onChange={(e) => updateEducation(edu.id, 'field', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                   placeholder="Computer Science"
                                 />
                               </div>
@@ -454,7 +454,7 @@ const ResumeBuilder: React.FC = () => {
                                 <Input
                                   value={edu.gpa}
                                   onChange={(e) => updateEducation(edu.id, 'gpa', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                   placeholder="3.8"
                                 />
                               </div>
@@ -464,7 +464,7 @@ const ResumeBuilder: React.FC = () => {
                                   type="date"
                                   value={edu.startDate}
                                   onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                 />
                               </div>
                               <div className="space-y-2">
@@ -473,7 +473,7 @@ const ResumeBuilder: React.FC = () => {
                                   type="date"
                                   value={edu.endDate}
                                   onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                 />
                               </div>
                               <div className="md:col-span-2 space-y-2">
@@ -481,7 +481,7 @@ const ResumeBuilder: React.FC = () => {
                                 <Textarea
                                   value={edu.description}
                                   onChange={(e) => updateEducation(edu.id, 'description', e.target.value)}
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm min-h-[80px] sm:min-h-[100px]"
                                   placeholder="Relevant coursework, achievements..."
                                   rows={3}
                                 />
@@ -493,7 +493,7 @@ const ResumeBuilder: React.FC = () => {
                     </TabsContent>
 
                     {/* Experience */}
-                    <TabsContent value="experience" className="space-y-4 sm:space-y-6">
+                    <TabsContent value="experience" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Work Experience</h3>
                         <Button onClick={addExperience} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
@@ -505,7 +505,7 @@ const ResumeBuilder: React.FC = () => {
                        {experience.map((exp, index) => (
                          <Card key={exp.id} className="bg-white/10 backdrop-blur-sm border-white/20 shadow-lg w-full">
                            <CardContent className="p-3 sm:p-4 md:p-6">
-                             <div className="flex justify-between items-start mb-4 sm:mb-6">
+                             <div className="flex justify-between items-start mb-3 sm:mb-4 md:mb-6">
                                <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Experience #{index + 1}</h4>
                                <Button
                                  variant="destructive"
@@ -522,7 +522,7 @@ const ResumeBuilder: React.FC = () => {
                                  <Input
                                    value={exp.company}
                                    onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                    placeholder="Company Name"
                                  />
                                </div>
@@ -531,7 +531,7 @@ const ResumeBuilder: React.FC = () => {
                                  <Input
                                    value={exp.position}
                                    onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                    placeholder="Software Engineer"
                                  />
                                </div>
@@ -540,7 +540,7 @@ const ResumeBuilder: React.FC = () => {
                                  <Input
                                    value={exp.location}
                                    onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                    placeholder="San Francisco, CA"
                                  />
                                </div>
@@ -559,7 +559,7 @@ const ResumeBuilder: React.FC = () => {
                                    type="date"
                                    value={exp.startDate}
                                    onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                  />
                                </div>
                                <div className="space-y-2">
@@ -568,7 +568,7 @@ const ResumeBuilder: React.FC = () => {
                                    type="date"
                                    value={exp.endDate}
                                    onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm h-8 sm:h-10"
                                    disabled={exp.current}
                                  />
                                </div>
@@ -577,9 +577,9 @@ const ResumeBuilder: React.FC = () => {
                                  <Textarea
                                    value={exp.description}
                                    onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm"
+                                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:ring-white/20 text-xs sm:text-sm min-h-[80px] sm:min-h-[100px]"
                                    placeholder="Describe your responsibilities and achievements..."
-                                   rows={4}
+                                   rows={3}
                                  />
                                </div>
                              </div>
@@ -589,7 +589,7 @@ const ResumeBuilder: React.FC = () => {
                      </TabsContent>
 
                     {/* Skills */}
-                    <TabsContent value="skills" className="space-y-4 sm:space-y-6">
+                    <TabsContent value="skills" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Skills</h3>
                         <Button onClick={addSkill} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
@@ -726,41 +726,41 @@ const ResumeBuilder: React.FC = () => {
                       onClick={() => setShowTemplateSelector(true)}
                       variant="premium"
                       size="sm"
-                      className="w-full text-xs sm:text-sm"
+                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
                     >
-                      <Palette className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span className="hidden sm:inline">Choose Template</span>
-                      <span className="sm:hidden">Template</span>
+                      <Palette className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <span className="hidden sm:inline truncate">Choose Template</span>
+                      <span className="sm:hidden truncate">Template</span>
                     </Button>
                     <Button 
                       onClick={() => setShowCustomizer(true)}
                       variant="hero"
                       size="sm"
-                      className="w-full text-xs sm:text-sm"
+                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
                     >
-                      <Settings className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span className="hidden sm:inline">Customize Resume</span>
-                      <span className="sm:hidden">Customize</span>
+                      <Settings className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <span className="hidden sm:inline truncate">Customize Resume</span>
+                      <span className="sm:hidden truncate">Customize</span>
                     </Button>
                     <Button 
                       onClick={previewResume} 
                       variant="outline-hero"
                       size="sm"
-                      className="w-full text-xs sm:text-sm"
+                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
                     >
-                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span className="hidden sm:inline">Preview Resume</span>
-                      <span className="sm:hidden">Preview</span>
+                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <span className="hidden sm:inline truncate">Preview Resume</span>
+                      <span className="sm:hidden truncate">Preview</span>
                     </Button>
                     <Button 
                       onClick={generateResume} 
                       variant="hero"
                       size="sm"
-                      className="w-full text-xs sm:text-sm"
+                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
                     >
-                      <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span className="hidden sm:inline">Generate PDF</span>
-                      <span className="sm:hidden">PDF</span>
+                      <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <span className="hidden sm:inline truncate">Generate PDF</span>
+                      <span className="sm:hidden truncate">PDF</span>
                     </Button>
                     <Button 
                       variant="outline"
@@ -783,11 +783,11 @@ const ResumeBuilder: React.FC = () => {
                           setProjects([]);
                         }
                       }}
-                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-xs sm:text-sm"
+                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-xs sm:text-sm min-h-[44px] overflow-hidden"
                     >
-                      <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span className="hidden sm:inline">Clear Form</span>
-                      <span className="sm:hidden">Clear</span>
+                      <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <span className="hidden sm:inline truncate">Clear Form</span>
+                      <span className="sm:hidden truncate">Clear</span>
                     </Button>
                   </div>
                   
