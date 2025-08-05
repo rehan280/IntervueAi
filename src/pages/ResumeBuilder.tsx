@@ -302,11 +302,11 @@ const ResumeBuilder: React.FC = () => {
                 <CardContent className="p-3 sm:p-4 md:p-6">
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-white/10 border border-white/20 text-xs sm:text-sm gap-1 sm:gap-2 overflow-hidden">
-                      <TabsTrigger value="personal" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Personal</TabsTrigger>
-                      <TabsTrigger value="education" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Education</TabsTrigger>
-                      <TabsTrigger value="experience" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Experience</TabsTrigger>
-                      <TabsTrigger value="skills" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Skills</TabsTrigger>
-                      <TabsTrigger value="projects" className="text-white data-[state=active]:bg-white/20 truncate text-xs overflow-hidden">Projects</TabsTrigger>
+                      <TabsTrigger value="personal" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Personal</TabsTrigger>
+                      <TabsTrigger value="education" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Education</TabsTrigger>
+                      <TabsTrigger value="experience" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Experience</TabsTrigger>
+                      <TabsTrigger value="skills" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Skills</TabsTrigger>
+                      <TabsTrigger value="projects" className="text-white data-[state=active]:bg-white/20 truncate text-xs sm:text-sm px-2 py-2 sm:px-3 sm:py-2.5 min-h-[40px] sm:min-h-[44px] overflow-hidden">Projects</TabsTrigger>
                     </TabsList>
 
                     {/* Personal Information */}
@@ -401,8 +401,8 @@ const ResumeBuilder: React.FC = () => {
                     <TabsContent value="education" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Education</h3>
-                        <Button onClick={addEducation} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <Button onClick={addEducation} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Education</span>
                           <span className="sm:hidden">Add</span>
                         </Button>
@@ -414,11 +414,10 @@ const ResumeBuilder: React.FC = () => {
                               <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Education #{index + 1}</h4>
                               <Button
                                 variant="destructive"
-                                size="sm"
                                 onClick={() => removeEducation(edu.id)}
-                                className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm"
+                                className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm min-h-[36px] sm:min-h-[40px] px-2 sm:px-3 py-1.5 sm:py-2"
                               >
-                                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                               </Button>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
@@ -496,8 +495,8 @@ const ResumeBuilder: React.FC = () => {
                     <TabsContent value="experience" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Work Experience</h3>
-                        <Button onClick={addExperience} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <Button onClick={addExperience} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Experience</span>
                           <span className="sm:hidden">Add</span>
                         </Button>
@@ -509,11 +508,10 @@ const ResumeBuilder: React.FC = () => {
                                <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Experience #{index + 1}</h4>
                                <Button
                                  variant="destructive"
-                                 size="sm"
                                  onClick={() => removeExperience(exp.id)}
-                                 className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm"
+                                 className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm min-h-[36px] sm:min-h-[40px] px-2 sm:px-3 py-1.5 sm:py-2"
                                >
-                                 <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                                 <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                                </Button>
                              </div>
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
@@ -592,8 +590,8 @@ const ResumeBuilder: React.FC = () => {
                     <TabsContent value="skills" className="space-y-3 sm:space-y-4 md:space-y-6 mt-3 sm:mt-4">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Skills</h3>
-                        <Button onClick={addSkill} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <Button onClick={addSkill} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Skill</span>
                           <span className="sm:hidden">Add</span>
                         </Button>
@@ -605,11 +603,10 @@ const ResumeBuilder: React.FC = () => {
                               <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Skill #{index + 1}</h4>
                               <Button
                                 variant="destructive"
-                                size="sm"
                                 onClick={() => removeSkill(skill.id)}
-                                className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm"
+                                className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm min-h-[36px] sm:min-h-[40px] px-2 sm:px-3 py-1.5 sm:py-2"
                               >
-                                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                               </Button>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
@@ -645,8 +642,8 @@ const ResumeBuilder: React.FC = () => {
                     <TabsContent value="projects" className="space-y-4 sm:space-y-6">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
                         <h3 className="text-white text-base sm:text-lg font-semibold">Projects</h3>
-                        <Button onClick={addProject} variant="outline-hero" size="sm" className="text-xs sm:text-sm">
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <Button onClick={addProject} variant="outline-hero" className="text-xs sm:text-sm min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 sm:py-2.5 w-full sm:w-auto">
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
                           <span className="hidden sm:inline">Add Project</span>
                           <span className="sm:hidden">Add</span>
                         </Button>
@@ -658,11 +655,10 @@ const ResumeBuilder: React.FC = () => {
                                <h4 className="text-white font-medium text-sm sm:text-base md:text-lg">Project #{index + 1}</h4>
                                <Button
                                  variant="destructive"
-                                 size="sm"
                                  onClick={() => removeProject(project.id)}
-                                 className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm"
+                                 className="bg-red-500/20 hover:bg-red-500/30 border-red-500/30 text-xs sm:text-sm min-h-[36px] sm:min-h-[40px] px-2 sm:px-3 py-1.5 sm:py-2"
                                >
-                                 <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                                 <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                                </Button>
                              </div>
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
@@ -725,8 +721,7 @@ const ResumeBuilder: React.FC = () => {
                     <Button 
                       onClick={() => setShowTemplateSelector(true)}
                       variant="premium"
-                      size="default"
-                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
+                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
                     >
                       <Palette className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Choose Template</span>
@@ -735,8 +730,7 @@ const ResumeBuilder: React.FC = () => {
                     <Button 
                       onClick={() => setShowCustomizer(true)}
                       variant="hero"
-                      size="default"
-                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
+                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
                     >
                       <Settings className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Customize Resume</span>
@@ -745,8 +739,7 @@ const ResumeBuilder: React.FC = () => {
                     <Button 
                       onClick={previewResume} 
                       variant="outline-hero"
-                      size="default"
-                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
+                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
                     >
                       <Eye className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Preview Resume</span>
@@ -755,8 +748,7 @@ const ResumeBuilder: React.FC = () => {
                     <Button 
                       onClick={generateResume} 
                       variant="hero"
-                      size="default"
-                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
+                      className="w-full text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
                     >
                       <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Generate PDF</span>
@@ -783,7 +775,7 @@ const ResumeBuilder: React.FC = () => {
                           setProjects([]);
                         }
                       }}
-                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
+                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-sm sm:text-base min-h-[48px] sm:min-h-[52px] px-4 sm:px-6 py-3 sm:py-3.5 overflow-hidden font-medium"
                     >
                       <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Clear Form</span>

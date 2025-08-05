@@ -72,21 +72,19 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 w-full">
             <Button 
               variant="hero" 
-              size="xl" 
-              className="group text-sm sm:text-base md:text-lg w-full sm:w-auto"
+              className="group text-sm sm:text-base md:text-lg w-full sm:w-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4"
               onClick={() => navigate('/interview-practice')}
             >
-              <Target className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+              <Target className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 flex-shrink-0" />
               Try IntervueAi
               <span className="ml-1.5 sm:ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </Button>
             <Link to="/about" className="w-full sm:w-auto">
               <Button 
                 variant="outline-hero" 
-                size="xl"
-                className="text-sm sm:text-base md:text-lg w-full"
+                className="text-sm sm:text-base md:text-lg w-full min-h-[48px] sm:min-h-[52px] md:min-h-[56px] px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4"
               >
-                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 flex-shrink-0" />
                 <span className="hidden sm:inline">See How it Works</span>
                 <span className="sm:hidden">How it Works</span>
               </Button>
@@ -94,7 +92,7 @@ const Hero = () => {
           </div>
           
           {/* Enhanced features showcase */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-10 md:mt-12 w-full max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-10 md:mt-12 w-full max-w-5xl mx-auto px-2 sm:px-4">
             <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">14</div>
               <div className="text-white/80 font-medium text-sm sm:text-base">Job Roles</div>
@@ -194,7 +192,7 @@ const Hero = () => {
           </div>
 
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 xl:p-12 w-full border border-slate-700">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-start">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-start">
               {/* Coding Problems Preview */}
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Featured Problems</h3>
@@ -203,7 +201,7 @@ const Hero = () => {
                   <div className="p-3 md:p-4 rounded-xl bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-700/50 hover:border-blue-500/50 transition-all duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-base md:text-lg font-semibold text-white">Two Sum</h4>
-                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30">Easy</span>
+                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30 whitespace-nowrap">Easy</span>
                     </div>
                     <p className="text-gray-300 text-sm mb-3">Find two numbers that add up to a target value</p>
                     <div className="flex flex-wrap gap-2">
@@ -215,7 +213,7 @@ const Hero = () => {
                   <div className="p-3 md:p-4 rounded-xl bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-700/50 hover:border-purple-500/50 transition-all duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-base md:text-lg font-semibold text-white">Python Lambda Functions</h4>
-                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30">Easy</span>
+                      <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded-full border border-green-500/30 whitespace-nowrap">Easy</span>
                     </div>
                     <p className="text-gray-300 text-sm mb-3">Master Python's functional programming features</p>
                     <div className="flex flex-wrap gap-2">
@@ -227,7 +225,7 @@ const Hero = () => {
                   <div className="p-3 md:p-4 rounded-xl bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-700/50 hover:border-green-500/50 transition-all duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-base md:text-lg font-semibold text-white">Java HashMap Operations</h4>
-                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30">Medium</span>
+                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30 whitespace-nowrap">Medium</span>
                     </div>
                     <p className="text-gray-300 text-sm mb-3">Learn Java Collections Framework</p>
                     <div className="flex flex-wrap gap-2">
@@ -239,7 +237,7 @@ const Hero = () => {
                   <div className="p-3 md:p-4 rounded-xl bg-gradient-to-r from-orange-900/30 to-red-900/30 border border-orange-700/50 hover:border-orange-500/50 transition-all duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-base md:text-lg font-semibold text-white">C++ STL Algorithms</h4>
-                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30">Medium</span>
+                      <span className="px-2 py-1 bg-yellow-600/20 text-yellow-300 text-xs rounded-full border border-yellow-500/30 whitespace-nowrap">Medium</span>
                     </div>
                     <p className="text-gray-300 text-sm mb-3">Master C++ Standard Template Library</p>
                     <div className="flex flex-wrap gap-2">
@@ -254,7 +252,7 @@ const Hero = () => {
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Practice Features</h3>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-8">
                   <div className="text-center p-3 md:p-4 rounded-xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30">
                     <div className="text-2xl md:text-3xl font-bold text-blue-400 mb-2">4</div>
                     <div className="text-white font-medium text-sm md:text-base">Languages</div>
@@ -313,10 +311,9 @@ const Hero = () => {
                   <Link to="/coding-practice">
                     <Button 
                       variant="hero" 
-                      size="xl"
-                      className="w-full group text-lg md:text-xl lg:text-2xl py-4 md:py-6 lg:py-8 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis"
+                      className="w-full group text-base sm:text-lg md:text-xl lg:text-2xl py-3 sm:py-4 md:py-6 lg:py-8 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis min-h-[48px] sm:min-h-[56px] md:min-h-[64px] lg:min-h-[72px]"
                     >
-                      <Play className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mr-2 md:mr-3 flex-shrink-0" />
+                      <Play className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mr-2 md:mr-3 flex-shrink-0" />
                       <span className="truncate">Start Coding Practice</span>
                       <span className="ml-2 md:ml-3 group-hover:translate-x-2 transition-transform duration-300 flex-shrink-0">→</span>
                     </Button>
