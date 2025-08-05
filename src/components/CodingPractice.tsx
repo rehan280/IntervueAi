@@ -2112,17 +2112,17 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 w-full">
-      <div className="coding-practice-container w-full">
-        <div className="coding-practice-grid w-full">
+    <div className="min-h-screen bg-gray-900 w-full overflow-x-hidden">
+      <div className="coding-practice-container w-full max-w-full px-2 sm:px-4 md:px-6 lg:px-8">
+        <div className="coding-practice-grid w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Left Panel - Problems */}
-          <div className="left-panel w-full">
+          <div className="left-panel w-full space-y-4 sm:space-y-6">
             {/* Category Selector */}
             <Card className="enhanced-card w-full">
-              <CardHeader className="p-4 sm:p-6">
-                <CardTitle className="text-base sm:text-lg text-white">Categories</CardTitle>
+              <CardHeader className="p-3 sm:p-4 md:p-6">
+                <CardTitle className="text-sm sm:text-base md:text-lg text-white">Categories</CardTitle>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6">
+              <CardContent className="p-3 sm:p-4 md:p-6">
                 <div className="space-y-2 w-full">
                   {categories.map((category) => (
                     <Button
@@ -2145,16 +2145,16 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
 
             {/* Problems List */}
             <Card className="enhanced-card w-full">
-              <CardHeader className="p-4 sm:p-6">
+              <CardHeader className="p-3 sm:p-4 md:p-6">
                 <div className="flex items-center justify-between w-full">
-                  <CardTitle className="text-base sm:text-lg text-white">Problems</CardTitle>
+                  <CardTitle className="text-sm sm:text-base md:text-lg text-white">Problems</CardTitle>
                   <Badge className="category-badge text-xs">
                     {filteredProblems.length} problems
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6">
-                <div className="space-y-2 max-h-48 sm:max-h-64 overflow-y-auto w-full">
+              <CardContent className="p-3 sm:p-4 md:p-6">
+                <div className="space-y-2 max-h-32 sm:max-h-48 md:max-h-64 overflow-y-auto w-full">
                   {filteredProblems.map((problem) => (
                     <div
                       key={problem.id}
@@ -2166,8 +2166,8 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       onClick={() => setSelectedProblem(problem)}
                     >
                       <div className="flex items-center justify-between w-full">
-                        <span className={`font-medium text-xs sm:text-sm ${selectedProblem?.id === problem.id ? 'text-white' : 'text-gray-300'}`}>{problem.title}</span>
-                        <Badge className={`difficulty-badge ${problem.difficulty} text-xs`}>
+                        <span className={`font-medium text-xs sm:text-sm truncate ${selectedProblem?.id === problem.id ? 'text-white' : 'text-gray-300'}`}>{problem.title}</span>
+                        <Badge className={`difficulty-badge ${problem.difficulty} text-xs flex-shrink-0`}>
                           {problem.difficulty}
                         </Badge>
                       </div>
@@ -2181,7 +2181,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
             {selectedProblem && (
               <Card className="problem-description-card w-full">
                 <CardHeader className="problem-header p-3 sm:p-4">
-                  <div className="problem-badges">
+                  <div className="problem-badges flex flex-wrap gap-2">
                     <Badge className={`difficulty-badge ${selectedProblem.difficulty} text-xs`}>
                       {selectedProblem.difficulty}
                     </Badge>
@@ -2189,7 +2189,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       {selectedProblem.category}
                     </Badge>
                   </div>
-                  <div className="problem-actions">
+                  <div className="problem-actions flex flex-wrap gap-2 mt-2">
                     <Button 
                       variant="outline" 
                       size="sm" 
@@ -2200,48 +2200,50 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       className="action-button secondary text-xs"
                       disabled={!selectedProblem?.solutions}
                     >
-                      <Eye className="w-4 h-4 mr-1" />
-                      See Solution
+                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      <span className="hidden sm:inline">See Solution</span>
+                      <span className="sm:hidden">Solution</span>
                     </Button>
-                    <Button variant="outline" size="sm" className="action-button secondary" onClick={handleDownloadPDF}>
-                      <Download className="w-4 h-4 mr-1" />
-                      Download PDF
+                    <Button variant="outline" size="sm" className="action-button secondary text-xs" onClick={handleDownloadPDF}>
+                      <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      <span className="hidden sm:inline">Download PDF</span>
+                      <span className="sm:hidden">PDF</span>
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="problem-content">
-                  <p className="problem-description">{selectedProblem.description}</p>
+                <CardContent className="problem-content p-3 sm:p-4">
+                  <p className="problem-description text-xs sm:text-sm">{selectedProblem.description}</p>
                   
-                  <div className="examples-section">
-                    <h4 className="examples-title">Examples:</h4>
+                  <div className="examples-section mt-3 sm:mt-4">
+                    <h4 className="examples-title text-sm sm:text-base font-semibold">Examples:</h4>
                     {selectedProblem.examples.map((example, index) => (
-                      <div key={index} className="example-item">
-                        <div className="example-number">
+                      <div key={index} className="example-item mt-2 sm:mt-3">
+                        <div className="example-number text-xs sm:text-sm font-medium">
                           Example {index + 1}:
                         </div>
-                        <div className="example-content">
+                        <div className="example-content mt-1 sm:mt-2 space-y-1 sm:space-y-2">
                           <div className="example-field">
-                            <span className="example-label">Input:</span>
-                            <span className="example-value">{example.input}</span>
+                            <span className="example-label text-xs sm:text-sm">Input:</span>
+                            <span className="example-value text-xs sm:text-sm">{example.input}</span>
                           </div>
                           <div className="example-field">
-                            <span className="example-label">Output:</span>
-                            <span className="example-value">{example.output}</span>
+                            <span className="example-label text-xs sm:text-sm">Output:</span>
+                            <span className="example-value text-xs sm:text-sm">{example.output}</span>
                           </div>
                           <div className="example-field">
-                            <span className="example-label">Explanation:</span>
-                            <span className="example-value">{example.explanation}</span>
+                            <span className="example-label text-xs sm:text-sm">Explanation:</span>
+                            <span className="example-value text-xs sm:text-sm">{example.explanation}</span>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="constraints-section">
-                    <h4 className="constraints-title">Constraints:</h4>
-                    <ul className="constraints-list">
+                  <div className="constraints-section mt-3 sm:mt-4">
+                    <h4 className="constraints-title text-sm sm:text-base font-semibold">Constraints:</h4>
+                    <ul className="constraints-list mt-1 sm:mt-2 space-y-1">
                       {selectedProblem.constraints.map((constraint, index) => (
-                        <li key={index} className="constraint-item">{constraint}</li>
+                        <li key={index} className="constraint-item text-xs sm:text-sm">{constraint}</li>
                       ))}
                     </ul>
                   </div>
@@ -2251,66 +2253,70 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
           </div>
 
           {/* Right Panel - Code Editor and Output */}
-          <div className="flex flex-col space-y-6">
+          <div className="flex flex-col space-y-4 sm:space-y-6">
             {/* Code Editor */}
             <Card className="enhanced-card">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <CardTitle className="text-lg text-white">Code Editor</CardTitle>
+              <CardHeader className="p-3 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <CardTitle className="text-sm sm:text-base md:text-lg text-white">Code Editor</CardTitle>
                     <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                      <SelectTrigger className="w-32 bg-gray-700 border-gray-600 text-white">
+                      <SelectTrigger className="w-20 sm:w-32 bg-gray-700 border-gray-600 text-white text-xs sm:text-sm">
                         <SelectValue />
                       </SelectTrigger>
-                                             <SelectContent className="bg-gray-700 border-gray-600">
-                         <SelectItem value="java" className="text-white hover:bg-gray-600">Java</SelectItem>
-                         <SelectItem value="cpp" className="text-white hover:bg-gray-600">C++</SelectItem>
-                         <SelectItem value="c" className="text-white hover:bg-gray-600">C</SelectItem>
-                         <SelectItem value="python" className="text-white hover:bg-gray-600">Python</SelectItem>
-                         <SelectItem value="javascript" className="text-white hover:bg-gray-600">JavaScript</SelectItem>
-                         <SelectItem value="typescript" className="text-white hover:bg-gray-600">TypeScript</SelectItem>
-                         <SelectItem value="csharp" className="text-white hover:bg-gray-600">C#</SelectItem>
-                         <SelectItem value="php" className="text-white hover:bg-gray-600">PHP</SelectItem>
-                       </SelectContent>
+                      <SelectContent className="bg-gray-700 border-gray-600">
+                        <SelectItem value="java" className="text-white hover:bg-gray-600">Java</SelectItem>
+                        <SelectItem value="cpp" className="text-white hover:bg-gray-600">C++</SelectItem>
+                        <SelectItem value="c" className="text-white hover:bg-gray-600">C</SelectItem>
+                        <SelectItem value="python" className="text-white hover:bg-gray-600">Python</SelectItem>
+                        <SelectItem value="javascript" className="text-white hover:bg-gray-600">JavaScript</SelectItem>
+                        <SelectItem value="typescript" className="text-white hover:bg-gray-600">TypeScript</SelectItem>
+                        <SelectItem value="csharp" className="text-white hover:bg-gray-600">C#</SelectItem>
+                        <SelectItem value="php" className="text-white hover:bg-gray-600">PHP</SelectItem>
+                      </SelectContent>
                     </Select>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                     <Button 
                       variant="outline" 
                       size="sm" 
                       onClick={handleToggleCodeView}
-                      className={`action-button ${showBoilerplate ? 'bg-blue-600 text-white' : 'secondary'}`}
+                      className={`action-button ${showBoilerplate ? 'bg-blue-600 text-white' : 'secondary'} text-xs`}
                     >
                       {showBoilerplate ? (
                         <>
-                          <CheckCircle className="w-4 h-4 mr-1" />
-                          Show Solution
+                          <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                          <span className="hidden sm:inline">Show Solution</span>
+                          <span className="sm:hidden">Solution</span>
                         </>
                       ) : (
                         <>
-                          <FileText className="w-4 h-4 mr-1" />
-                          Show Boilerplate
+                          <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                          <span className="hidden sm:inline">Show Boilerplate</span>
+                          <span className="sm:hidden">Template</span>
                         </>
                       )}
                     </Button>
-                    <Button variant="outline" size="sm" onClick={handleResetCode} className="action-button secondary">
-                      <RotateCcw className="w-4 h-4 mr-1" />
-                      Reset Code
+                    <Button variant="outline" size="sm" onClick={handleResetCode} className="action-button secondary text-xs">
+                      <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      <span className="hidden sm:inline">Reset</span>
+                      <span className="sm:hidden">Reset</span>
                     </Button>
-                    <Button className="action-button primary">
-                      Submit Solution
+                    <Button className="action-button primary text-xs">
+                      <span className="hidden sm:inline">Submit Solution</span>
+                      <span className="sm:hidden">Submit</span>
                     </Button>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="bg-gray-900 rounded-lg p-4">
+              <CardContent className="p-3 sm:p-4">
+                <div className="bg-gray-900 rounded-lg p-2 sm:p-4">
                   <div className="flex items-center justify-between mb-2 pb-2 border-b border-gray-700">
                     <div className="flex items-center gap-2">
-                      <Badge className={`${showBoilerplate ? 'bg-blue-600' : 'bg-green-600'} text-white`}>
+                      <Badge className={`${showBoilerplate ? 'bg-blue-600' : 'bg-green-600'} text-white text-xs`}>
                         {showBoilerplate ? '📝 Boilerplate' : '💡 Solution'}
                       </Badge>
-                      <span className="text-gray-400 text-sm">
+                      <span className="text-gray-400 text-xs sm:text-sm hidden sm:inline">
                         {showBoilerplate ? 'Start with this template' : 'Complete solution with examples'}
                       </span>
                     </div>
@@ -2318,16 +2324,16 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                   <textarea
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="w-full h-80 bg-gray-900 text-green-400 font-mono text-sm border-none outline-none resize-none"
+                    className="w-full h-48 sm:h-64 md:h-80 bg-gray-900 text-green-400 font-mono text-xs sm:text-sm border-none outline-none resize-none"
                     placeholder="Write your code here..."
                   />
                 </div>
-                <div className="flex items-center justify-between mt-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-3 sm:mt-4 gap-2">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-400">Time: {formatTime(timer)}</span>
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
+                    <span className="text-xs sm:text-sm text-gray-400">Time: {formatTime(timer)}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <Button 
                       onClick={async () => {
                         setCode('System.out.println("Hello, World!");');
@@ -2357,17 +2363,18 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       }}
                       variant="outline" 
                       size="sm" 
-                      className="action-button secondary"
+                      className="action-button secondary text-xs"
                     >
                       Test
                     </Button>
                     <Button 
                       onClick={handleRunCode} 
                       disabled={isRunning}
-                      className="action-button primary"
+                      className="action-button primary text-xs"
                     >
-                      <Play className="w-4 h-4 mr-1" />
-                      Run Code
+                      <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      <span className="hidden sm:inline">Run Code</span>
+                      <span className="sm:hidden">Run</span>
                     </Button>
                   </div>
                 </div>
@@ -2376,28 +2383,28 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
 
             {/* Output */}
             <Card className="enhanced-card flex-1 flex flex-col">
-              <CardHeader>
+              <CardHeader className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-white">Output</CardTitle>
+                  <CardTitle className="text-sm sm:text-base md:text-lg text-white">Output</CardTitle>
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="action-button secondary"
+                    className="action-button secondary text-xs"
                     onClick={() => setOutput('')}
                   >
                     Clear
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="bg-gray-900 rounded-lg p-3 sm:p-4 flex-1 overflow-y-auto">
+              <CardContent className="flex-1 flex flex-col p-3 sm:p-4">
+                <div className="bg-gray-900 rounded-lg p-2 sm:p-3 md:p-4 flex-1 overflow-y-auto">
                   {isRunning ? (
                     <div className="flex items-center gap-2 text-green-400">
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                       </svg>
-                      <span className="text-sm">Running code...</span>
+                      <span className="text-xs sm:text-sm">Running code...</span>
                     </div>
                   ) : (
                     <pre className="text-green-400 font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
@@ -2407,9 +2414,9 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                   
                   {/* Solution Box - appears at the end of output */}
                   {showSolution && selectedSolution && (
-                    <div className="mt-4 sm:mt-6 border-t border-gray-700 pt-3 sm:pt-4">
+                    <div className="mt-3 sm:mt-4 md:mt-6 border-t border-gray-700 pt-2 sm:pt-3 md:pt-4">
                       <div className="flex items-center justify-between mb-2 sm:mb-3">
-                        <h4 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
+                        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-white flex items-center gap-2">
                           <span className="text-yellow-400">💡</span>
                           Solution
                         </h4>
@@ -2419,10 +2426,10 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                           onClick={() => setShowSolution(false)}
                           className="action-button secondary p-1"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                       </div>
-                      <div className="bg-gray-800 rounded-lg p-3 sm:p-4 border border-gray-600">
+                      <div className="bg-gray-800 rounded-lg p-2 sm:p-3 md:p-4 border border-gray-600">
                         <pre className="text-yellow-400 font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
                           {selectedSolution}
                         </pre>
@@ -2432,54 +2439,53 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                 </div>
               </CardContent>
             </Card>
-           </div>
-         </div>
-       </div>
+          </div>
+        </div>
+      </div>
 
       {/* Solution Dialog */}
       <Dialog open={showSolutionDialog} onOpenChange={setShowSolutionDialog}>
-        <DialogContent className="max-w-4xl max-h-[80vh] bg-gray-800 border-gray-600">
+        <DialogContent className="max-w-full sm:max-w-4xl max-h-[80vh] bg-gray-800 border-gray-600 mx-2 sm:mx-4">
           <DialogHeader>
-            <DialogTitle className="text-white flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
               <span className="text-yellow-400">💡</span>
               Solution for {selectedProblem?.title}
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between">
-              <Badge className="bg-blue-600 text-white">
+              <Badge className="bg-blue-600 text-white text-xs">
                 {selectedLanguage.toUpperCase()}
               </Badge>
               <Button
                 onClick={handleCopySolution}
                 variant="outline"
                 size="sm"
-                className="action-button secondary"
+                className="action-button secondary text-xs"
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 mr-1" />
+                    <Check className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                     Copied!
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4 mr-1" />
+                    <Copy className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                     Copy Code
                   </>
                 )}
               </Button>
             </div>
-            <div className="bg-gray-900 rounded-lg p-4 border border-gray-600 max-h-96 overflow-y-auto">
-              <pre className="text-yellow-400 font-mono text-sm whitespace-pre-wrap leading-relaxed">
+            <div className="bg-gray-900 rounded-lg p-2 sm:p-3 md:p-4 border border-gray-600 max-h-64 sm:max-h-96 overflow-y-auto">
+              <pre className="text-yellow-400 font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
                 {selectedSolution}
               </pre>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-
-     </div>
-   );
- };
+    </div>
+  );
+};
 
 export default CodingPractice; 

@@ -257,15 +257,15 @@ const HowItWorks = () => {
             <CardContent>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    Start Interview
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button size="lg" className="w-full sm:w-auto whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="truncate">Start Interview</span>
+                    <ArrowRight className="w-4 h-4 ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
                 <Link to="/test">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                    Test System
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="truncate">Test System</span>
+                    <ArrowRight className="w-4 h-4 ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
               </div>

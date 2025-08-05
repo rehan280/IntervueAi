@@ -36,7 +36,7 @@ const Header: React.FC = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-hero backdrop-blur-sm border-b border-white/10 w-full">
         <div className="bg-black/20 w-full">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 w-full">
               {/* Logo */}
               <Link to="/" className="flex items-center flex-shrink-0">
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
               </Link>
 
               {/* Navigation */}
-              <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+              <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 xl:space-x-8">
                 <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base">
                   Home
                 </Link>
@@ -97,7 +97,7 @@ const Header: React.FC = () => {
               </nav>
 
               {/* CTA Button / User Menu */}
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 {isLoggedIn ? (
                   <div className="flex items-center space-x-2 sm:space-x-3">
                     <div className="hidden sm:flex items-center space-x-2 bg-gray-800/50 px-3 py-2 rounded-lg">
@@ -117,7 +117,7 @@ const Header: React.FC = () => {
                 ) : (
                   <Button
                     onClick={() => navigate('/interview-practice')}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 sm:px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-xs sm:text-sm"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-2 sm:px-3 md:px-4 lg:px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis max-w-[80px] sm:max-w-none"
                   >
                     <span className="hidden sm:inline">Get Started</span>
                     <span className="sm:hidden">Start</span>
@@ -144,7 +144,7 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       {showMobileMenu && (
         <div className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700 w-full">
-          <div className="w-full max-w-7xl mx-auto px-4 py-4">
+          <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4">
             <nav className="flex flex-col space-y-3 sm:space-y-4 w-full">
               <Link 
                 to="/" 

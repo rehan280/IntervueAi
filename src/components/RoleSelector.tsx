@@ -131,10 +131,10 @@ const RoleSelector = ({ onRoleSelect }: RoleSelectorProps) => {
                   size="xl" 
                   onClick={handleStartInterview}
                   disabled={!selectedRole}
-                  className="w-full group"
+                  className="w-full group whitespace-nowrap overflow-hidden text-ellipsis"
                 >
-                  <ArrowRight className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Start Interview Session
+                  <ArrowRight className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                  <span className="truncate">Start Interview Session</span>
                 </Button>
               </div>
             </CardContent>
