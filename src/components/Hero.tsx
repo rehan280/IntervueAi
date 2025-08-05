@@ -92,7 +92,7 @@ const Hero = () => {
           </div>
           
           {/* Enhanced features showcase */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-10 md:mt-12 w-full max-w-5xl mx-auto px-2 sm:px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-10 md:mt-12 w-full max-w-5xl mx-auto px-2 sm:px-4">
             <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">14</div>
               <div className="text-white/80 font-medium text-sm sm:text-base">Job Roles</div>
@@ -107,11 +107,6 @@ const Hero = () => {
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">∞</div>
               <div className="text-white/80 font-medium text-sm sm:text-base">Unlimited</div>
               <div className="text-xs sm:text-sm text-white/60 mt-2">Practice Sessions</div>
-            </div>
-            <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">🎤</div>
-              <div className="text-white/80 font-medium text-sm sm:text-base">Voice Support</div>
-              <div className="text-xs sm:text-sm text-white/60 mt-2">Audio Feedback</div>
             </div>
           </div>
         </div>
