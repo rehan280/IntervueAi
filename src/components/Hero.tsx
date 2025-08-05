@@ -94,26 +94,26 @@ const Hero = () => {
           </div>
           
           {/* Enhanced features showcase */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8 w-full max-w-4xl mx-auto overflow-hidden">
-            <div className="text-center p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">14</div>
-              <div className="text-white/80 font-medium text-xs sm:text-sm">Job Roles</div>
-              <div className="text-xs text-white/60 mt-1">10 Questions Each</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-10 md:mt-12 w-full max-w-5xl mx-auto">
+            <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">14</div>
+              <div className="text-white/80 font-medium text-sm sm:text-base">Job Roles</div>
+              <div className="text-xs sm:text-sm text-white/60 mt-2">10 Questions Each</div>
             </div>
-            <div className="text-center p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">AI</div>
-              <div className="text-white/80 font-medium text-xs sm:text-sm">Powered</div>
-              <div className="text-xs text-white/60 mt-1">Gemini AI Feedback</div>
+            <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">AI</div>
+              <div className="text-white/80 font-medium text-sm sm:text-base">Powered</div>
+              <div className="text-xs sm:text-sm text-white/60 mt-2">Gemini AI Feedback</div>
             </div>
-            <div className="text-center p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">∞</div>
-              <div className="text-white/80 font-medium text-xs sm:text-sm">Unlimited</div>
-              <div className="text-xs text-white/60 mt-1">Practice Sessions</div>
+            <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">∞</div>
+              <div className="text-white/80 font-medium text-sm sm:text-base">Unlimited</div>
+              <div className="text-xs sm:text-sm text-white/60 mt-2">Practice Sessions</div>
             </div>
-            <div className="text-center p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">🎤</div>
-              <div className="text-white/80 font-medium text-xs sm:text-sm">Voice Support</div>
-              <div className="text-xs text-white/60 mt-1">Audio Feedback</div>
+            <div className="text-center p-3 sm:p-4 md:p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">🎤</div>
+              <div className="text-white/80 font-medium text-sm sm:text-base">Voice Support</div>
+              <div className="text-xs sm:text-sm text-white/60 mt-2">Audio Feedback</div>
             </div>
           </div>
         </div>
@@ -138,43 +138,43 @@ const Hero = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 overflow-hidden">
-            <div className="text-center p-4 md:p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
-              <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+            <div className="text-center p-6 md:p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <CheckCircle className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3">Save Time</h3>
-              <p className="text-muted-foreground text-sm md:text-base">
+              <h3 className="text-lg md:text-xl font-semibold mb-4">Save Time</h3>
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                 No need to schedule with humans. Practice interviews 24/7 at your own pace.
               </p>
             </div>
             
-            <div className="text-center p-4 md:p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
-              <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
+            <div className="text-center p-6 md:p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3">Personalized Questions</h3>
-              <p className="text-muted-foreground text-sm md:text-base">
+              <h3 className="text-lg md:text-xl font-semibold mb-4">Personalized Questions</h3>
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                 AI generates unique questions based on your specific role and experience level.
               </p>
             </div>
             
-            <div className="text-center p-4 md:p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
-              <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Brain className="w-6 h-6 md:w-8 md:h-8 text-white" />
+            <div className="text-center p-6 md:p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Brain className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3">AI-Powered Analysis</h3>
-              <p className="text-muted-foreground text-sm md:text-base">
+              <h3 className="text-lg md:text-xl font-semibold mb-4">AI-Powered Analysis</h3>
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                 Get detailed feedback on your answers with actionable improvement suggestions.
               </p>
             </div>
             
-            <div className="text-center p-4 md:p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
-              <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-6 h-6 md:w-8 md:h-8 text-white" />
+            <div className="text-center p-6 md:p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3">Improve Confidence</h3>
-              <p className="text-muted-foreground text-sm md:text-base">
+              <h3 className="text-lg md:text-xl font-semibold mb-4">Improve Confidence</h3>
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                 Practice in a judgment-free environment and build confidence for real interviews.
               </p>
             </div>
@@ -194,7 +194,7 @@ const Hero = () => {
           </div>
 
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 xl:p-12 w-full border border-slate-700">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-start">
               {/* Coding Problems Preview */}
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Featured Problems</h3>
@@ -254,7 +254,7 @@ const Hero = () => {
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Practice Features</h3>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 overflow-hidden">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
                   <div className="text-center p-3 md:p-4 rounded-xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30">
                     <div className="text-2xl md:text-3xl font-bold text-blue-400 mb-2">4</div>
                     <div className="text-white font-medium text-sm md:text-base">Languages</div>
@@ -340,7 +340,7 @@ const Hero = () => {
           </div>
 
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 xl:p-12 w-full border border-gray-700">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 items-start overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 items-start">
               {/* Developer Image */}
               <div className="lg:col-span-1 order-1">
                 <div className="relative bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-2 md:p-3 lg:p-4 shadow-lg border border-gray-600">

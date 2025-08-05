@@ -294,7 +294,7 @@ const ResumeBuilder: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 overflow-hidden">
             {/* Form Section */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 order-1 lg:order-2">
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl w-full">
                 <CardHeader className="border-b border-white/10 p-3 sm:p-4 md:p-6">
                   <CardTitle className="text-white text-base sm:text-lg md:text-xl font-semibold">Resume Information</CardTitle>
@@ -715,50 +715,50 @@ const ResumeBuilder: React.FC = () => {
             </div>
 
             {/* Preview Section */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 order-2 lg:order-1">
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl sticky top-8 w-full">
                 <CardHeader className="border-b border-white/10 p-3 sm:p-4 md:p-6">
                   <CardTitle className="text-white text-base sm:text-lg md:text-xl font-semibold">Resume Preview</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-6">
-                  <div className="space-y-2 sm:space-y-3">
+                  <div className="space-y-3 sm:space-y-4">
                     <Button 
                       onClick={() => setShowTemplateSelector(true)}
                       variant="premium"
-                      size="sm"
-                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
+                      size="default"
+                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
                     >
-                      <Palette className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <Palette className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Choose Template</span>
                       <span className="sm:hidden truncate">Template</span>
                     </Button>
                     <Button 
                       onClick={() => setShowCustomizer(true)}
                       variant="hero"
-                      size="sm"
-                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
+                      size="default"
+                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
                     >
-                      <Settings className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <Settings className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Customize Resume</span>
                       <span className="sm:hidden truncate">Customize</span>
                     </Button>
                     <Button 
                       onClick={previewResume} 
                       variant="outline-hero"
-                      size="sm"
-                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
+                      size="default"
+                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
                     >
-                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <Eye className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Preview Resume</span>
                       <span className="sm:hidden truncate">Preview</span>
                     </Button>
                     <Button 
                       onClick={generateResume} 
                       variant="hero"
-                      size="sm"
-                      className="w-full text-xs sm:text-sm min-h-[44px] overflow-hidden"
+                      size="default"
+                      className="w-full text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
                     >
-                      <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Generate PDF</span>
                       <span className="sm:hidden truncate">PDF</span>
                     </Button>
@@ -783,9 +783,9 @@ const ResumeBuilder: React.FC = () => {
                           setProjects([]);
                         }
                       }}
-                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-xs sm:text-sm min-h-[44px] overflow-hidden"
+                      className="w-full border-white/20 text-white hover:text-white hover:border-white/40 bg-white/5 text-sm sm:text-base min-h-[48px] overflow-hidden font-medium"
                     >
-                      <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+                      <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                       <span className="hidden sm:inline truncate">Clear Form</span>
                       <span className="sm:hidden truncate">Clear</span>
                     </Button>
