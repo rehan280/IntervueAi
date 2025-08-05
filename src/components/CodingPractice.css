@@ -3,11 +3,7 @@
 /* Main container responsive improvements */
 .coding-practice-container {
   max-width: 100%;
-  margin: 0 auto;
   padding: 0.25rem;
-  animation: fadeInUp 0.6s ease-out;
-  width: 100%;
-  box-sizing: border-box;
   overflow-x: hidden;
 }
 

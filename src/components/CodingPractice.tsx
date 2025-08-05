@@ -2114,9 +2114,9 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
   return (
     <div className="min-h-screen bg-gray-900 w-full overflow-x-hidden">
       <div className="coding-practice-container w-full max-w-full px-2 sm:px-4 md:px-6 lg:px-8">
-        <div className="coding-practice-grid w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="coding-practice-grid w-full grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Left Panel - Problems */}
-          <div className="left-panel w-full space-y-4 sm:space-y-6">
+          <div className="left-panel w-full space-y-3 sm:space-y-4 md:space-y-6">
             {/* Category Selector */}
             <Card className="enhanced-card w-full">
               <CardHeader className="p-3 sm:p-4 md:p-6">
@@ -2253,9 +2253,9 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
           </div>
 
           {/* Right Panel - Code Editor and Output */}
-          <div className="flex flex-col space-y-4 sm:space-y-6">
+          <div className="flex flex-col space-y-3 sm:space-y-4 md:space-y-6 w-full">
             {/* Code Editor */}
-            <Card className="enhanced-card">
+            <Card className="enhanced-card w-full">
               <CardHeader className="p-3 sm:p-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                   <div className="flex items-center gap-2 sm:gap-4">
@@ -2411,34 +2411,38 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       {output || '// Output will appear here after running your code'}
                     </pre>
                   )}
-                  
-                  {/* Solution Box - appears at the end of output */}
-                  {showSolution && selectedSolution && (
-                    <div className="mt-3 sm:mt-4 md:mt-6 border-t border-gray-700 pt-2 sm:pt-3 md:pt-4">
-                      <div className="flex items-center justify-between mb-2 sm:mb-3">
-                        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-white flex items-center gap-2">
-                          <span className="text-yellow-400">💡</span>
-                          Solution
-                        </h4>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setShowSolution(false)}
-                          className="action-button secondary p-1"
-                        >
-                          <X className="w-3 h-3 sm:w-4 sm:h-4" />
-                        </Button>
-                      </div>
-                      <div className="bg-gray-800 rounded-lg p-2 sm:p-3 md:p-4 border border-gray-600">
-                        <pre className="text-yellow-400 font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
-                          {selectedSolution}
-                        </pre>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </CardContent>
             </Card>
+
+            {/* Solution Section - Now appears at the bottom on mobile */}
+            {showSolution && selectedSolution && (
+              <Card className="enhanced-card w-full">
+                <CardHeader className="p-3 sm:p-4">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-sm sm:text-base md:text-lg text-white flex items-center gap-2">
+                      <span className="text-yellow-400">💡</span>
+                      Solution
+                    </CardTitle>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowSolution(false)}
+                      className="action-button secondary p-1"
+                    >
+                      <X className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-3 sm:p-4">
+                  <div className="bg-gray-800 rounded-lg p-2 sm:p-3 md:p-4 border border-gray-600">
+                    <pre className="text-yellow-400 font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
+                      {selectedSolution}
+                    </pre>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>
