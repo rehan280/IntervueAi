@@ -213,20 +213,20 @@ const VoiceRecorder = ({
   };
 
   return (
-    <Card className="w-full bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm">
+    <Card className="w-full bg-gray-800/60 border border-gray-700/60 backdrop-blur-xl shadow-2xl">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
+        <CardTitle className="flex items-center gap-3 text-white">
           <Mic className="h-5 w-5" />
           Voice Recorder
           {transcription && (
-            <Badge variant="default" className="ml-auto bg-green-600 text-white">
+            <Badge variant="default" className="ml-auto bg-green-600 text-white px-3 py-1">
               <Check className="h-3 w-3 mr-1" />
               Transcribed
             </Badge>
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {/* Example Button */}
         <div className="flex justify-center">
           <Button
@@ -238,23 +238,27 @@ const VoiceRecorder = ({
             }}
             variant="outline"
             size="sm"
-            className="flex items-center gap-2 text-blue-400 hover:text-blue-300 border-blue-500/30"
+            className="flex items-center gap-2 text-blue-400 hover:text-blue-300 border-blue-500/50 hover:border-blue-400/50 bg-blue-900/20 hover:bg-blue-800/30 px-4 py-2 rounded-lg transition-all duration-200"
           >
             <Lightbulb className="h-4 w-4" />
-            Show Example Answer
+            <span className="hidden sm:inline">Show Example Answer</span>
+            <span className="sm:hidden">Example</span>
           </Button>
         </div>
 
         {/* Recording Status */}
         {isRecording && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-red-400 font-medium">Recording...</span>
-              <span className="text-gray-400">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between text-sm sm:text-base">
+              <span className="text-red-400 font-medium flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                Recording...
+              </span>
+              <span className="text-gray-400 font-medium">
                 {formatTime(recordingTime)} / {formatTime(maxDuration / 1000)}
               </span>
             </div>
-            <Progress value={progressPercentage} className="h-2" />
+            <Progress value={progressPercentage} className="h-3" />
             <div className="flex items-center gap-2 text-xs text-gray-400">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
               Recording in progress
@@ -264,40 +268,40 @@ const VoiceRecorder = ({
 
         {/* Error Display */}
         {error && (
-          <div className="space-y-3 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 text-red-400" />
-              <span className="text-sm font-medium text-red-300">Microphone Access Issue</span>
+          <div className="space-y-4 p-6 bg-red-900/20 border border-red-500/30 rounded-lg">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="h-5 w-5 text-red-400" />
+              <span className="text-base font-medium text-red-300">Microphone Access Issue</span>
             </div>
-            <p className="text-sm text-red-200">{error}</p>
-            <div className="text-xs text-red-300">
+            <p className="text-sm text-red-200 leading-relaxed">{error}</p>
+            <div className="text-xs text-red-300 bg-red-900/20 p-3 rounded-md">
               <p>💡 Tip: You can still use the text input option to type your answers instead.</p>
             </div>
           </div>
         )}
 
         {/* Main Controls */}
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-6">
           {!isRecording && !transcription && !error && (
             <Button
               onClick={startRecording}
               size="lg"
-              className="h-16 w-16 rounded-full bg-red-500 hover:bg-red-600 text-white"
+              className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              <Mic className="h-6 w-6" />
+              <Mic className="h-8 w-8 sm:h-10 sm:w-10" />
             </Button>
           )}
           
           {error && (
-            <div className="text-center space-y-3">
-              <div className="text-sm text-gray-400">
+            <div className="text-center space-y-4">
+              <div className="text-sm sm:text-base text-gray-400">
                 Voice recording is not available
               </div>
               <Button
                 onClick={() => setError(null)}
                 variant="outline"
                 size="sm"
-                className="text-blue-400 hover:text-blue-300 border-blue-500/30"
+                className="text-blue-400 hover:text-blue-300 border-blue-500/50 hover:border-blue-400/50 bg-blue-900/20 hover:bg-blue-800/30 px-4 py-2 rounded-lg transition-all duration-200"
               >
                 Try Again
               </Button>
@@ -308,19 +312,19 @@ const VoiceRecorder = ({
             <Button
               onClick={stopRecording}
               size="lg"
-              className="h-16 w-16 rounded-full bg-gray-600 hover:bg-gray-700 text-white"
+              className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              <Square className="h-6 w-6" />
+              <Square className="h-8 w-8 sm:h-10 sm:w-10" />
             </Button>
           )}
 
           {transcription && !isRecording && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Button
                 onClick={clearRecording}
                 variant="outline"
                 size="sm"
-                className="text-red-400 hover:text-red-300 border-red-500/30"
+                className="text-red-400 hover:text-red-300 border-red-500/50 hover:border-red-400/50 bg-red-900/20 hover:bg-red-800/30 px-4 py-2 rounded-lg transition-all duration-200"
               >
                 Clear
               </Button>
@@ -330,46 +334,51 @@ const VoiceRecorder = ({
 
         {/* Placeholder Text */}
         {!transcription && !isRecording && !error && (
-          <p className="text-center text-sm text-gray-400 py-4">
+          <p className="text-center text-sm sm:text-base text-gray-400 py-6 leading-relaxed">
             {placeholder}
           </p>
         )}
 
         {/* Transcription Result */}
         {isTranscribing && (
-          <div className="flex items-center justify-center gap-2 p-4 bg-blue-900/20 border border-blue-500/30 rounded-md">
-            <Loader2 className="h-4 w-4 animate-spin text-blue-400" />
-            <span className="text-sm text-blue-300">Listening to your voice...</span>
+          <div className="flex items-center justify-center gap-3 p-6 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+            <Loader2 className="h-5 w-5 animate-spin text-blue-400" />
+            <span className="text-sm sm:text-base text-blue-300 font-medium">Listening to your voice...</span>
           </div>
         )}
 
         {transcription && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h4 className="font-medium text-sm text-white">
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <h4 className="font-medium text-base sm:text-lg text-white">
                 {showExample ? "Example Answer:" : "Your Answer:"}
               </h4>
-              <Badge variant="secondary" className="bg-green-900/20 text-green-300 border-green-500/30">
+              <Badge variant="secondary" className="bg-green-900/40 text-green-300 border-green-500/50 px-3 py-1 text-sm font-medium">
                 {transcription.split(' ').length} words
               </Badge>
             </div>
-            <div className="p-3 bg-gray-700/50 border border-gray-600 rounded-md">
-              <p className="text-sm leading-relaxed text-gray-200">{transcription}</p>
+            <div className="p-4 sm:p-6 bg-gray-700/50 border border-gray-600 rounded-lg">
+              <p className="text-sm sm:text-base leading-relaxed text-gray-200">{transcription}</p>
             </div>
             {showExample && (
-              <p className="text-xs text-blue-400 text-center">
-                💡 This is an example of a comprehensive interview answer using the STAR method
-              </p>
+              <div className="text-center p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                <p className="text-xs sm:text-sm text-blue-400 leading-relaxed">
+                  💡 This is an example of a comprehensive interview answer using the STAR method
+                </p>
+              </div>
             )}
           </div>
         )}
 
         {/* Instructions */}
-        <div className="text-xs text-gray-400 space-y-1">
-          <p>• Speak clearly and at a normal pace</p>
-          <p>• Maximum recording time: {formatTime(maxDuration / 1000)}</p>
-          <p>• Use the STAR method: Situation, Task, Action, Result</p>
-          <p>• Click "Show Example Answer" to see a good response format</p>
+        <div className="text-xs sm:text-sm text-gray-400 space-y-2 bg-gray-900/30 p-4 rounded-lg border border-gray-700/50">
+          <p className="font-medium">Instructions:</p>
+          <div className="space-y-1">
+            <p>• Speak clearly and at a normal pace</p>
+            <p>• Maximum recording time: {formatTime(maxDuration / 1000)}</p>
+            <p>• Use the STAR method: Situation, Task, Action, Result</p>
+            <p>• Click "Show Example Answer" to see a good response format</p>
+          </div>
         </div>
       </CardContent>
     </Card>

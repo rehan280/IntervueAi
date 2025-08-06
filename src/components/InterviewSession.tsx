@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Loader2, Volume2, VolumeX, TestTube, Star, Mic, Settings, Keyboard, MessageSquare } from "lucide-react";
+import { Loader2, Volume2, VolumeX, TestTube, Star, Mic, Settings, Keyboard, MessageSquare, Target, Lightbulb, BarChart3 } from "lucide-react";
 import { directGeminiService } from "@/services/directGeminiService";
 import VoiceRecorder from "./VoiceRecorder";
 
@@ -921,6 +921,8 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
   const [generatingTestFeedback, setGeneratingTestFeedback] = useState(false);
 
   const [inputMethod, setInputMethod] = useState<'text' | 'voice'>('text');
+  const [showExamples, setShowExamples] = useState(false);
+  const [selectedExampleScore, setSelectedExampleScore] = useState<'excellent' | 'intermediate' | 'poor'>('intermediate');
 
   const parseScores = (feedback: string) => {
     const scores: any = {};
@@ -1194,22 +1196,22 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Header */}
+      {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-4">
             Interview Practice Session
           </h1>
           <p className="text-lg text-gray-300">
             Role: {role}
-          </p>
-        </div>
+                </p>
+              </div>
 
         {/* Progress Indicator */}
-        <div className="mb-8">
+      <div className="mb-8">
           <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
             <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
             <span>{Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Complete</span>
-          </div>
+           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
             <div 
               className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
@@ -1218,55 +1220,65 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
           </div>
         </div>
 
-        {/* Welcome Card */}
+        {/* Professional Welcome Screen */}
         {currentQuestionIndex === 0 && (
-          <Card className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/30 backdrop-blur-sm mb-8">
-            <CardHeader className="text-center pb-4">
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <span className="text-2xl">🎯</span>
-                </div>
-                <div>
-                  <CardTitle className="text-2xl text-white">Welcome to Your Interview Practice Session!</CardTitle>
-                  <p className="text-blue-300">Tips for success:</p>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Use the voice recorder for natural speech-to-text answers</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Click the speaker icon to hear questions read aloud</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Take your time to think before answering</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Use the STAR method (Situation, Task, Action, Result) for behavioral questions</p>
-                </div>
-                <div className="flex items-start gap-3 md:col-span-2">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Customize voice settings for your preferred interviewer voice</p>
+          <div className="w-full max-w-6xl mx-auto mb-8 px-4">
+            {/* Main Welcome Section */}
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center shadow-xl">
+                  <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center">
+                    <Target className="h-10 w-10 text-gray-700" />
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-4 pt-4">
-                <Badge variant="secondary" className="bg-green-900/20 text-green-300 border-green-500/30">
-                  <Mic className="h-3 w-3 mr-1" />
-                  Voice Input Available
-                </Badge>
-                <Badge variant="secondary" className="bg-blue-900/20 text-blue-300 border-blue-500/30">
-                  <Volume2 className="h-3 w-3 mr-1" />
-                  Text-to-Speech Enabled
-                </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Welcome to Your Interview Practice Session!
+              </h2>
+              <p className="text-xl text-blue-300 mb-8">
+                Master your interview skills with AI-powered feedback
+              </p>
+            </div>
+
+            {/* Feature Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Voice Recording Card */}
+              <div className="bg-gradient-to-br from-gray-900 to-blue-900 border border-blue-800/40 rounded-2xl shadow-lg p-8 flex flex-col items-center text-center transition-transform duration-200 hover:scale-105 hover:shadow-2xl">
+                <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg">
+                  <Mic className="h-8 w-8 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-white mb-1">Voice Recording</div>
+                <div className="text-base font-medium text-blue-400 mb-3">Natural speech-to-text</div>
+                <div className="text-gray-300 text-sm leading-relaxed">
+                  Record your answers naturally and get instant transcription with AI-powered accuracy.
+                </div>
               </div>
-            </CardContent>
-          </Card>
+
+              {/* Text-to-Speech Card */}
+              <div className="bg-gradient-to-br from-gray-900 to-blue-900 border border-blue-800/40 rounded-2xl shadow-lg p-8 flex flex-col items-center text-center transition-transform duration-200 hover:scale-105 hover:shadow-2xl">
+                <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg">
+                  <Volume2 className="h-8 w-8 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-white mb-1">Text-to-Speech</div>
+                <div className="text-base font-medium text-blue-400 mb-3">Hear questions aloud</div>
+                <div className="text-gray-300 text-sm leading-relaxed">
+                  Listen to questions being read aloud for better understanding and natural flow.
+                </div>
+              </div>
+
+              {/* STAR Method Card */}
+              <div className="bg-gradient-to-br from-gray-900 to-blue-900 border border-green-700/40 rounded-2xl shadow-lg p-8 flex flex-col items-center text-center transition-transform duration-200 hover:scale-105 hover:shadow-2xl">
+                <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 shadow-lg">
+                  <Star className="h-8 w-8 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-white mb-1">STAR Method</div>
+                <div className="text-base font-medium text-green-400 mb-3">Structured responses</div>
+                <div className="text-gray-300 text-sm leading-relaxed">
+                  Structure your answers using Situation, Task, Action, Result for maximum impact.
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Question Card */}
@@ -1274,16 +1286,16 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
           <CardHeader>
             <CardTitle className="flex items-center gap-3 text-white">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-sm font-bold">
-                {currentQuestionIndex + 1}
-              </div>
+                  {currentQuestionIndex + 1}
+                </div>
               <span className="text-xl">Question {currentQuestionIndex + 1}</span>
-                              <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => speakText(questions[currentQuestionIndex])}
-                  disabled={isSpeaking}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => speakText(questions[currentQuestionIndex])}
+                disabled={isSpeaking}
                   className="ml-auto text-gray-400 hover:text-white"
-                >
+              >
                 {isSpeaking ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
@@ -1302,23 +1314,39 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
         {/* Answer Input */}
         <Card className="bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="flex items-center justify-between text-white">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-white w-full">
               <span className="text-xl">Your Answer</span>
-              <div className="flex items-center gap-2">
-                <Tabs value={inputMethod} onValueChange={(value) => setInputMethod(value as 'text' | 'voice')} className="w-auto">
-                  <TabsList className="grid w-full grid-cols-2 bg-gray-700/50">
-                    <TabsTrigger value="text" className="flex items-center gap-2 data-[state=active]:bg-blue-600">
-                      <Keyboard className="h-4 w-4" />
-                      Text
-                    </TabsTrigger>
-                    <TabsTrigger value="voice" className="flex items-center gap-2 data-[state=active]:bg-blue-600">
-                      <Mic className="h-4 w-4" />
-                      Voice
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
+              <div className="flex gap-2 w-full sm:w-auto justify-end">
+                <Button
+                  onClick={() => setShowExamples(!showExamples)}
+                  variant="outline"
+                  size="sm"
+                  className="bg-blue-900/30 text-blue-300 border-blue-500/50 hover:bg-blue-800/40"
+                >
+                  <Lightbulb className="h-4 w-4 mr-2" />
+                  {showExamples ? 'Hide Example' : 'Show Example'}
+                </Button>
+                {inputMethod === 'text' ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-blue-900/30 text-blue-300 border-blue-500/50 hover:bg-blue-800/40"
+                    onClick={() => setInputMethod('voice')}
+                  >
+                    <Mic className="h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-blue-900/30 text-blue-300 border-blue-500/50 hover:bg-blue-800/40"
+                    onClick={() => setInputMethod('text')}
+                  >
+                    <Keyboard className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
-            </CardTitle>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <Tabs value={inputMethod} onValueChange={(value) => setInputMethod(value as 'text' | 'voice')}>
@@ -1329,11 +1357,11 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
                   placeholder="Type your answer here..."
                   className="min-h-[200px] bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
                 />
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
                     <span className="text-sm text-gray-400">
-                      {currentAnswer.length} characters • {currentAnswer.split(' ').length} words
-                    </span>
+                       {currentAnswer.length} characters • {currentAnswer.split(' ').length} words
+                     </span>
                     {currentAnswer.length > 0 && currentAnswer.length < 100 && (
                       <span className="text-xs text-orange-400 bg-orange-900/20 px-2 py-1 rounded border border-orange-500/30">
                         💡 Tip: Consider adding more detail to your answer
@@ -1344,11 +1372,11 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
                         ✅ Good length for a comprehensive answer
                       </span>
                     )}
-                  </div>
+          </div>
                   <Button
                     onClick={handleAnswerSubmit}
                     disabled={!currentAnswer.trim() || generatingFeedback}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
                   >
                     {generatingFeedback ? (
                       <>
@@ -1359,52 +1387,57 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
                       "Submit Answer"
                     )}
                   </Button>
-                </div>
+        </div>
               </TabsContent>
               
               <TabsContent value="voice" className="space-y-4">
-                <VoiceRecorder
-                  onTranscriptionComplete={handleVoiceTranscription}
-                  maxDuration={60000} // 60 seconds for interview answers
-                  autoTranscribe={true}
-                  placeholder="Click the microphone to start recording your interview answer..."
-                />
-                {currentAnswer && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-sm text-white">Your Answer:</h4>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-400">
-                          {currentAnswer.length} characters • {currentAnswer.split(' ').length} words
-                        </span>
-                        {currentAnswer.length > 0 && currentAnswer.length < 100 && (
-                          <span className="text-xs text-orange-400 bg-orange-900/20 px-2 py-1 rounded border border-orange-500/30">
-                            💡 Consider adding more detail
+                  <VoiceRecorder
+                    onTranscriptionComplete={handleVoiceTranscription}
+                    maxDuration={60000} // 60 seconds for interview answers
+                    autoTranscribe={true}
+                    placeholder="Click the microphone to start recording your interview answer..."
+                  />
+                  {currentAnswer && (
+                    <div className="space-y-3">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <h4 className="font-medium text-sm text-white">Your Answer:</h4>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                          <span className="text-sm text-gray-400">
+                            {currentAnswer.length} characters • {currentAnswer.split(' ').length} words
                           </span>
-                        )}
+                          {currentAnswer.length > 0 && currentAnswer.length < 100 && (
+                            <span className="text-xs text-orange-400 bg-orange-900/20 px-2 py-1 rounded border border-orange-500/30">
+                              💡 Consider adding more detail
+                            </span>
+                          )}
+                          {currentAnswer.length > 500 && (
+                            <span className="text-xs text-green-400 bg-green-900/20 px-2 py-1 rounded border border-green-500/30">
+                              ✅ Good length
+                            </span>
+                          )}
+          </div>
+        </div>
+                      <div className="p-3 bg-gray-700/50 border border-gray-600 rounded-md">
+                        <p className="text-sm leading-relaxed text-gray-200">{currentAnswer}</p>
+      </div>
+                      <div className="flex justify-end">
+                        <Button
+                          onClick={handleAnswerSubmit}
+                          disabled={!currentAnswer.trim() || generatingFeedback}
+                          className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
+                        >
+                          {generatingFeedback ? (
+                            <>
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              Analyzing...
+                            </>
+                          ) : (
+                            "Submit Answer"
+                          )}
+                        </Button>
                       </div>
                     </div>
-                    <div className="p-3 bg-gray-700/50 border border-gray-600 rounded-md">
-                      <p className="text-sm leading-relaxed text-gray-200">{currentAnswer}</p>
-                    </div>
-                    <div className="flex justify-end">
-                      <Button
-                        onClick={handleAnswerSubmit}
-                        disabled={!currentAnswer.trim() || generatingFeedback}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        {generatingFeedback ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Analyzing...
-                          </>
-                        ) : (
-                          "Submit Answer"
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                )}
+                  )}
               </TabsContent>
             </Tabs>
           </CardContent>
@@ -1412,462 +1445,462 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
 
         {/* Test Mode */}
         {testMode && (
-          <div className="space-y-6">
-            <Card className="border-2 border-blue-200">
+        <div className="space-y-6">
+          <Card className="border-2 border-blue-200">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TestTube className="h-5 w-5 text-blue-600" />
+                Test AI Evaluation System
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Question:</label>
+                <Textarea
+                  value={testQuestion}
+                  onChange={(e) => setTestQuestion(e.target.value)}
+                  placeholder="Enter any interview question to test..."
+                  className="min-h-[80px]"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block">Your Answer:</label>
+                <Textarea
+                  value={testAnswer}
+                  onChange={(e) => setTestAnswer(e.target.value)}
+                  placeholder="Enter your answer here..."
+                  className="min-h-[120px]"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleTestEvaluation}
+                  disabled={!testQuestion.trim() || !testAnswer.trim() || generatingTestFeedback}
+                  variant="default"
+                >
+                  {generatingTestFeedback ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Analyzing...
+                    </>
+                  ) : (
+                    "Evaluate Answer"
+                  )}
+                </Button>
+                <Button
+                  onClick={() => {
+                    setTestQuestion("Tell me about a challenging project you worked on and how you handled it.");
+                    setTestAnswer("I worked on a project where we had to migrate a legacy system. It was challenging because the old system was poorly documented. I organized the team, created a detailed migration plan, and we completed it on time.");
+                  }}
+                  variant="outline"
+                  size="sm"
+                >
+                  Load Sample
+                </Button>
+                <Button
+                  onClick={resetTestMode}
+                  variant="outline"
+                >
+                  Reset
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Test Questions */}
+          <Card className="border border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-sm">Quick Test Questions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTestQuestion("What are your greatest strengths and how do they apply to this position?");
+                    setTestAnswer("React is good.");
+                  }}
+                  className="text-left justify-start h-auto p-3"
+                >
+                  <div>
+                    <div className="font-medium">Sample 1: Very Poor Answer</div>
+                    <div className="text-xs text-muted-foreground mt-1">Should get 1-2/10 score</div>
+                  </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTestQuestion("Describe a time when you had to work under pressure and how you handled it.");
+                    setTestAnswer("In my previous role, we had a critical deadline for a client project. The team was struggling with a complex integration issue. I took the initiative to break down the problem into smaller tasks, assigned them to team members based on their strengths, and we worked overtime to meet the deadline. The project was delivered on time and the client was very satisfied with the results.");
+                  }}
+                  className="text-left justify-start h-auto p-3"
+                >
+                  <div>
+                    <div className="font-medium">Sample 2: Excellent STAR Answer</div>
+                    <div className="text-xs text-muted-foreground mt-1">Should get 8-10/10 score</div>
+                  </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTestQuestion("How do you handle feedback and criticism?");
+                    setTestAnswer("I welcome feedback as it helps me grow. I listen carefully, ask clarifying questions, and implement the suggestions. I don't take it personally.");
+                  }}
+                  className="text-left justify-start h-auto p-3"
+                >
+                  <div>
+                    <div className="font-medium">Sample 3: Average Answer</div>
+                    <div className="text-xs text-muted-foreground mt-1">Should get 5-7/10 score</div>
+                  </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTestQuestion("Tell me about a challenging technical problem you solved.");
+                    setTestAnswer("I had to optimize a database query that was taking 30 seconds to run. I analyzed the execution plan, added proper indexes, and restructured the query. This reduced the execution time to under 2 seconds, improving the user experience significantly.");
+                  }}
+                  className="text-left justify-start h-auto p-3"
+                >
+                  <div>
+                    <div className="font-medium">Sample 4: Technical Answer</div>
+                    <div className="text-xs text-muted-foreground mt-1">Should get 7-9/10 score</div>
+                  </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTestQuestion("Why do you want to work for our company?");
+                    setTestAnswer("I like coding and your company seems cool. I want to make money and learn new things.");
+                  }}
+                  className="text-left justify-start h-auto p-3"
+                >
+                  <div>
+                    <div className="font-medium">Sample 5: Unprofessional Answer</div>
+                    <div className="text-xs text-muted-foreground mt-1">Should get 2-4/10 score</div>
+                  </div>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {testFeedback && (
+            <Card className="border-2 border-green-200">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TestTube className="h-5 w-5 text-blue-600" />
-                  Test AI Evaluation System
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Question:</label>
-                  <Textarea
-                    value={testQuestion}
-                    onChange={(e) => setTestQuestion(e.target.value)}
-                    placeholder="Enter any interview question to test..."
-                    className="min-h-[80px]"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Your Answer:</label>
-                  <Textarea
-                    value={testAnswer}
-                    onChange={(e) => setTestAnswer(e.target.value)}
-                    placeholder="Enter your answer here..."
-                    className="min-h-[120px]"
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleTestEvaluation}
-                    disabled={!testQuestion.trim() || !testAnswer.trim() || generatingTestFeedback}
-                    variant="default"
-                  >
-                    {generatingTestFeedback ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Analyzing...
-                      </>
-                    ) : (
-                      "Evaluate Answer"
-                    )}
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setTestQuestion("Tell me about a challenging project you worked on and how you handled it.");
-                      setTestAnswer("I worked on a project where we had to migrate a legacy system. It was challenging because the old system was poorly documented. I organized the team, created a detailed migration plan, and we completed it on time.");
-                    }}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Load Sample
-                  </Button>
-                  <Button
-                    onClick={resetTestMode}
-                    variant="outline"
-                  >
-                    Reset
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Test Questions */}
-            <Card className="border border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-sm">Quick Test Questions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setTestQuestion("What are your greatest strengths and how do they apply to this position?");
-                      setTestAnswer("React is good.");
-                    }}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    <div>
-                      <div className="font-medium">Sample 1: Very Poor Answer</div>
-                      <div className="text-xs text-muted-foreground mt-1">Should get 1-2/10 score</div>
-                    </div>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setTestQuestion("Describe a time when you had to work under pressure and how you handled it.");
-                      setTestAnswer("In my previous role, we had a critical deadline for a client project. The team was struggling with a complex integration issue. I took the initiative to break down the problem into smaller tasks, assigned them to team members based on their strengths, and we worked overtime to meet the deadline. The project was delivered on time and the client was very satisfied with the results.");
-                    }}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    <div>
-                      <div className="font-medium">Sample 2: Excellent STAR Answer</div>
-                      <div className="text-xs text-muted-foreground mt-1">Should get 8-10/10 score</div>
-                    </div>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setTestQuestion("How do you handle feedback and criticism?");
-                      setTestAnswer("I welcome feedback as it helps me grow. I listen carefully, ask clarifying questions, and implement the suggestions. I don't take it personally.");
-                    }}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    <div>
-                      <div className="font-medium">Sample 3: Average Answer</div>
-                      <div className="text-xs text-muted-foreground mt-1">Should get 5-7/10 score</div>
-                    </div>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setTestQuestion("Tell me about a challenging technical problem you solved.");
-                      setTestAnswer("I had to optimize a database query that was taking 30 seconds to run. I analyzed the execution plan, added proper indexes, and restructured the query. This reduced the execution time to under 2 seconds, improving the user experience significantly.");
-                    }}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    <div>
-                      <div className="font-medium">Sample 4: Technical Answer</div>
-                      <div className="text-xs text-muted-foreground mt-1">Should get 7-9/10 score</div>
-                    </div>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setTestQuestion("Why do you want to work for our company?");
-                      setTestAnswer("I like coding and your company seems cool. I want to make money and learn new things.");
-                    }}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    <div>
-                      <div className="font-medium">Sample 5: Unprofessional Answer</div>
-                      <div className="text-xs text-muted-foreground mt-1">Should get 2-4/10 score</div>
-                    </div>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {testFeedback && (
-              <Card className="border-2 border-green-200">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    🤖 AI Evaluation Result
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => speakText(testFeedback)}
-                      disabled={isSpeaking}
-                      className="p-2"
-                    >
-                      <Volume2 className="h-4 w-4" />
-                    </Button>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="prose prose-sm max-w-none">
-                    <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                      {testFeedback}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {/* Feedback */}
-        {feedback && (
-          <div className="space-y-6">
-            {/* Overall Score Card */}
-            {parsedScores && (
-              <Card className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/30 backdrop-blur-sm">
-                <CardHeader className="text-center pb-4">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-2xl">🤖</span>
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl text-white">AI Evaluation Result</CardTitle>
-                      <p className="text-sm text-blue-300">Powered by Gemini AI</p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <div className="mb-6">
-                    <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
-                      {parsedScores.overall || 0}/10
-                    </div>
-                    <div className="text-sm text-gray-300">
-                      {parsedScores.overall >= 8 ? "Excellent" : 
-                       parsedScores.overall >= 6 ? "Good" : 
-                       parsedScores.overall >= 4 ? "Fair" : "Needs Improvement"}
-                    </div>
-                  </div>
-                  
-                  {/* Progress Bar */}
-                  <div className="w-full bg-gray-700 rounded-full h-3 mb-6">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${(parsedScores.overall || 0) * 10}%` }}
-                    ></div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Detailed Scoring */}
-            {parsedScores && (
-              <Card className="bg-gray-800/50 border border-gray-600/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-white">
-                    <span className="text-xl">📊</span>
-                    Detailed Scoring Breakdown
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-green-300 flex items-center gap-2">
-                          <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                          Correctness
-                        </span>
-                        <StarRating score={parsedScores.correctness || 0} />
-                      </div>
-                      <div className="w-full bg-gray-600 rounded-full h-2">
-                        <div 
-                          className="bg-green-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${(parsedScores.correctness || 0) * 10}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-pink-300 flex items-center gap-2">
-                          <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
-                          Relevance
-                        </span>
-                        <StarRating score={parsedScores.relevance || 0} />
-                      </div>
-                      <div className="w-full bg-gray-600 rounded-full h-2">
-                        <div 
-                          className="bg-pink-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${(parsedScores.relevance || 0) * 10}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-purple-300 flex items-center gap-2">
-                          <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                          Depth & Detail
-                        </span>
-                        <StarRating score={parsedScores.depth || 0} />
-                      </div>
-                      <div className="w-full bg-gray-600 rounded-full h-2">
-                        <div 
-                          className="bg-purple-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${(parsedScores.depth || 0) * 10}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-blue-300 flex items-center gap-2">
-                          <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
-                          Communication
-                        </span>
-                        <StarRating score={parsedScores.communication || 0} />
-                      </div>
-                      <div className="w-full bg-gray-600 rounded-full h-2">
-                        <div 
-                          className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${(parsedScores.communication || 0) * 10}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Detailed Analysis */}
-            <Card className="bg-gray-800/50 border border-gray-600/50 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between text-white">
-                  <span className="flex items-center gap-2">
-                    <span className="text-xl">🔍</span>
-                    Detailed Analysis
-                  </span>
+                <CardTitle className="flex items-center justify-between">
+                  🤖 AI Evaluation Result
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => speakText(feedback)}
+                    onClick={() => speakText(testFeedback)}
                     disabled={isSpeaking}
-                    className="p-2 text-blue-400 hover:text-blue-300"
+                    className="p-2"
                   >
                     <Volume2 className="h-4 w-4" />
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Strengths Section */}
-                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-green-400 text-lg">✅</span>
-                    <h4 className="font-semibold text-green-300">Strengths</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                      <span className="text-green-200 text-sm">Minimal response</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                      <span className="text-green-200 text-sm">Basic attempt</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                      <span className="text-green-200 text-sm">Shows effort</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Areas for Improvement */}
-                <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-orange-400 text-lg">⚠️</span>
-                    <h4 className="font-semibold text-orange-300">Areas for Improvement</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
-                      <span className="text-orange-200 text-sm">Provide comprehensive detail and explanation</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
-                      <span className="text-orange-200 text-sm">Include specific examples and experiences</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
-                      <span className="text-orange-200 text-sm">Use the STAR method for comprehensive responses</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Recommendation */}
-                <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-blue-400 text-lg">💡</span>
-                    <h4 className="font-semibold text-blue-300">Key Recommendation</h4>
-                  </div>
-                  <p className="text-blue-200 text-sm leading-relaxed">
-                    This answer needs major improvement. Provide detailed responses with specific examples and experiences.
-                  </p>
-                </div>
-
-                {/* Detailed Analysis */}
-                <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-purple-400 text-lg">📝</span>
-                    <h4 className="font-semibold text-purple-300">Detailed Analysis</h4>
-                  </div>
-                  <p className="text-gray-200 text-sm leading-relaxed">
-                    This answer is extremely brief and lacks the detail needed for an effective interview response. Consider expanding significantly. Your answer has {currentAnswer.length} characters and {currentAnswer.split(' ').length} words. This is too brief for an effective interview response. Consider adding more concrete examples from your experience.
-                  </p>
-                </div>
-
-                {/* Word Count Stats */}
-                <div className="bg-gray-700/30 border border-gray-600/30 rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-400">{currentAnswer.split(' ').length}</div>
-                        <div className="text-xs text-gray-400">Words</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-purple-400">{currentAnswer.length}</div>
-                        <div className="text-xs text-gray-400">Characters</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs text-gray-400">AI Analysis Complete</div>
-                      <div className="text-xs text-green-400">✓ Processed</div>
-                    </div>
+              <CardContent>
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                    {testFeedback}
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </div>
+          )}
+        </div>
         )}
 
-        {/* Navigation */}
-        {feedback && (
-          <div className="space-y-4">
-            {/* Progress Encouragement */}
-            <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
-              <CardContent className="pt-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">🎉</span>
-                    <div>
-                      <p className="text-sm font-medium text-green-800">
-                        Great job on question {currentQuestionIndex + 1}!
-                      </p>
-                      <p className="text-xs text-green-600">
-                        {currentQuestionIndex === questions.length - 1 
-                          ? "This was your final question!" 
-                          : `${questions.length - currentQuestionIndex - 1} more questions to go!`}
-                      </p>
+          {/* Feedback */}
+          {feedback && (
+            <div className="space-y-6">
+              {/* Overall Score Card */}
+              {parsedScores && (
+                <Card className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/30 backdrop-blur-sm">
+                  <CardHeader className="text-center pb-4">
+                    <div className="flex items-center justify-center gap-3 mb-2">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-2xl">🤖</span>
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl text-white">AI Evaluation Result</CardTitle>
+                        <p className="text-sm text-blue-300">Powered by Gemini AI</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="text-center">
+                    <div className="mb-6">
+                      <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                        {parsedScores.overall || 0}/10
+                      </div>
+                      <div className="text-sm text-gray-300">
+                        {parsedScores.overall >= 8 ? "Excellent" : 
+                         parsedScores.overall >= 6 ? "Good" : 
+                         parsedScores.overall >= 4 ? "Fair" : "Needs Improvement"}
+                      </div>
+                    </div>
+                    
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-700 rounded-full h-3 mb-6">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500"
+                        style={{ width: `${(parsedScores.overall || 0) * 10}%` }}
+                      ></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Detailed Scoring */}
+              {parsedScores && (
+                <Card className="bg-gray-800/50 border border-gray-600/50 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <span className="text-xl">📊</span>
+                      Detailed Scoring Breakdown
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-green-300 flex items-center gap-2">
+                            <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                            Correctness
+                          </span>
+                          <StarRating score={parsedScores.correctness || 0} />
+                        </div>
+                        <div className="w-full bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${(parsedScores.correctness || 0) * 10}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-pink-300 flex items-center gap-2">
+                            <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
+                            Relevance
+                          </span>
+                          <StarRating score={parsedScores.relevance || 0} />
+                        </div>
+                        <div className="w-full bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-pink-500 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${(parsedScores.relevance || 0) * 10}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-purple-300 flex items-center gap-2">
+                            <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                            Depth & Detail
+                          </span>
+                          <StarRating score={parsedScores.depth || 0} />
+                        </div>
+                        <div className="w-full bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-purple-500 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${(parsedScores.depth || 0) * 10}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/30">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-blue-300 flex items-center gap-2">
+                            <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                            Communication
+                          </span>
+                          <StarRating score={parsedScores.communication || 0} />
+                        </div>
+                        <div className="w-full bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${(parsedScores.communication || 0) * 10}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Detailed Analysis */}
+              <Card className="bg-gray-800/50 border border-gray-600/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between text-white">
+                    <span className="flex items-center gap-2">
+                      <span className="text-xl">🔍</span>
+                      Detailed Analysis
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => speakText(feedback)}
+                      disabled={isSpeaking}
+                      className="p-2 text-blue-400 hover:text-blue-300"
+                    >
+                      <Volume2 className="h-4 w-4" />
+                    </Button>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Strengths Section */}
+                  <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-green-400 text-lg">✅</span>
+                      <h4 className="font-semibold text-green-300">Strengths</h4>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span className="text-green-200 text-sm">Minimal response</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span className="text-green-200 text-sm">Basic attempt</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span className="text-green-200 text-sm">Shows effort</span>
+                      </div>
                     </div>
                   </div>
-                  {parsedScores?.overall && (
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-green-600">
-                        {parsedScores.overall}/10
-                      </div>
-                      <div className="text-xs text-green-600">Score</div>
+
+                  {/* Areas for Improvement */}
+                  <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-orange-400 text-lg">⚠️</span>
+                      <h4 className="font-semibold text-orange-300">Areas for Improvement</h4>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <div className="flex justify-between">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setCurrentQuestionIndex(currentQuestionIndex - 1);
-                  setCurrentAnswer(answers[currentQuestionIndex - 1] || "");
-                  setFeedback("");
-                  setParsedScores(null);
-                }}
-                disabled={currentQuestionIndex === 0}
-              >
-                Previous Question
-              </Button>
-              <Button
-                onClick={handleNextQuestion}
-                disabled={!feedback}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-              >
-                {currentQuestionIndex === questions.length - 1 ? "Complete Interview" : "Next Question"}
-              </Button>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
+                        <span className="text-orange-200 text-sm">Provide comprehensive detail and explanation</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
+                        <span className="text-orange-200 text-sm">Include specific examples and experiences</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
+                        <span className="text-orange-200 text-sm">Use the STAR method for comprehensive responses</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Recommendation */}
+                  <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-blue-400 text-lg">💡</span>
+                      <h4 className="font-semibold text-blue-300">Key Recommendation</h4>
+                    </div>
+                    <p className="text-blue-200 text-sm leading-relaxed">
+                      This answer needs major improvement. Provide detailed responses with specific examples and experiences.
+                    </p>
+                  </div>
+
+                  {/* Detailed Analysis */}
+                  <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-purple-400 text-lg">📝</span>
+                      <h4 className="font-semibold text-purple-300">Detailed Analysis</h4>
+                    </div>
+                    <p className="text-gray-200 text-sm leading-relaxed">
+                      This answer is extremely brief and lacks the detail needed for an effective interview response. Consider expanding significantly. Your answer has {currentAnswer.length} characters and {currentAnswer.split(' ').length} words. This is too brief for an effective interview response. Consider adding more concrete examples from your experience.
+                    </p>
+                  </div>
+
+                  {/* Word Count Stats */}
+                  <div className="bg-gray-700/30 border border-gray-600/30 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-400">{currentAnswer.split(' ').length}</div>
+                          <div className="text-xs text-gray-400">Words</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-purple-400">{currentAnswer.length}</div>
+                          <div className="text-xs text-gray-400">Characters</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-gray-400">AI Analysis Complete</div>
+                        <div className="text-xs text-green-400">✓ Processed</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+
+          {/* Navigation */}
+          {feedback && (
+            <div className="space-y-4">
+              {/* Progress Encouragement */}
+              <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+                <CardContent className="pt-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🎉</span>
+                      <div>
+                        <p className="text-sm font-medium text-green-800">
+                          Great job on question {currentQuestionIndex + 1}!
+                        </p>
+                        <p className="text-xs text-green-600">
+                          {currentQuestionIndex === questions.length - 1 
+                            ? "This was your final question!" 
+                            : `${questions.length - currentQuestionIndex - 1} more questions to go!`}
+                        </p>
+                      </div>
+                    </div>
+                    {parsedScores?.overall && (
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-green-600">
+                          {parsedScores.overall}/10
+                        </div>
+                        <div className="text-xs text-green-600">Score</div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <div className="flex justify-between">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setCurrentQuestionIndex(currentQuestionIndex - 1);
+                    setCurrentAnswer(answers[currentQuestionIndex - 1] || "");
+                    setFeedback("");
+                    setParsedScores(null);
+                  }}
+                  disabled={currentQuestionIndex === 0}
+                >
+                  Previous Question
+                </Button>
+                <Button
+                  onClick={handleNextQuestion}
+                  disabled={!feedback}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
+                  {currentQuestionIndex === questions.length - 1 ? "Complete Interview" : "Next Question"}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
     </div>
   );
 };
