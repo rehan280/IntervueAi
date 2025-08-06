@@ -1443,6 +1443,151 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
           </CardContent>
         </Card>
 
+        {/* Example Answers Section */}
+        {showExamples && (
+          <Card className="bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between text-white">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5 text-blue-400" />
+                  Example Answers with Scoring
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSelectedExampleScore('excellent')}
+                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
+                      ${selectedExampleScore === 'excellent'
+                        ? 'bg-purple-900 border-purple-400 text-white shadow-purple-500/50'
+                        : 'bg-purple-900/80 border-purple-500/60 text-purple-200 hover:border-purple-400 hover:shadow-purple-500/30'
+                      }
+                    `}
+                  >
+                    Excellent (9.2/10)
+                  </button>
+                  <button
+                    onClick={() => setSelectedExampleScore('intermediate')}
+                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
+                      ${selectedExampleScore === 'intermediate'
+                        ? 'bg-orange-500 border-orange-500 text-white shadow-orange-500/50'
+                        : 'bg-transparent border-orange-400 text-orange-400 hover:bg-orange-900/20'
+                      }
+                    `}
+                  >
+                    Intermediate (6.5/10)
+                  </button>
+                  <button
+                    onClick={() => setSelectedExampleScore('poor')}
+                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
+                      ${selectedExampleScore === 'poor'
+                        ? 'bg-purple-900 border-purple-400 text-white shadow-purple-500/50'
+                        : 'bg-purple-900/80 border-purple-500/60 text-purple-200 hover:border-purple-400 hover:shadow-purple-500/30'
+                      }
+                    `}
+                  >
+                    Poor (3.2/10)
+                  </button>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Sample Question */}
+              <div>
+                <h4 className="font-semibold text-white mb-2">Sample Question:</h4>
+                <p className="text-gray-300 italic">"Tell me about a challenging project you worked on and how you handled it."</p>
+              </div>
+
+              {/* Example Answer */}
+              <div>
+                <h4 className="font-semibold text-white mb-2">Example Answer:</h4>
+                <div className="bg-gray-700/50 border border-gray-600 rounded-md p-4">
+                  {selectedExampleScore === 'excellent' && (
+                    <p className="text-gray-200 leading-relaxed">
+                      "I led a critical project to modernize our legacy e-commerce platform that was experiencing frequent downtime and poor performance. The challenge was that we had to maintain 99.9% uptime while completely rewriting the system. I started by conducting a thorough analysis of the current system's bottlenecks and created a detailed migration plan with rollback strategies. I assembled a cross-functional team of 8 developers and coordinated with stakeholders to ensure minimal business disruption. We implemented the new system in phases, starting with non-critical features, and used feature flags to gradually transition traffic. The project was completed 2 weeks ahead of schedule, resulting in a 40% improvement in page load times and zero downtime during the transition. This experience taught me the importance of thorough planning, stakeholder communication, and having robust contingency plans."
+                    </p>
+                  )}
+                  {selectedExampleScore === 'intermediate' && (
+                    <p className="text-gray-200 leading-relaxed">
+                      "I worked on a project where we had to update our website. It was challenging because the old website was slow and customers complained about it. I talked to the team and we decided to make the website faster. We worked on it for a few weeks and made some improvements. In the end, the website was a bit faster and customers were happier. It was a good learning experience for me."
+                    </p>
+                  )}
+                  {selectedExampleScore === 'poor' && (
+                    <p className="text-gray-200 leading-relaxed">
+                      "I had to work on a project once. It was hard because the old system was bad. I did some stuff to fix it. The project was okay in the end."
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Scoring Grid */}
+              <div>
+                <h4 className="font-semibold text-white mb-4">Scoring Breakdown:</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {selectedExampleScore === 'excellent' && (
+                    <>
+                      <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-green-400">9.2</div>
+                        <div className="text-sm text-green-300">Overall Score</div>
+                      </div>
+                      <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-blue-400">9.5</div>
+                        <div className="text-sm text-blue-300">Relevance</div>
+                      </div>
+                      <div className="bg-purple-900/30 border border-purple-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-400">9.0</div>
+                        <div className="text-sm text-purple-300">Depth</div>
+                      </div>
+                      <div className="bg-indigo-900/30 border border-indigo-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-indigo-400">9.1</div>
+                        <div className="text-sm text-indigo-300">Communication</div>
+                      </div>
+                    </>
+                  )}
+                  {selectedExampleScore === 'intermediate' && (
+                    <>
+                      <div className="bg-orange-900/30 border border-orange-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-orange-400">6.5</div>
+                        <div className="text-sm text-orange-300">Overall Score</div>
+                      </div>
+                      <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-blue-400">7.0</div>
+                        <div className="text-sm text-blue-300">Relevance</div>
+                      </div>
+                      <div className="bg-purple-900/30 border border-purple-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-400">6.0</div>
+                        <div className="text-sm text-purple-300">Depth</div>
+                      </div>
+                      <div className="bg-indigo-900/30 border border-indigo-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-indigo-400">6.5</div>
+                        <div className="text-sm text-indigo-300">Communication</div>
+                      </div>
+                    </>
+                  )}
+                  {selectedExampleScore === 'poor' && (
+                    <>
+                      <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-red-400">3.2</div>
+                        <div className="text-sm text-red-300">Overall Score</div>
+                      </div>
+                      <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-blue-400">4.0</div>
+                        <div className="text-sm text-blue-300">Relevance</div>
+                      </div>
+                      <div className="bg-purple-900/30 border border-purple-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-400">2.5</div>
+                        <div className="text-sm text-purple-300">Depth</div>
+                      </div>
+                      <div className="bg-indigo-900/30 border border-indigo-500/50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-indigo-400">3.0</div>
+                        <div className="text-sm text-indigo-300">Communication</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Test Mode */}
         {testMode && (
         <div className="space-y-6">
