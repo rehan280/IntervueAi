@@ -1453,39 +1453,40 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
                   Example Answers with Scoring
                 </div>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setSelectedExampleScore('excellent')}
-                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
-                      ${selectedExampleScore === 'excellent'
-                        ? 'bg-purple-900 border-purple-400 text-white shadow-purple-500/50'
-                        : 'bg-purple-900/80 border-purple-500/60 text-purple-200 hover:border-purple-400 hover:shadow-purple-500/30'
-                      }
-                    `}
-                  >
-                    Excellent (9.2/10)
-                  </button>
-                  <button
-                    onClick={() => setSelectedExampleScore('intermediate')}
-                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
-                      ${selectedExampleScore === 'intermediate'
-                        ? 'bg-orange-500 border-orange-500 text-white shadow-orange-500/50'
-                        : 'bg-transparent border-orange-400 text-orange-400 hover:bg-orange-900/20'
-                      }
-                    `}
-                  >
-                    Intermediate (6.5/10)
-                  </button>
-                  <button
-                    onClick={() => setSelectedExampleScore('poor')}
-                    className={`px-4 py-2 rounded-xl border-2 font-semibold transition-all duration-300 shadow-lg
-                      ${selectedExampleScore === 'poor'
-                        ? 'bg-purple-900 border-purple-400 text-white shadow-purple-500/50'
-                        : 'bg-purple-900/80 border-purple-500/60 text-purple-200 hover:border-purple-400 hover:shadow-purple-500/30'
-                      }
-                    `}
-                  >
-                    Poor (3.2/10)
-                  </button>
+                  <div className="flex flex-col md:flex-row gap-2 md:gap-4 my-2 w-full md:w-auto">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 my-2 w-full">
+                      <button
+                        onClick={() => setSelectedExampleScore('excellent')}
+                        className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border-2 font-medium sm:font-semibold transition-all duration-200 w-full sm:w-auto text-sm sm:text-base
+                          ${selectedExampleScore === 'excellent'
+                            ? 'bg-blue-900 border-blue-400 text-white shadow-lg'
+                            : 'bg-transparent border-blue-400 text-blue-400 hover:bg-blue-900/20'}
+                        `}
+                      >
+                        Excellent (9.2/10)
+                      </button>
+                      <button
+                        onClick={() => setSelectedExampleScore('intermediate')}
+                        className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border-2 font-medium sm:font-semibold transition-all duration-200 w-full sm:w-auto text-sm sm:text-base
+                          ${selectedExampleScore === 'intermediate'
+                            ? 'bg-orange-600 border-orange-500 text-white shadow-lg'
+                            : 'bg-transparent border-orange-500 text-orange-500 hover:bg-orange-900/20'}
+                        `}
+                      >
+                        Intermediate (6.5/10)
+                      </button>
+                      <button
+                        onClick={() => setSelectedExampleScore('poor')}
+                        className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border-2 font-medium sm:font-semibold transition-all duration-200 w-full sm:w-auto text-sm sm:text-base
+                          ${selectedExampleScore === 'poor'
+                            ? 'bg-red-900 border-red-400 text-white shadow-lg'
+                            : 'bg-transparent border-red-400 text-red-400 hover:bg-red-900/20'}
+                        `}
+                      >
+                        Poor (3.2/10)
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </CardTitle>
             </CardHeader>
