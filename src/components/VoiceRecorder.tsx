@@ -5,18 +5,14 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { 
   Mic, 
-  MicOff, 
   Square, 
   Loader2, 
-  Volume2, 
-  Trash2, 
   Check,
   AlertCircle,
   Play,
-  Pause
+  Pause,
+  Lightbulb
 } from "lucide-react";
-// Import Custom Speech-to-Text Service
-import { speechToTextService, type SpeechToTextResult } from "@/services/speechToTextService";
 
 interface VoiceRecorderProps {
   onTranscriptionComplete: (text: string) => void;
@@ -33,34 +29,46 @@ const VoiceRecorder = ({
 }: VoiceRecorderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  const [transcription, setTranscription] = useState<SpeechToTextResult | null>(null);
+  const [transcription, setTranscription] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [showExample, setShowExample] = useState(false);
   
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     return () => {
-      if (audioUrl) {
-        URL.revokeObjectURL(audioUrl);
-      }
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
       }
     };
-  }, [audioUrl]);
+  }, []);
 
   const startRecording = async () => {
     try {
       setError(null);
+      setTranscription("");
       
-      // Start speech recognition directly
+      // Check if microphone permissions are available
+      if (navigator.permissions) {
+        try {
+          const permission = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+          if (permission.state === 'denied') {
+            setError('Microphone access is denied. Please enable microphone permissions in your browser settings and refresh the page.');
+            return;
+          }
+        } catch (e) {
+          console.log('Permission API not supported, continuing...');
+        }
+      }
+      
+      // Check if speech recognition is supported
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        setError('Speech recognition is not supported in this browser. Please use the text input option instead.');
+        return;
+      }
+      
+      // Start speech recognition
       startSpeechRecognition();
       setIsRecording(true);
       setRecordingTime(0);
@@ -78,7 +86,7 @@ const VoiceRecorder = ({
 
     } catch (error) {
       console.error('Failed to start recording:', error);
-      setError('Failed to access microphone. Please check permissions and try again.');
+      setError('Failed to access microphone. Please check permissions and try again. You can also use the text input option instead.');
     }
   };
 
@@ -95,45 +103,95 @@ const VoiceRecorder = ({
   };
 
   const startSpeechRecognition = () => {
-    if (!speechToTextService.isSpeechRecognitionSupported()) {
-      setError('Speech recognition is not supported in this browser');
-      return;
-    }
+    try {
+      setIsTranscribing(true);
+      setError(null);
 
-    setIsTranscribing(true);
-    setError(null);
+      // Create speech recognition instance
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
 
-    speechToTextService.startListening(
-      (result) => {
+      recognition.onresult = (event: any) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          const isFinal = event.results[i].isFinal;
+
+          if (isFinal) {
+            finalTranscript += transcript;
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        const result = finalTranscript || interimTranscript;
         setTranscription(result);
-        onTranscriptionComplete(result.text);
+        onTranscriptionComplete(result);
+      };
+
+      recognition.onerror = (event: any) => {
+        let errorMessage = 'Speech recognition error';
+        
+        switch (event.error) {
+          case 'no-speech':
+            errorMessage = 'No speech detected. Please try speaking again.';
+            break;
+          case 'audio-capture':
+            errorMessage = 'Audio capture error. Please check your microphone.';
+            break;
+          case 'not-allowed':
+            errorMessage = 'Microphone access denied. Please enable microphone permissions.';
+            break;
+          case 'network':
+            errorMessage = 'Network error. Please check your internet connection.';
+            break;
+          default:
+            errorMessage = `Speech recognition error: ${event.error}`;
+        }
+        
+        setError(errorMessage);
         setIsTranscribing(false);
-      },
-      (error) => {
-        setError(error);
+      };
+
+      recognition.onend = () => {
         setIsTranscribing(false);
-      },
-      () => {
-        setIsTranscribing(false);
-      }
-    );
+      };
+
+      recognition.start();
+      
+      // Store recognition instance for stopping
+      (window as any).currentRecognition = recognition;
+      
+    } catch (error) {
+      console.error('Speech recognition error:', error);
+      setError('Speech recognition failed to start. Please use the text input option instead.');
+      setIsTranscribing(false);
+    }
   };
 
   const stopSpeechRecognition = () => {
-    speechToTextService.stopListening();
+    try {
+      const recognition = (window as any).currentRecognition;
+      if (recognition) {
+        recognition.stop();
+        (window as any).currentRecognition = null;
+      }
+    } catch (error) {
+      console.error('Error stopping speech recognition:', error);
+    }
     setIsTranscribing(false);
   };
 
-  const playRecording = () => {
-    // Not needed for speech recognition - just a placeholder
-    console.log('Play recording not available with speech recognition');
-  };
-
   const clearRecording = () => {
-    setTranscription(null);
+    setTranscription("");
     setRecordingTime(0);
     setError(null);
-    setIsPlaying(false);
   };
 
   const formatTime = (seconds: number) => {
@@ -144,14 +202,24 @@ const VoiceRecorder = ({
 
   const progressPercentage = (recordingTime / (maxDuration / 1000)) * 100;
 
+  const exampleAnswers = [
+    "In my previous role as a UX Designer, I worked on a project where we had to redesign an e-commerce platform. The challenge was balancing user needs for a streamlined checkout process with business requirements for upselling opportunities. I conducted user research through interviews and usability testing, which revealed that users were abandoning their carts due to too many upsell prompts. I proposed a solution that moved upsells to non-intrusive locations while maintaining the business goals. The result was a 25% increase in conversion rate and improved user satisfaction scores.",
+    "As a Software Developer, I encountered a critical performance issue where our application was taking 30 seconds to load data. I analyzed the problem using profiling tools and discovered inefficient database queries. I optimized the queries by adding proper indexes and implementing caching strategies. This reduced the load time to under 3 seconds, significantly improving user experience and reducing server costs.",
+    "In my role as a Product Manager, I led a cross-functional team to launch a new mobile app feature. We had limited resources and tight deadlines, so I prioritized features based on user impact and business value. I used data from user analytics and A/B testing to make decisions, and we successfully launched on time with positive user feedback and exceeded our KPIs by 15%."
+  ];
+
+  const getRandomExample = () => {
+    return exampleAnswers[Math.floor(Math.random() * exampleAnswers.length)];
+  };
+
   return (
-    <Card className="w-full">
+    <Card className="w-full bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 text-white">
           <Mic className="h-5 w-5" />
           Voice Recorder
           {transcription && (
-            <Badge variant="default" className="ml-auto">
+            <Badge variant="default" className="ml-auto bg-green-600 text-white">
               <Check className="h-3 w-3 mr-1" />
               Transcribed
             </Badge>
@@ -159,17 +227,35 @@ const VoiceRecorder = ({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Example Button */}
+        <div className="flex justify-center">
+          <Button
+            onClick={() => {
+              const example = getRandomExample();
+              setTranscription(example);
+              onTranscriptionComplete(example);
+              setShowExample(true);
+            }}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2 text-blue-400 hover:text-blue-300 border-blue-500/30"
+          >
+            <Lightbulb className="h-4 w-4" />
+            Show Example Answer
+          </Button>
+        </div>
+
         {/* Recording Status */}
         {isRecording && (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-red-600 font-medium">Recording...</span>
-              <span className="text-muted-foreground">
+              <span className="text-red-400 font-medium">Recording...</span>
+              <span className="text-gray-400">
                 {formatTime(recordingTime)} / {formatTime(maxDuration / 1000)}
               </span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 text-xs text-gray-400">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
               Recording in progress
             </div>
@@ -178,119 +264,113 @@ const VoiceRecorder = ({
 
         {/* Error Display */}
         {error && (
-          <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-md">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <span className="text-sm text-red-700">{error}</span>
+          <div className="space-y-3 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 text-red-400" />
+              <span className="text-sm font-medium text-red-300">Microphone Access Issue</span>
+            </div>
+            <p className="text-sm text-red-200">{error}</p>
+            <div className="text-xs text-red-300">
+              <p>💡 Tip: You can still use the text input option to type your answers instead.</p>
+            </div>
           </div>
         )}
 
         {/* Main Controls */}
         <div className="flex items-center justify-center gap-4">
-          {!isRecording && !audioBlob && (
+          {!isRecording && !transcription && !error && (
             <Button
               onClick={startRecording}
               size="lg"
-              className="h-16 w-16 rounded-full bg-red-500 hover:bg-red-600"
+              className="h-16 w-16 rounded-full bg-red-500 hover:bg-red-600 text-white"
             >
               <Mic className="h-6 w-6" />
             </Button>
+          )}
+          
+          {error && (
+            <div className="text-center space-y-3">
+              <div className="text-sm text-gray-400">
+                Voice recording is not available
+              </div>
+              <Button
+                onClick={() => setError(null)}
+                variant="outline"
+                size="sm"
+                className="text-blue-400 hover:text-blue-300 border-blue-500/30"
+              >
+                Try Again
+              </Button>
+            </div>
           )}
 
           {isRecording && (
             <Button
               onClick={stopRecording}
               size="lg"
-              className="h-16 w-16 rounded-full bg-gray-500 hover:bg-gray-600"
+              className="h-16 w-16 rounded-full bg-gray-600 hover:bg-gray-700 text-white"
             >
               <Square className="h-6 w-6" />
             </Button>
           )}
 
-          {audioBlob && !isRecording && (
+          {transcription && !isRecording && (
             <div className="flex items-center gap-2">
-              <Button
-                onClick={playRecording}
-                variant="outline"
-                size="lg"
-                className="h-12 w-12 rounded-full"
-              >
-                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-              </Button>
               <Button
                 onClick={clearRecording}
                 variant="outline"
                 size="sm"
-                className="text-red-600 hover:text-red-700"
+                className="text-red-400 hover:text-red-300 border-red-500/30"
               >
-                <Trash2 className="h-4 w-4" />
+                Clear
               </Button>
             </div>
           )}
         </div>
 
         {/* Placeholder Text */}
-        {!audioBlob && !isRecording && (
-          <p className="text-center text-sm text-muted-foreground py-4">
+        {!transcription && !isRecording && !error && (
+          <p className="text-center text-sm text-gray-400 py-4">
             {placeholder}
           </p>
         )}
 
-        {/* Manual Transcribe Button */}
-        {!transcription && !autoTranscribe && (
-          <div className="text-center">
-            <Button
-              onClick={startSpeechRecognition}
-              disabled={isTranscribing}
-              className="flex items-center gap-2"
-            >
-              {isTranscribing ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Listening...
-                </>
-              ) : (
-                <>
-                  <Mic className="h-4 w-4" />
-                  Start Speech Recognition
-                </>
-              )}
-            </Button>
-          </div>
-        )}
-
         {/* Transcription Result */}
         {isTranscribing && (
-          <div className="flex items-center justify-center gap-2 p-4 bg-blue-50 border border-blue-200 rounded-md">
-            <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
-            <span className="text-sm text-blue-700">Transcribing your audio...</span>
+          <div className="flex items-center justify-center gap-2 p-4 bg-blue-900/20 border border-blue-500/30 rounded-md">
+            <Loader2 className="h-4 w-4 animate-spin text-blue-400" />
+            <span className="text-sm text-blue-300">Listening to your voice...</span>
           </div>
         )}
 
         {transcription && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <h4 className="font-medium text-sm">Transcribed Text:</h4>
-              <Badge variant="secondary">
-                {Math.round(transcription.confidence * 100)}% confidence
+              <h4 className="font-medium text-sm text-white">
+                {showExample ? "Example Answer:" : "Your Answer:"}
+              </h4>
+              <Badge variant="secondary" className="bg-green-900/20 text-green-300 border-green-500/30">
+                {transcription.split(' ').length} words
               </Badge>
             </div>
-            <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
-              <p className="text-sm leading-relaxed">{transcription.text}</p>
+            <div className="p-3 bg-gray-700/50 border border-gray-600 rounded-md">
+              <p className="text-sm leading-relaxed text-gray-200">{transcription}</p>
             </div>
-            {transcription.language && (
-              <p className="text-xs text-muted-foreground">
-                Detected language: {transcription.language}
+            {showExample && (
+              <p className="text-xs text-blue-400 text-center">
+                💡 This is an example of a comprehensive interview answer using the STAR method
               </p>
             )}
           </div>
         )}
 
-                 {/* Instructions */}
-         <div className="text-xs text-muted-foreground space-y-1">
-           <p>• Speak clearly and at a normal pace</p>
-           <p>• Maximum recording time: {formatTime(maxDuration / 1000)}</p>
-           <p>• Uses browser's built-in speech recognition</p>
-         </div>
+        {/* Instructions */}
+        <div className="text-xs text-gray-400 space-y-1">
+          <p>• Speak clearly and at a normal pace</p>
+          <p>• Maximum recording time: {formatTime(maxDuration / 1000)}</p>
+          <p>• Use the STAR method: Situation, Task, Action, Result</p>
+          <p>• Click "Show Example Answer" to see a good response format</p>
+        </div>
       </CardContent>
     </Card>
   );
