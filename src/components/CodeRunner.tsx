@@ -157,13 +157,13 @@ int main() {
   return (
     <div className={`code-runner ${className || ''}`}>
       <div className="mb-4">
-        <h2 className="text-2xl font-bold mb-4">Code Runner</h2>
+        <h2 className="text-2xl font-bold mb-4 text-foreground">Code Runner</h2>
         
         <div className="flex gap-4 mb-4">
           <select 
             value={language} 
             onChange={(e) => setLanguage(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md"
+            className="px-3 py-2 border border-border bg-card text-foreground rounded-md"
           >
             {supportedLanguages.map(lang => (
               <option key={lang.value} value={lang.value}>
@@ -175,7 +175,7 @@ int main() {
           <button
             onClick={runCode}
             disabled={isLoading}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <span className="flex items-center gap-2">
@@ -192,20 +192,20 @@ int main() {
 
           <button
             onClick={clearOutput}
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            className="px-4 py-2 bg-muted text-muted-foreground rounded-md hover:bg-muted/80"
           >
             Clear Output
           </button>
         </div>
 
         <div className="mb-4">
-          <h3 className="text-lg font-semibold mb-2">Quick Examples:</h3>
+          <h3 className="text-lg font-semibold mb-2 text-foreground">Quick Examples:</h3>
           <div className="flex gap-2 flex-wrap">
             {supportedLanguages.slice(0, 5).map(lang => (
               <button
                 key={lang.value}
                 onClick={() => loadExample(lang.value)}
-                className="px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                className="px-3 py-1 text-sm bg-muted/50 text-foreground rounded hover:bg-muted/80"
               >
                 {lang.label}
               </button>
@@ -216,22 +216,22 @@ int main() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2">Code Editor</h3>
+          <h3 className="text-lg font-semibold mb-2 text-foreground">Code Editor</h3>
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
             rows={15}
-            className="w-full p-3 border border-gray-300 rounded-md font-mono text-sm"
+            className="w-full p-3 border border-border bg-card text-foreground rounded-md font-mono text-sm"
             placeholder="Enter your code here..."
             disabled={isLoading}
           />
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold mb-2">Output</h3>
-          <div className="p-3 border border-gray-300 rounded-md bg-gray-50 min-h-[300px]">
+          <h3 className="text-lg font-semibold mb-2 text-foreground">Output</h3>
+          <div className="p-3 border border-border bg-muted/20 rounded-md min-h-[300px]">
             {isLoading && (
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
@@ -242,8 +242,8 @@ int main() {
             
             {!isLoading && output && (
               <div className="mb-4">
-                <h4 className="font-semibold text-green-600 mb-1">Output:</h4>
-                <pre className="whitespace-pre-wrap text-sm bg-white p-2 rounded border overflow-auto max-h-48">
+                <h4 className="font-semibold text-green-500 mb-1">Output:</h4>
+                <pre className="whitespace-pre-wrap text-sm bg-card/50 p-2 rounded border border-border overflow-auto max-h-48 text-foreground">
                   {output}
                 </pre>
               </div>
@@ -251,15 +251,15 @@ int main() {
             
             {!isLoading && error && (
               <div>
-                <h4 className="font-semibold text-red-600 mb-1">Error:</h4>
-                <pre className="whitespace-pre-wrap text-sm bg-red-50 p-2 rounded border text-red-700 overflow-auto max-h-48">
+                <h4 className="font-semibold text-red-500 mb-1">Error:</h4>
+                <pre className="whitespace-pre-wrap text-sm bg-red-950/20 p-2 rounded border border-red-800/30 text-red-400 overflow-auto max-h-48">
                   {error}
                 </pre>
               </div>
             )}
             
             {!isLoading && !output && !error && (
-              <div className="text-gray-500">
+              <div className="text-muted-foreground">
                 Run your code to see the output here.
               </div>
             )}
@@ -289,4 +289,4 @@ int main() {
   );
 };
 
-export default CodeRunner; 
+export default CodeRunner;
