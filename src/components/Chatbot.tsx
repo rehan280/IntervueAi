@@ -275,19 +275,19 @@ const Chatbot: React.FC = () => {
       </div>
       
       <div className="p-4 border-t border-gray-800">
-        <form onSubmit={handleSubmit} className="flex flex-row flex-nowrap gap-2 sm:gap-3">
+        <form onSubmit={handleSubmit} className="flex space-x-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 p-3 bg-gray-800 border border-gray-700 rounded-full text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm h-12 sm:h-14"
+            className="flex-1 p-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
             disabled={isLoading}
           />
           <Button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-full flex items-center justify-center disabled:bg-indigo-800 disabled:text-indigo-300 transition-all duration-200 h-12 w-12 sm:h-14 sm:w-14"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg flex items-center justify-center disabled:bg-indigo-800 disabled:text-indigo-300 transition-all duration-200"
           >
             {isLoading ? (
               <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

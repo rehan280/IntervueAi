@@ -336,13 +336,13 @@ export default function ChatInterface() {
         </ScrollArea>
 
         <div className="border-t border-gray-800 p-4">
-          <div className="flex flex-row flex-nowrap gap-2 sm:gap-3">
+          <div className="flex gap-2">
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Ask anything... (Press Enter to send)"
-              className="flex-1 bg-gray-800 border-gray-700 text-white h-12 sm:h-14 rounded-full"
+              className="flex-1 bg-gray-800 border-gray-700 text-white h-12"
               disabled={isLoading}
             />
             <Button
@@ -350,7 +350,7 @@ export default function ChatInterface() {
               disabled={isLoading || !inputValue.trim()}
               variant="default"
               size="icon"
-              className="bg-indigo-600 hover:bg-indigo-700 h-12 w-12 sm:h-14 sm:w-14 rounded-full"
+              className="bg-indigo-600 hover:bg-indigo-700 h-12 w-12 rounded-lg"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -362,7 +362,7 @@ export default function ChatInterface() {
           <div className="flex justify-between items-center mt-3">
             <p className="text-xs text-gray-500 flex items-center gap-1">
               <Sparkles className="w-3 h-3 text-indigo-400" />
-              Powered by IntervueAI
+              Powered by Google Gemini AI
             </p>
             <p className="text-xs text-gray-500">
               {messages.length} message{messages.length !== 1 ? 's' : ''}
