@@ -34,7 +34,7 @@ export default function InsightsPage() {
       
       try {
         const googleAI = new genAI.GoogleGenerativeAI(API_KEY);
-        const model = googleAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = googleAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
         
         const prompt = `Give me a detailed, up-to-date, and actionable industry insight for the following industry: ${industry}${subIndustry ? `, specifically in the sub-industry: ${subIndustry}` : ''}. Include current trends, challenges, opportunities, and future outlook.`;
         

@@ -267,9 +267,9 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Full width chat interface */}
-      <div className="w-full h-screen flex flex-col">
+    <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl overflow-hidden">
+      {/* Chat interface */}
+      <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700/50 p-4 lg:p-6">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -310,7 +310,7 @@ const Chatbot: React.FC = () => {
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
+        <div className="flex-1 p-4 lg:p-6 overflow-y-auto" style={{ maxHeight: 'calc(100% - 140px)' }}>
           <div className="space-y-6 max-w-4xl mx-auto">
             {messages.length === 0 && (
               <div className="flex items-center justify-center h-32">

@@ -39,11 +39,11 @@ const Header: React.FC = () => {
           <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 w-full">
               {/* Logo */}
-              <Link to="/" className="flex items-center flex-shrink-0">
+              <Link to="/" className="flex items-center flex-shrink-0 px-3 py-2 sm:px-4">
                 <img 
                   src="/logo.png" 
                   alt="IntervueAi Logo" 
-                  className="h-6 w-auto sm:h-8 object-contain"
+                  className="h-7 w-auto sm:h-9 object-contain mx-1"
                 />
               </Link>
 

@@ -57,8 +57,8 @@ const Hero = () => {
             <span className="sm:hidden">AI INTERVIEW PREP</span>
           </Badge>
           
-          <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-            <img src="/logo.png" alt="IntervueAi Logo" className="w-20 h-12 sm:w-24 sm:h-14 md:w-32 md:h-18 lg:w-40 lg:h-22 xl:w-48 xl:h-27 object-contain" />
+          <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 lg:mb-10 px-2">
+            <img src="/logo.png" alt="IntervueAi Logo" className="w-20 h-12 sm:w-24 sm:h-14 md:w-32 md:h-18 lg:w-40 lg:h-22 xl:w-48 xl:h-27 object-contain mx-auto" />
           </div>
           
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-white/90 leading-tight px-2 sm:px-4">

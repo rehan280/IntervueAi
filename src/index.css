@@ -267,6 +267,25 @@
       max-width: 100vw;
     }
     
+    /* Header logo spacing fix for mobile */
+    header .flex-shrink-0 {
+      padding: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Ensure logo doesn't touch edges on mobile */
+    header .flex-shrink-0 img {
+      margin: 0 6px;
+      padding: 2px;
+    }
+    
+    /* Additional spacing for header elements on mobile */
+    header .flex {
+      gap: 8px;
+    }
+    
     /* Additional mobile overflow fixes */
     * {
       box-sizing: border-box;

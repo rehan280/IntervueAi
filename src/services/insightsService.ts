@@ -51,7 +51,7 @@ export const insightsService = {
       }
 
       const genAI = getGenAI();
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
       const prompt = `
         Generate current industry insights for tech professionals preparing for interviews.
@@ -172,7 +172,7 @@ export const insightsService = {
       }
 
       const genAI = getGenAI();
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
       const prompt = `
         Generate the latest tech industry news that would be relevant for developers preparing for interviews.
