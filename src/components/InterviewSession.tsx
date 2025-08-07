@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Loader2, Volume2, VolumeX, TestTube, Star, Mic, Settings, Keyboard, MessageSquare, Target, Lightbulb, BarChart3 } from "lucide-react";
-import { directGeminiService } from "@/services/directGeminiService";
+import { directGeminiService } from "@/services/directIntervueAIService";
 import VoiceRecorder from "./VoiceRecorder";
 
 interface InterviewSessionProps {
@@ -2050,4 +2050,4 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
   );
 };
 
-export default InterviewSession; 
+export default InterviewSession;

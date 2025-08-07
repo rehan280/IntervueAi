@@ -5,19 +5,23 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 
-// Google OAuth Types
-declare global {
-  interface Window {
-    google: {
-      accounts: {
-        id: {
-          initialize: (config: any) => void;
-          prompt: () => void;
-          renderButton: (element: HTMLElement, options: any) => void;
-        };
-      };
-    };
-  }
+function waitForGapi(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    if (typeof window !== 'undefined' && (window as any).gapi) {
+      resolve((window as any).gapi);
+    } else {
+      let attempts = 0;
+      const interval = setInterval(() => {
+        if ((window as any).gapi) {
+          clearInterval(interval);
+          resolve((window as any).gapi);
+        } else if (++attempts > 50) { // ~5 seconds
+          clearInterval(interval);
+          reject(new Error('Google API failed to load.'));
+        }
+      }, 100);
+    }
+  });
 }
 
 const Login = () => {
@@ -26,6 +30,40 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const handleGoogleCallback = async (response: any) => {
+    try {
+      // The response object contains a credential field with the JWT token
+      const { credential } = response;
+      
+      if (!credential) {
+        throw new Error('No credential received from Google');
+      }
+
+      const result = await fetch('/api/auth/google/callback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ credential })
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      } else {
+        setError(data.message || 'Google Sign-In failed');
+      }
+    } catch (err) {
+      console.error('Google callback error:', err);
+      setError('Google Sign-In failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const [formData, setFormData] = useState({
     email: '',
@@ -111,54 +149,84 @@ const Login = () => {
     setError('');
 
     try {
-      // Your Google OAuth Client ID
-      const GOOGLE_CLIENT_ID = '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
-      
-      // Initialize Google Sign-In
+      // Use the Google Identity Services API
       if (typeof window !== 'undefined' && window.google) {
-        window.google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: handleGoogleCallback,
-          auto_select: false,
-          cancel_on_tap_outside: true,
-        });
         window.google.accounts.id.prompt();
       } else {
-        // Fallback: redirect to Google OAuth
-        window.location.href = '/api/auth/google';
+        // Fallback if Google API isn't loaded yet
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+          window.google.accounts.id.prompt();
+        };
+        document.head.appendChild(script);
       }
     } catch (err) {
+      console.error('Google Sign-In error:', err);
       setError('Google Sign-In failed. Please try again.');
-    } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleCallback = async (response: any) => {
-    try {
-      const result = await fetch('/api/auth/google/callback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          credential: response.credential
-        })
-      });
-
-      const data = await result.json();
-
-      if (result.ok) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        navigate('/');
-      } else {
-        setError(data.message || 'Google Sign-In failed');
+  useEffect(() => {
+    let cancelled = false;
+    const loadGoogleApi = async () => {
+      try {
+        // Get client ID from environment variable or fallback
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+        if (!clientId) {
+          console.error('Google Client ID is missing!');
+          if (!cancelled) setError('Google Sign-In is not configured. Please contact support.');
+          return;
+        }
+        console.log('Using Google Client ID:', clientId);
+        if (typeof window !== 'undefined' && !document.getElementById('google-api')) {
+          const script = document.createElement('script');
+          script.id = 'google-api';
+          script.src = 'https://accounts.google.com/gsi/client';
+          script.async = true;
+          script.defer = true;
+          script.onload = () => {
+            if (cancelled) return;
+            if (window.google) {
+              window.google.accounts.id.initialize({
+                client_id: clientId,
+                callback: handleGoogleCallback,
+                auto_select: false,
+                cancel_on_tap_outside: true,
+              });
+            }
+          };
+          document.head.appendChild(script);
+        } else if (window.google) {
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+        }
+      } catch (err) {
+        console.error('Google API failed to load:', err);
+        if (!cancelled) {
+          setError('Google Sign-In is currently unavailable. Please try again later.');
+        }
       }
-    } catch (err) {
-      setError('Google Sign-In failed. Please try again.');
-    }
-  };
+    };
+    
+    loadGoogleApi();
+    
+    return () => { cancelled = true; };
+  }, [handleGoogleCallback]);
 
   return (
     <div className="relative min-h-screen">
@@ -362,4 +430,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;

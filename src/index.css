@@ -268,22 +268,18 @@
     }
     
     /* Header logo spacing fix for mobile */
+    header .flex-shrink-0 img {
+      margin-left: 4px;
+    }
+    
+    /* Additional header logo spacing for mobile */
     header .flex-shrink-0 {
-      padding: 6px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 4px;
     }
     
     /* Ensure logo doesn't touch edges on mobile */
     header .flex-shrink-0 img {
-      margin: 0 6px;
-      padding: 2px;
-    }
-    
-    /* Additional spacing for header elements on mobile */
-    header .flex {
-      gap: 8px;
+      margin: 0 4px;
     }
     
     /* Additional mobile overflow fixes */

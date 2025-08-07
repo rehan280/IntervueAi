@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -53,15 +53,127 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
     }, 1500);
   };
 
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    // Simulate social login
-    setTimeout(() => {
+  const handleGoogleCallback = async (response: any) => {
+    try {
+      // The response object contains a credential field with the JWT token
+      const { credential } = response;
+      
+      if (!credential) {
+        throw new Error('No credential received from Google');
+      }
+
+      const result = await fetch('/api/auth/google/callback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ credential })
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.token);
+        onLoginSuccess();
+        onClose();
+      } else {
+        console.error('Google Sign-In failed:', data.message);
+      }
+    } catch (err) {
+      console.error('Google callback error:', err);
+    } finally {
       setIsLoading(false);
-      onLoginSuccess();
-      onClose();
-    }, 1500);
+    }
   };
+
+  const handleSocialLogin = (provider: string) => {
+    if (provider === 'google') {
+      // Use Google Identity Services API
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        // Make sure Google Identity Services is initialized with client ID before prompting
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleGoogleCallback,
+          auto_select: false,
+          cancel_on_tap_outside: true,
+        });
+        window.google.accounts.id.prompt();
+      } else {
+        // Fallback if Google API isn't loaded yet
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+          window.google.accounts.id.prompt();
+        };
+        document.head.appendChild(script);
+      }
+    } else {
+      // Handle other providers or show not implemented message
+      setIsLoading(true);
+      // Simulate API call for other providers
+      setTimeout(() => {
+        setIsLoading(false);
+        onLoginSuccess();
+        onClose();
+      }, 1500);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    // Initialize Google Identity Services when modal opens
+    const loadGoogleApi = async () => {
+      try {
+        // Get client ID from environment variable
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+        
+        if (typeof window !== 'undefined' && !document.getElementById('google-api-modal')) {
+          const script = document.createElement('script');
+          script.id = 'google-api-modal';
+          script.src = 'https://accounts.google.com/gsi/client';
+          script.async = true;
+          script.defer = true;
+          
+          script.onload = () => {
+            if (window.google) {
+              window.google.accounts.id.initialize({
+                client_id: clientId,
+                callback: handleGoogleCallback,
+                auto_select: false,
+                cancel_on_tap_outside: true,
+              });
+            }
+          };
+          
+          document.head.appendChild(script);
+        } else if (window.google) {
+          // Google API already loaded, initialize
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+        }
+      } catch (err) {
+        console.error('Google API failed to load:', err);
+      }
+    };
+    
+    loadGoogleApi();
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -293,4 +405,4 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
   );
 };
 
-export default LoginModal; 
+export default LoginModal;

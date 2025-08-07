@@ -310,7 +310,7 @@ const Chatbot: React.FC = () => {
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 p-4 lg:p-6 overflow-y-auto" style={{ maxHeight: 'calc(100% - 140px)' }}>
+        <div className="flex-1 p-4 lg:p-6 overflow-y-auto max-h-[400px]">
           <div className="space-y-6 max-w-4xl mx-auto">
             {messages.length === 0 && (
               <div className="flex items-center justify-center h-32">

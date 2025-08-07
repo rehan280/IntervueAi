@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, Briefcase, Star, Loader2, Volume2, VolumeX, TestTube, Mic, Settings, Keyboard, MessageSquare } from "lucide-react";
-import { directGeminiService } from "@/services/directGeminiService";
+import { directGeminiService } from "@/services/directIntervueAIService";
 import InterviewSessionComponent from "@/components/InterviewSession";
 
 type InterviewPhase = "role-selection" | "interview" | "results";
@@ -346,7 +346,7 @@ const InterviewPractice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero pt-16">
+    <div className="min-h-screen bg-gradient-hero">
       {currentPhase === "role-selection" && <RoleSelector />}
       {currentPhase === "interview" && <InterviewSession />}
       {currentPhase === "results" && <InterviewResults />}
@@ -364,4 +364,4 @@ const InterviewPractice = () => {
   );
 };
 
-export default InterviewPractice; 
+export default InterviewPractice;

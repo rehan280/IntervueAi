@@ -154,7 +154,7 @@ export const indiaInsightsService = {
       }
 
       const genAI = getGenAI();
-      const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
       const prompt = `
         Generate the latest tech industry news from India that would be relevant for developers preparing for interviews.

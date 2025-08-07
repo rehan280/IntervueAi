@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { directGeminiService } from "@/services/directGeminiService";
+import { directGeminiService } from "@/services/directIntervueAIService";
 import { Loader2 } from "lucide-react";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 
@@ -169,4 +169,4 @@ const DirectAnalysisTest = () => {
   );
 };
 
-export default DirectAnalysisTest; 
+export default DirectAnalysisTest;
