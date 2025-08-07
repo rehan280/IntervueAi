@@ -3,7 +3,7 @@ import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Copy, ThumbsUp, ThumbsDown, Bot, Send } from 'lucide-react';
+import { Copy, ThumbsUp, ThumbsDown, Bot, Send, MessageCircle, Zap, Shield, Brain, Loader2 } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -13,6 +13,20 @@ interface Message {
   liked?: boolean;
   disliked?: boolean;
 }
+
+// Vector Logo Component
+const ChatLogo = () => (
+  <div className="relative">
+    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
+      <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center">
+        <MessageCircle className="w-4 h-4 text-indigo-600" />
+      </div>
+    </div>
+    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 flex items-center justify-center">
+      <div className="w-2 h-2 bg-white rounded-full"></div>
+    </div>
+  </div>
+);
 
 const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -30,7 +44,7 @@ const Chatbot: React.FC = () => {
     setMessages([
       {
         id: '1',
-        text: 'Hello! I\'m your AI assistant powered by Google Gemini. How can I help you today?',
+        text: 'Hello! I\'m your AI assistant powered by IntervueAI. How can I help you today?',
         sender: 'bot',
         timestamp: new Date()
       }
@@ -56,6 +70,7 @@ const Chatbot: React.FC = () => {
   // Function to copy message content to clipboard
   const copyMessage = (content: string) => {
     navigator.clipboard.writeText(content);
+    // You can replace this with a toast notification if available
     alert('Message copied to clipboard');
   };
 
@@ -98,10 +113,10 @@ const Chatbot: React.FC = () => {
         
         setMessages(prev => [...prev, systemMessage]);
       }
-
+      
       // Add bot response
       const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: Date.now().toString(),
         text: response,
         sender: 'bot',
         timestamp: new Date()
@@ -109,23 +124,13 @@ const Chatbot: React.FC = () => {
 
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      console.error('Error getting response:', error);
-      
-      // Create a more informative error message
-      let errorText = 'Sorry, I encountered an error. Please try again later.';
-      
-      // Check if it's an API error
-      if (error instanceof Error && error.message.includes('HTTP error! status: 403')) {
-        errorText = 'Sorry, I cannot connect to the AI service right now due to authentication issues. Our team has been notified and is working on a fix. Please try again later.';
-      } else if (error instanceof Error) {
-        errorText = `Sorry, I encountered an error: ${error.message}. Please try again later.`;
-      }
+      console.error('Error generating response:', error);
       
       // Add error message
       const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: errorText,
-        sender: 'bot',
+        id: Date.now().toString(),
+        text: "I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.",
+        sender: 'system',
         timestamp: new Date()
       };
 
@@ -134,23 +139,21 @@ const Chatbot: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
-  // Handle like/dislike functionality
+
   const handleFeedback = (messageId: string, isLike: boolean) => {
     setMessages(prev => 
-      prev.map(m => 
-        m.id === messageId 
+      prev.map(message => 
+        message.id === messageId 
           ? { 
-              ...m, 
-              liked: isLike ? !m.liked : false, 
-              disliked: !isLike ? !m.disliked : false 
+              ...message, 
+              liked: isLike ? !message.liked : false, 
+              disliked: !isLike ? !message.disliked : false 
             } 
-          : m
+          : message
       )
     );
   };
 
-  // Function to generate content using Gemini API
   const generateGeminiContent = async (prompt: string): Promise<string> => {
     try {
       const response = await axios.post(
@@ -172,138 +175,227 @@ const Chatbot: React.FC = () => {
         }
       );
       
-      return response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini API';
+      return response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from IntervueAI';
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
+      console.error('Error calling IntervueAI:', error);
       throw error;
     }
   };
 
   const formatTimestamp = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+
+  const MessageComponent = ({ message }: { message: Message }) => {
+    const isUser = message.sender === 'user';
+    const isSystem = message.sender === 'system';
+    
+    return (
+      <div className={`flex gap-3 ${isUser ? 'justify-end' : ''} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`}>
+        {!isUser && (
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+            {isSystem ? (
+              <Shield className="w-5 h-5" />
+            ) : (
+              <Brain className="w-5 h-5" />
+            )}
+          </div>
+        )}
+        
+        <div className={`flex-1 max-w-[85%] sm:max-w-[75%] ${isUser ? 'text-right' : ''}`}>
+          <div 
+            className={`inline-block p-4 rounded-2xl shadow-lg ${
+              isUser 
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-indigo-500/25' 
+                : isSystem
+                  ? 'bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 text-amber-200 shadow-amber-500/10'
+                  : 'bg-gradient-to-r from-gray-800/80 to-gray-700/80 border border-gray-600/50 text-white backdrop-blur-sm shadow-gray-900/50'
+            }`}
+          >
+            <div className="whitespace-pre-wrap leading-relaxed">{message.text}</div>
+            
+            {!isUser && !isSystem && (
+              <div className="flex items-center gap-1 mt-3 justify-end">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-200"
+                  onClick={() => copyMessage(message.text)}
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`h-8 w-8 rounded-full transition-all duration-200 ${
+                    message.liked 
+                      ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30' 
+                      : 'bg-gray-700/50 hover:bg-gray-600/50'
+                  }`}
+                  onClick={() => handleFeedback(message.id, true)}
+                >
+                  <ThumbsUp className="h-3 w-3" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`h-8 w-8 rounded-full transition-all duration-200 ${
+                    message.disliked 
+                      ? 'bg-red-600/20 text-red-400 hover:bg-red-600/30' 
+                      : 'bg-gray-700/50 hover:bg-gray-600/50'
+                  }`}
+                  onClick={() => handleFeedback(message.id, false)}
+                >
+                  <ThumbsDown className="h-3 w-3" />
+                </Button>
+              </div>
+            )}
+            
+            <div className="text-xs text-gray-500 mt-2">
+              {formatTimestamp(message.timestamp)}
+            </div>
+          </div>
+        </div>
+        
+        {isUser && (
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-800 flex items-center justify-center shadow-lg">
+            <span className="text-sm font-semibold">YOU</span>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
-    <div className="flex flex-col h-full max-w-4xl mx-auto bg-gray-900 rounded-xl border border-gray-800 overflow-hidden shadow-xl">
-      <div className="p-4 bg-gray-800 border-b border-gray-700 flex items-center">
-        <div className="h-3 w-3 bg-indigo-500 rounded-full mr-2"></div>
-        <h2 className="text-lg font-semibold text-white">AI Assistant</h2>
-      </div>
+    <div className="min-h-screen bg-gradient-hero relative">
+      {/* Background logo blend like home page */}
+      <div 
+        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('/logo.png')`,
+          backgroundSize: '50%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      ></div>
       
-      <div className="flex-1 p-4 overflow-y-auto max-h-[500px]">
-        <div className="space-y-4">
-          {messages.map(message => (
-            <div 
-              key={message.id} 
-              className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              {message.sender !== 'user' && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white flex items-center justify-center">
-                  {message.sender === 'system' ? (
-                    <span className="text-xs font-bold">SYS</span>
-                  ) : (
-                    <Bot className="w-4 h-4" />
-                  )}
+      <div className="relative w-full h-full max-w-4xl mx-auto p-4">
+        <div className="w-full h-[calc(100vh-2rem)] flex flex-col bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl shadow-black/20">
+          {/* Header */}
+          <div className="border-b border-white/20 p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-t-2xl">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+              <div className="text-xl lg:text-2xl text-white flex items-center gap-3">
+                <ChatLogo />
+                <div className="flex flex-col">
+                  <span className="font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    AI Chat Assistant
+                  </span>
+                  <span className="text-xs text-white/70 font-normal flex items-center gap-1">
+                    <Zap className="w-3 h-3 text-indigo-400" />
+                    Powered by IntervueAI
+                  </span>
                 </div>
-              )}
+              </div>
               
-              <div className={`flex-1 max-w-[85%] sm:max-w-[75%] ${message.sender === 'user' ? 'text-right' : ''}`}>
-                <div 
-                  className={`inline-block p-3 rounded-lg ${message.sender === 'user' 
-                    ? 'bg-indigo-600 text-white' 
-                    : message.sender === 'system'
-                      ? 'bg-amber-500/10 border border-amber-500/30 text-amber-200'
-                      : 'bg-gray-800 border border-gray-700 text-white'}`}
-                >
-                  <div className="whitespace-pre-wrap text-sm">{message.text}</div>
-                  
-                  <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
-                    <span>{formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}</span>
-                    
-                    {message.sender === 'bot' && (
-                      <div className="flex items-center gap-1">
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="h-6 w-6 rounded-full bg-gray-700 hover:bg-gray-600"
-                          onClick={() => copyMessage(message.text)}
-                        >
-                          <Copy className="h-3 w-3" />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className={`h-6 w-6 rounded-full ${message.liked ? 'bg-green-600 text-white' : 'bg-gray-700 hover:bg-gray-600'}`}
-                          onClick={() => handleFeedback(message.id, true)}
-                        >
-                          <ThumbsUp className="h-3 w-3" />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className={`h-6 w-6 rounded-full ${message.disliked ? 'bg-red-600 text-white' : 'bg-gray-700 hover:bg-gray-600'}`}
-                          onClick={() => handleFeedback(message.id, false)}
-                        >
-                          <ThumbsDown className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
+              <Badge 
+                variant={isLoading ? "secondary" : "default"} 
+                className={`${
+                  isLoading 
+                    ? "bg-white/20 text-white" 
+                    : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+                } backdrop-blur-sm transition-all duration-200`}
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-1">
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                    Processing...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    Ready
+                  </div>
+                )}
+              </Badge>
+            </div>
+          </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
+            <div className="space-y-6">
+              {messages.length === 0 && (
+                <div className="flex items-center justify-center h-32">
+                  <div className="text-center text-white/70">
+                    <MessageCircle className="w-12 h-12 mx-auto mb-3 text-white/50" />
+                    <p className="mb-2 font-medium">No messages yet</p>
+                    <p className="text-sm">Start a conversation by typing a message below</p>
                   </div>
                 </div>
-              </div>
-              
-              {message.sender === 'user' && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center">
-                  <span className="text-xs font-bold">YOU</span>
+              )}
+              {messages.map((message) => (
+                <MessageComponent key={message.id} message={message} />
+              ))}
+              {isLoading && (
+                <div className="flex gap-3 animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                    <Brain className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 max-w-[75%]">
+                    <div className="inline-block p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+                      <div className="flex items-center gap-3">
+                        <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
+                        <div className="flex flex-col gap-1">
+                          <span className="text-sm text-white/80 font-medium">Thinking...</span>
+                          <div className="flex gap-1">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
+              <div ref={messagesEndRef} />
             </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-gray-700 text-white rounded-lg p-3 max-w-[80%]">
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 bg-indigo-400 rounded-full animate-pulse"></div>
-                  <div className="h-2 w-2 bg-indigo-400 rounded-full animate-pulse delay-75"></div>
-                  <div className="h-2 w-2 bg-indigo-400 rounded-full animate-pulse delay-150"></div>
-                </div>
-              </div>
+          </div>
+
+          {/* Input Area */}
+          <div className="border-t border-white/20 p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-b-2xl">
+            <form onSubmit={handleSubmit} className="flex gap-3 items-end">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask anything... (Press Enter to send)"
+                className="flex-1 bg-white/10 border border-white/20 text-white h-12 lg:h-14 rounded-xl px-4 backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 placeholder:text-white/50"
+                disabled={isLoading}
+              />
+              <Button
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                variant="default"
+                size="icon"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 h-12 lg:h-14 w-12 lg:w-14 rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+              </Button>
+            </form>
+            <div className="flex justify-between items-center mt-3">
+              <p className="text-xs text-white/60 flex items-center gap-1">
+                <Zap className="w-3 h-3 text-indigo-400" />
+                Powered by IntervueAI
+              </p>
+              <p className="text-xs text-white/60">
+                {messages.length} message{messages.length !== 1 ? 's' : ''}
+              </p>
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
-      
-      <div className="p-4 border-t border-gray-800">
-        <form onSubmit={handleSubmit} className="flex space-x-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-            className="flex-1 p-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
-            disabled={isLoading}
-          />
-          <Button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg flex items-center justify-center disabled:bg-indigo-800 disabled:text-indigo-300 transition-all duration-200"
-          >
-            {isLoading ? (
-              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            ) : (
-              <Send className="h-5 w-5" />
-            )}
-          </Button>
-        </form>
-        <div className="mt-2 flex justify-between items-center">
-          <p className="text-xs text-gray-500">Powered by AI Assistant</p>
-          <Badge variant="outline" className="text-xs bg-gray-800 text-gray-400 border-gray-700">
-            {isLoading ? "Processing..." : "Ready"}
-          </Badge>
+          </div>
         </div>
       </div>
     </div>

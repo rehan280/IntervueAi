@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from '@/hooks/use-toast';
-import { Bot, Copy, Send, ThumbsDown, ThumbsUp, Loader2, Sparkles } from 'lucide-react';
+import { Bot, Copy, Send, ThumbsDown, ThumbsUp, Loader2, Sparkles, MessageCircle, Zap, Shield, Brain } from 'lucide-react';
 import axios from 'axios';
 
 interface Message {
@@ -24,40 +24,52 @@ interface Model {
   status: 'available' | 'limited';
 }
 
+// Vector Logo Component
+const ChatLogo = () => (
+  <div className="relative">
+    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
+      <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center">
+        <MessageCircle className="w-4 h-4 text-indigo-600" />
+      </div>
+    </div>
+    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 flex items-center justify-center">
+      <div className="w-2 h-2 bg-white rounded-full"></div>
+    </div>
+  </div>
+);
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([{
     id: '1',
     content: 'Hello! I\'m your AI assistant. How can I help you today?',
     sender: 'bot',
     timestamp: new Date(),
-    model: 'gemini-2.0-flash'
+    model: 'intervue-ai'
   }]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('gemini-2.0-flash');
+  const [selectedModel, setSelectedModel] = useState('intervue-ai');
   const [isUsingFallback, setIsUsingFallback] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCUU5SkCDqqiSIQbPBHhhrQaoPTTHJyOEA';
 
   // Available models
   const availableModels: Model[] = [
-    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', status: 'available' },
+    { id: 'intervue-ai', name: 'IntervueAI', status: 'available' },
   ];
 
-  // Scroll to bottom when messages change, but only within the chat container
+  // Scroll to bottom when messages change
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const scrollToBottom = () => {
-    // Find the scrollable parent container by traversing up the DOM
     if (messagesEndRef.current) {
       let scrollArea = messagesEndRef.current.parentElement;
       while (scrollArea && getComputedStyle(scrollArea).overflowY !== 'auto') {
         scrollArea = scrollArea.parentElement;
       }
       
-      // If we found a scrollable container, scroll it to the bottom
       if (scrollArea) {
         scrollArea.scrollTop = scrollArea.scrollHeight;
       }
@@ -68,7 +80,7 @@ export default function ChatInterface() {
   const sendMessageToGemini = async (prompt: string, model: string): Promise<string> => {
     try {
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`,
         {
           contents: [
             {
@@ -86,9 +98,9 @@ export default function ChatInterface() {
         }
       );
       
-      return response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini API';
+      return response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from IntervueAI';
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
+      console.error('Error calling IntervueAI:', error);
       throw error;
     }
   };
@@ -111,7 +123,6 @@ export default function ChatInterface() {
     try {
       const response = await sendMessageToGemini(inputValue, selectedModel);
       
-      // Check if response contains fallback indicators
       const isFallbackResponse = [
         "I'm currently experiencing connection issues",
         "connection issues with my knowledge base",
@@ -119,11 +130,9 @@ export default function ChatInterface() {
         "try again later when our systems"
       ].some(phrase => response.includes(phrase));
       
-      // If this is a fallback response and we haven't shown the fallback message yet
       if (isFallbackResponse && !isUsingFallback) {
         setIsUsingFallback(true);
         
-        // Add system message about fallback mode
         const systemMessage: Message = {
           id: `system-${Date.now().toString()}`,
           content: "⚠️ We're currently experiencing connection issues with our AI service. Switching to offline mode with limited capabilities. Some responses may be generic.",
@@ -147,7 +156,6 @@ export default function ChatInterface() {
     } catch (error: any) {
       console.error('Error in chat:', error);
       
-      // Handle specific HTTP errors
       if (error.message && error.message.includes('403')) {
         toast({
           title: 'Authentication Error',
@@ -182,43 +190,48 @@ export default function ChatInterface() {
   };
 
   const MessageComponent = ({ message }: { message: Message }) => {
+    const isUser = message.sender === 'user';
+    const isSystem = message.sender === 'system';
+    
     return (
-      <div className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : ''}`}>
-        {message.sender !== 'user' && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white flex items-center justify-center">
-            {message.sender === 'system' ? (
-              <span className="text-xs font-bold">SYS</span>
+      <div className={`flex gap-3 ${isUser ? 'justify-end' : ''} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`}>
+        {!isUser && (
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+            {isSystem ? (
+              <Shield className="w-5 h-5" />
             ) : (
-              <Bot className="w-4 h-4" />
+              <Brain className="w-5 h-5" />
             )}
           </div>
         )}
         
-        <div className={`flex-1 ${message.sender === 'user' ? 'text-right' : ''}`}>
+        <div className={`flex-1 max-w-[85%] sm:max-w-[75%] ${isUser ? 'text-right' : ''}`}>
           <div 
-            className={`inline-block p-3 rounded-lg ${message.sender === 'user' 
-              ? 'bg-indigo-600 text-white' 
-              : message.sender === 'system'
-                ? 'bg-amber-500/10 border border-amber-500/30 text-amber-200'
-                : 'bg-gray-800 border border-gray-700 text-white'}`}
+            className={`inline-block p-4 rounded-2xl shadow-lg ${
+              isUser 
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-indigo-500/25' 
+                : isSystem
+                  ? 'bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 text-amber-200 shadow-amber-500/10'
+                  : 'bg-gradient-to-r from-gray-800/80 to-gray-700/80 border border-gray-600/50 text-white backdrop-blur-sm shadow-gray-900/50'
+            }`}
           >
-            {message.sender !== 'user' && message.sender !== 'system' && (
-              <div className="flex items-center gap-2 mb-1 text-xs text-gray-400">
-                <Badge variant="outline" className="bg-gray-700/50 text-gray-300 border-gray-600">
+            {!isUser && !isSystem && (
+              <div className="flex items-center gap-2 mb-2 text-xs text-gray-400">
+                <Badge variant="outline" className="bg-gray-700/50 text-gray-300 border-gray-600 text-xs">
                   {message.model}
                 </Badge>
-                <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+                <span className="text-gray-500">{new Date(message.timestamp).toLocaleTimeString()}</span>
               </div>
             )}
             
-            <div className="whitespace-pre-wrap">{message.content}</div>
+            <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
             
-            {message.sender === 'bot' && (
-              <div className="flex items-center gap-2 mt-2 justify-end">
+            {!isUser && !isSystem && (
+              <div className="flex items-center gap-1 mt-3 justify-end">
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-6 w-6 rounded-full bg-gray-700 hover:bg-gray-600"
+                  className="h-8 w-8 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-200"
                   onClick={() => copyMessage(message.content)}
                 >
                   <Copy className="h-3 w-3" />
@@ -226,7 +239,11 @@ export default function ChatInterface() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className={`h-6 w-6 rounded-full ${message.liked ? 'bg-green-600 text-white' : 'bg-gray-700 hover:bg-gray-600'}`}
+                  className={`h-8 w-8 rounded-full transition-all duration-200 ${
+                    message.liked 
+                      ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30' 
+                      : 'bg-gray-700/50 hover:bg-gray-600/50'
+                  }`}
                   onClick={() => {
                     setMessages(prev => 
                       prev.map(m => 
@@ -242,7 +259,11 @@ export default function ChatInterface() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className={`h-6 w-6 rounded-full ${message.disliked ? 'bg-red-600 text-white' : 'bg-gray-700 hover:bg-gray-600'}`}
+                  className={`h-8 w-8 rounded-full transition-all duration-200 ${
+                    message.disliked 
+                      ? 'bg-red-600/20 text-red-400 hover:bg-red-600/30' 
+                      : 'bg-gray-700/50 hover:bg-gray-600/50'
+                  }`}
                   onClick={() => {
                     setMessages(prev => 
                       prev.map(m => 
@@ -260,9 +281,9 @@ export default function ChatInterface() {
           </div>
         </div>
         
-        {message.sender === 'user' && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center">
-            <span className="text-xs font-bold">YOU</span>
+        {isUser && (
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-800 flex items-center justify-center shadow-lg">
+            <span className="text-sm font-semibold">YOU</span>
           </div>
         )}
       </div>
@@ -270,106 +291,149 @@ export default function ChatInterface() {
   };
 
   return (
-    <Card className="w-full h-full flex flex-col bg-gray-900 border-gray-800 shadow-xl">
-      <CardHeader className="border-b border-gray-800 pb-3">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
-          <CardTitle className="text-xl text-white flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center">
-              <Bot className="h-4 w-4 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span>AI Chat Assistant</span>
-              <span className="text-xs text-gray-400 font-normal">Powered by Google Gemini AI</span>
-            </div>
-          </CardTitle>
-          
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              className="bg-gray-800 border border-gray-700 rounded-md px-2 py-1 text-sm text-white flex-1 sm:flex-none"
-            >
-              {availableModels.map((model) => (
-                <option key={model.id} value={model.id} disabled={model.status === 'limited'}>
-                  {model.name} {model.status === 'limited' ? '(Limited)' : ''}
-                </option>
-              ))}
-            </select>
-            <Badge variant={isLoading ? "secondary" : "default"} className={isLoading ? "bg-gray-700" : "bg-green-600"}>
-              {isLoading ? "Processing..." : "Ready"}
-            </Badge>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="flex-1 flex flex-col p-0">
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4">
-            {messages.length === 0 && (
-              <div className="flex items-center justify-center h-32">
-                <div className="text-center text-gray-500">
-                  <p className="mb-2">No messages yet</p>
-                  <p className="text-sm">Start a conversation by typing a message below</p>
+    <div className="min-h-screen bg-gradient-hero relative">
+      {/* Background logo blend like home page */}
+      <div 
+        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('/logo.png')`,
+          backgroundSize: '50%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      ></div>
+      
+      <div className="relative w-full h-full max-w-4xl mx-auto p-4">
+        <Card className="w-full h-[calc(100vh-2rem)] flex flex-col bg-white/10 backdrop-blur-md border-white/20 shadow-2xl shadow-black/20">
+          <CardHeader className="border-b border-white/20 pb-4 bg-white/5 backdrop-blur-sm">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+              <CardTitle className="text-xl lg:text-2xl text-white flex items-center gap-3">
+                <ChatLogo />
+                <div className="flex flex-col">
+                  <span className="font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    AI Chat Assistant
+                  </span>
+                  <span className="text-xs text-white/70 font-normal flex items-center gap-1">
+                    <Zap className="w-3 h-3 text-indigo-400" />
+                    Powered by IntervueAI
+                  </span>
                 </div>
+              </CardTitle>
+              
+              <div className="flex items-center gap-3 w-full lg:w-auto">
+                <select
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm text-white flex-1 lg:flex-none backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                >
+                  {availableModels.map((model) => (
+                    <option key={model.id} value={model.id} disabled={model.status === 'limited'}>
+                      {model.name} {model.status === 'limited' ? '(Limited)' : ''}
+                    </option>
+                  ))}
+                </select>
+                <Badge 
+                  variant={isLoading ? "secondary" : "default"} 
+                  className={`${
+                    isLoading 
+                      ? "bg-white/20 text-white" 
+                      : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+                  } backdrop-blur-sm transition-all duration-200`}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-1">
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      Processing...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      Ready
+                    </div>
+                  )}
+                </Badge>
               </div>
-            )}
-            {messages.map((message) => (
-              <MessageComponent key={message.id} message={message} />
-            ))}
-            {isLoading && (
-              <div className="flex gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white flex items-center justify-center">
-                  <Bot className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="inline-block p-3 rounded-lg bg-gray-800 border border-gray-700">
-                    <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
-                      <span className="text-sm text-gray-400">Thinking...</span>
+            </div>
+          </CardHeader>
+
+          <CardContent className="flex-1 flex flex-col p-0">
+            <ScrollArea className="flex-1 p-4 lg:p-6">
+              <div className="space-y-6">
+                {messages.length === 0 && (
+                  <div className="flex items-center justify-center h-32">
+                    <div className="text-center text-white/70">
+                      <MessageCircle className="w-12 h-12 mx-auto mb-3 text-white/50" />
+                      <p className="mb-2 font-medium">No messages yet</p>
+                      <p className="text-sm">Start a conversation by typing a message below</p>
                     </div>
                   </div>
-                </div>
+                )}
+                {messages.map((message) => (
+                  <MessageComponent key={message.id} message={message} />
+                ))}
+                {isLoading && (
+                  <div className="flex gap-3 animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                      <Brain className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 max-w-[75%]">
+                      <div className="inline-block p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+                        <div className="flex items-center gap-3">
+                          <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
+                          <div className="flex flex-col gap-1">
+                            <span className="text-sm text-white/80 font-medium">Thinking...</span>
+                            <div className="flex gap-1">
+                              <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                              <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
+            </ScrollArea>
 
-        <div className="border-t border-gray-800 p-4">
-          <div className="flex gap-2">
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Ask anything... (Press Enter to send)"
-              className="flex-1 bg-gray-800 border-gray-700 text-white h-12"
-              disabled={isLoading}
-            />
-            <Button
-              onClick={handleSendMessage}
-              disabled={isLoading || !inputValue.trim()}
-              variant="default"
-              size="icon"
-              className="bg-indigo-600 hover:bg-indigo-700 h-12 w-12 rounded-lg"
-            >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Send className="w-5 h-5" />
-              )}
-            </Button>
-          </div>
-          <div className="flex justify-between items-center mt-3">
-            <p className="text-xs text-gray-500 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-indigo-400" />
-              Powered by Google Gemini AI
-            </p>
-            <p className="text-xs text-gray-500">
-              {messages.length} message{messages.length !== 1 ? 's' : ''}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+            <div className="border-t border-white/20 p-4 lg:p-6 bg-white/5 backdrop-blur-sm">
+              <div className="flex gap-3 items-end">
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask anything... (Press Enter to send)"
+                  className="flex-1 bg-white/10 border-white/20 text-white h-12 lg:h-14 rounded-xl backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 placeholder:text-white/50"
+                  disabled={isLoading}
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={isLoading || !inputValue.trim()}
+                  variant="default"
+                  size="icon"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 h-12 lg:h-14 w-12 lg:w-14 rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                </Button>
+              </div>
+              <div className="flex justify-between items-center mt-3">
+                <p className="text-xs text-white/60 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                  Powered by IntervueAI
+                </p>
+                <p className="text-xs text-white/60">
+                  {messages.length} message{messages.length !== 1 ? 's' : ''}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

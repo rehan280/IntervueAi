@@ -135,13 +135,56 @@ IMPORTANT:
       // Return a detailed fallback analysis based on the answer content
       return this.generateFallbackAnalysis(question, answer, role);
     }
-- Be specific about what was said and what was missing
-- Provide unique feedback that reflects the particular answer given
-- Don't give generic feedback - analyze the specific response
-- Consider the role requirements when evaluating technical depth
-- Be honest and accurate in your assessment
-- ALWAYS provide the detailed scoring format above
-- Include word count and character count in the analysis`;
+  }
+
+  // Guidelines for analysis:
+  // - Be specific about what was said and what was missing
+  // - Provide unique feedback that reflects the particular answer given
+  // - Don't give generic feedback - analyze the specific response
+  // - Consider the role requirements when evaluating technical depth
+  // - Be honest and accurate in your assessment
+  // - ALWAYS provide the detailed scoring format above
+  // - Include word count and character count in the analysis
+  
+  async analyzeAnswerWithFetch(question: string, answer: string, role: string): Promise<string> {
+    const prompt = `You're an interview coach.
+
+Evaluate the following answer to an interview question and give:
+
+1. A score out of 10 for each of the following categories:
+   - Correctness (Did the answer reflect accurate and logical understanding?)
+   - Relevance (Did it directly answer the question?)
+   - Depth & Detail (Was the answer insightful and supported by examples?)
+   - Communication (Was it clear, structured, and professional?)
+
+2. Provide overall strengths based on the categories scored above.
+
+3. Point out areas of improvement **only based on weaknesses**.
+
+4. Give a key recommendation based on the overall rating.
+
+5. Detect and include the **word count** and **character count** of the answer.
+
+6. Adapt the tone of your feedback to the overall rating:
+   - 1–3: Very weak
+   - 4–6: Needs improvement
+   - 7–8: Good but can improve
+   - 9–10: Excellent, near interview-ready (400+ characters, detailed examples, professional)
+
+CONTEXT:
+Role: ${role}
+Question: "${question}"
+
+User's answer: 
+"""
+${answer}
+"""
+
+DYNAMIC SCORING GUIDELINES:
+- 1-3: Very weak (less than 50 characters, no examples, unclear)
+- 4-6: Needs improvement (50-200 characters, basic response, minimal detail)
+- 7-8: Good but can improve (200-400 characters, good examples, well-structured)
+- 9-10: Excellent (400+ characters, detailed examples, professional)`;
 
     try {
       console.log("Calling Gemini API with:", { question, answer, role });
