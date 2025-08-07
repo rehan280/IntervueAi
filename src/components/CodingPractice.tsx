@@ -2189,7 +2189,7 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       {selectedProblem.category}
                     </Badge>
                   </div>
-                  <div className="problem-actions flex flex-wrap gap-2 mt-2">
+                  <div className="problem-actions flex flex-wrap gap-2">
                     <Button 
                       variant="outline" 
                       size="sm" 
@@ -2204,7 +2204,12 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
                       <span className="hidden sm:inline">See Solution</span>
                       <span className="sm:hidden">Solution</span>
                     </Button>
-                    <Button variant="outline" size="sm" className="action-button secondary text-xs" onClick={handleDownloadPDF}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="action-button secondary text-xs" 
+                      onClick={handleDownloadPDF}
+                    >
                       <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                       <span className="hidden sm:inline">Download PDF</span>
                       <span className="sm:hidden">PDF</span>
@@ -2492,4 +2497,4 @@ echo "Output: [" . implode(", ", $s) . "]\\n";
   );
 };
 
-export default CodingPractice; 
+export default CodingPractice;

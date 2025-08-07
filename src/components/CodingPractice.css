@@ -113,9 +113,9 @@
 /* Problem header styling */
 .problem-header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 0.5rem;
   padding: 0.75rem;
   border-bottom: 1px solid hsl(210, 20%, 18%);
@@ -123,6 +123,7 @@
   border-radius: 8px 8px 0 0;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 @media (min-width: 640px) {
@@ -130,6 +131,8 @@
     gap: 0.75rem;
     padding: 1rem;
     border-radius: 12px 12px 0 0;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -137,6 +140,20 @@
   .problem-header {
     gap: 1rem;
     padding: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .problem-badges {
+    width: auto;
+    flex: 0 1 auto;
+  }
+  
+  .problem-actions {
+    width: auto;
+    flex: 0 1 auto;
+    justify-content: flex-end;
   }
 }
 
@@ -146,11 +163,22 @@
   gap: 0.25rem;
   align-items: center;
   width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.problem-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 @media (min-width: 640px) {
   .problem-badges {
     gap: 0.5rem;
+    width: auto;
   }
 }
 
@@ -159,12 +187,17 @@
   flex-wrap: wrap;
   gap: 0.25rem;
   align-items: center;
-  width: 100%;
+  justify-content: flex-end;
+  width: auto;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 640px) {
   .problem-actions {
     gap: 0.5rem;
+    width: auto;
+    justify-content: flex-end;
   }
 }
 
@@ -773,14 +806,23 @@
   }
   
   .problem-header {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
+    padding-right: 0.75rem;
   }
   
-  .problem-badges,
+  .problem-badges {
+    justify-content: flex-start;
+    width: auto;
+    flex: 1;
+  }
+  
   .problem-actions {
-    justify-content: center;
+    justify-content: flex-end;
+    width: auto;
+    flex-shrink: 0;
   }
   
   .problem-content {
@@ -836,6 +878,19 @@
 @media (max-width: 480px) {
   .problem-header {
     padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .problem-badges {
+    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  
+  .problem-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
   
   .problem-content {
@@ -913,4 +968,4 @@
 .constraint-item:focus-within {
   outline: 2px solid hsl(217, 91%, 60%);
   outline-offset: 2px;
-} 
+}
