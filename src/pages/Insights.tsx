@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import industriesData from '../data/industries';
 import { InsightCard } from '../components/InsightCard';
 import { NewsCard } from '../components/NewsCard';
@@ -58,9 +59,7 @@ const Insights: React.FC = () => {
     setInsight('');
     setError('');
     try {
-      // Use the insightsService directly instead of the API route
-      // This ensures consistent behavior with the dashboard
-      const genAI = await import('@google/generative-ai');
+      // Use axios to call the Gemini API
       const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
       
       if (!API_KEY) {
@@ -68,14 +67,38 @@ const Insights: React.FC = () => {
       }
       
       try {
-        const googleAI = new genAI.GoogleGenerativeAI(API_KEY);
-        const model = googleAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-        
         const prompt = `Give me a detailed, up-to-date, and actionable industry insight for the following industry: ${industry}${subIndustry ? `, specifically in the sub-industry: ${subIndustry}` : ''}. Include current trends, challenges, opportunities, and future outlook.`;
         
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        // Using axios to call the Gemini API directly
+        const response = await axios.post(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`,
+          {
+            contents: [
+              {
+                parts: [
+                  { text: prompt }
+                ]
+              }
+            ]
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': API_KEY
+            }
+          }
+        );
+        
+        const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        
+        if (!text) {
+          throw new Error('No valid response received from AI');
+        }
         
         setInsight(text);
       } catch (apiError: any) {
@@ -171,7 +194,7 @@ const Insights: React.FC = () => {
     if (loading) {
       return (
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 text-indigo-600 animate-spin" />
+          <Loader2 className="h-8 w-8 text-primary animate-spin" />
           <span className="ml-2 text-lg">Loading insights...</span>
         </div>
       );
@@ -180,14 +203,14 @@ const Insights: React.FC = () => {
     return (
       <div>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 flex items-center">
-            <TrendingUp className="h-6 w-6 mr-2 text-indigo-600" />
+          <h2 className="text-2xl font-bold text-foreground flex items-center">
+            <TrendingUp className="h-6 w-6 mr-2 text-primary" />
             Industry Insights Dashboard
           </h2>
           <button
             onClick={() => fetchAllData(true)}
             disabled={refreshing}
-            className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+            className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-colors"
           >
             {refreshing ? (
               <>
@@ -205,8 +228,8 @@ const Insights: React.FC = () => {
 
         {/* Top In-Demand Tech Job Roles Section */}
         <div className="mb-10">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <Briefcase className="h-5 w-5 mr-2 text-indigo-600" />
+          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+            <Briefcase className="h-5 w-5 mr-2 text-primary" />
             Top In-Demand Tech Job Roles
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -222,16 +245,16 @@ const Insights: React.FC = () => {
         {/* Skill Demand and Trends Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           <div>
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <BarChart3 className="h-5 w-5 mr-2 text-indigo-600" />
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+              <BarChart3 className="h-5 w-5 mr-2 text-primary" />
               Skill Demand Table
             </h3>
             <SkillDemandTable skills={skillDemand} />
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <LineChart className="h-5 w-5 mr-2 text-indigo-600" />
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+              <LineChart className="h-5 w-5 mr-2 text-primary" />
               Skill Trends (Last 30 Days)
             </h3>
             <SkillTrendChart data={skillTrends} />
@@ -241,16 +264,16 @@ const Insights: React.FC = () => {
         {/* Top Hiring Cities Section */}
         <div className="mb-10">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-bold text-gray-800 flex items-center">
-              <MapPin className="h-5 w-5 mr-2 text-indigo-600" />
+            <h3 className="text-xl font-bold text-foreground flex items-center">
+              <MapPin className="h-5 w-5 mr-2 text-primary" />
               Top Hiring Cities
             </h3>
             <div className="flex items-center">
-              <span className="mr-2 text-sm text-gray-600">Select Role:</span>
+              <span className="mr-2 text-sm text-muted-foreground">Select Role:</span>
               <select 
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
-                className="p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                className="p-2 bg-card border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary text-sm text-foreground"
               >
                 {jobRoles.map(role => (
                   <option key={role.id} value={role.title}>{role.title}</option>
@@ -263,8 +286,8 @@ const Insights: React.FC = () => {
         
         {/* Role Preparation Section */}
         <div className="mb-10">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <BookOpen className="h-5 w-5 mr-2 text-indigo-600" />
+          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+            <BookOpen className="h-5 w-5 mr-2 text-primary" />
             Interview Preparation Resources
           </h3>
           <RolePreparationCard role={selectedRole} resources={prepResources} />
@@ -272,8 +295,8 @@ const Insights: React.FC = () => {
         
         {/* AI Career Advice Section */}
         <div className="mb-10">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <Lightbulb className="h-5 w-5 mr-2 text-indigo-600" />
+          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+            <Lightbulb className="h-5 w-5 mr-2 text-primary" />
             AI Career Advice
           </h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -286,8 +309,8 @@ const Insights: React.FC = () => {
         {/* Original Dashboard Sections */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <Sparkles className="h-5 w-5 mr-2 text-indigo-600" />
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+              <Sparkles className="h-5 w-5 mr-2 text-primary" />
               Top Industry Trends
             </h3>
             <div className="space-y-4">
@@ -298,8 +321,8 @@ const Insights: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <Newspaper className="h-5 w-5 mr-2 text-indigo-600" />
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+              <Newspaper className="h-5 w-5 mr-2 text-primary" />
               Latest Industry News
             </h3>
             <div className="space-y-4">
@@ -311,8 +334,8 @@ const Insights: React.FC = () => {
         </div>
 
         <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <BarChart3 className="h-5 w-5 mr-2 text-indigo-600" />
+          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+            <BarChart3 className="h-5 w-5 mr-2 text-primary" />
             Industry Growth Metrics
           </h3>
           <StatsChart data={stats} />
@@ -325,22 +348,22 @@ const Insights: React.FC = () => {
     return (
       <div>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 flex items-center">
-            <Target className="h-6 w-6 mr-2 text-indigo-600" />
+          <h2 className="text-2xl font-bold text-foreground flex items-center">
+            <Target className="h-6 w-6 mr-2 text-primary" />
             Custom Industry Insights
           </h2>
         </div>
         
-        <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-100 mb-6">
-          <h3 className="text-lg font-semibold text-indigo-800 mb-4">Generate Targeted Industry Analysis</h3>
+        <div className="bg-accent p-6 rounded-lg border border-border mb-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Generate Targeted Industry Analysis</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block font-medium text-gray-700 mb-1">Industry:</label>
+              <label className="block font-medium text-foreground mb-1">Industry:</label>
               <select 
                 value={industry} 
                 onChange={handleIndustryChange} 
-                className="w-full p-2 border border-indigo-200 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                className="w-full p-2 bg-card border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-foreground"
               >
                 <option value="">Select Industry</option>
                 {industriesData.map((ind: any) => (
@@ -350,12 +373,12 @@ const Insights: React.FC = () => {
             </div>
             
             <div>
-              <label className="block font-medium text-gray-700 mb-1">Sub-Industry:</label>
+              <label className="block font-medium text-foreground mb-1">Sub-Industry:</label>
               <select 
                 value={subIndustry} 
                 onChange={handleSubIndustryChange} 
                 disabled={!industry}
-                className="w-full p-2 border border-indigo-200 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors disabled:bg-gray-100 disabled:text-gray-400"
+                className="w-full p-2 bg-card border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors disabled:bg-muted disabled:text-muted-foreground text-foreground"
               >
                 <option value="">Select Sub-Industry</option>
                 {selectedIndustry?.subIndustries.map((sub: string) => (
@@ -368,7 +391,7 @@ const Insights: React.FC = () => {
           <button
             onClick={handleFetchInsight}
             disabled={!industry || !subIndustry || formLoading}
-            className="w-full md:w-auto px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center"
+            className="w-full md:w-auto px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-colors flex items-center justify-center"
           >
             {formLoading ? (
               <>
@@ -385,19 +408,19 @@ const Insights: React.FC = () => {
         </div>
         
         {error && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-md border border-red-200 mb-6 flex items-start">
+          <div className="bg-destructive/20 text-destructive-foreground p-4 rounded-md border border-destructive/30 mb-6 flex items-start">
             <div className="mr-2 mt-0.5">⚠️</div>
             <div>{error}</div>
           </div>
         )}
         
         {insight && (
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <TrendingUp className="h-5 w-5 mr-2 text-indigo-600" />
+          <div className="bg-card p-6 rounded-lg border border-border shadow-sm">
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
+              <TrendingUp className="h-5 w-5 mr-2 text-primary" />
               Industry Analysis
             </h3>
-            <div className="prose prose-indigo max-w-none whitespace-pre-line">
+            <div className="prose prose-invert max-w-none whitespace-pre-line">
               {insight}
             </div>
           </div>
@@ -408,23 +431,23 @@ const Insights: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <div className="flex items-center justify-center bg-indigo-900 text-white py-4 px-6 rounded-lg mb-6">
-        <Sparkles className="h-6 w-6 mr-3 text-indigo-300" />
-        <h1 className="text-3xl font-bold">Industry Insights <span className="text-lg text-indigo-300">(Powered by Gemini)</span></h1>
+      <div className="flex items-center justify-center bg-card text-card-foreground py-4 px-6 rounded-lg mb-6 border border-border">
+        <Sparkles className="h-6 w-6 mr-3 text-primary" />
+        <h1 className="text-3xl font-bold">Industry Insights <span className="text-lg text-muted-foreground">(Powered by Gemini)</span></h1>
       </div>
       
       <div className="mb-8 flex justify-center">
         <div className="inline-flex rounded-md shadow-sm" role="group">
           <button
             type="button"
-            className={`px-4 py-2 text-sm font-medium rounded-l-lg ${activeTab === 'dashboard' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+            className={`px-4 py-2 text-sm font-medium rounded-l-lg ${activeTab === 'dashboard' ? 'bg-primary text-primary-foreground' : 'bg-card text-card-foreground hover:bg-accent'}`}
             onClick={() => setActiveTab('dashboard')}
           >
             Dashboard
           </button>
           <button
             type="button"
-            className={`px-4 py-2 text-sm font-medium rounded-r-lg ${activeTab === 'custom' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+            className={`px-4 py-2 text-sm font-medium rounded-r-lg ${activeTab === 'custom' ? 'bg-primary text-primary-foreground' : 'bg-card text-card-foreground hover:bg-accent'}`}
             onClick={() => setActiveTab('custom')}
           >
             Custom Insights
@@ -432,7 +455,7 @@ const Insights: React.FC = () => {
         </div>
       </div>
       
-      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+      <div className="bg-card text-card-foreground rounded-lg shadow-sm p-6 border border-border">
         {activeTab === 'dashboard' ? renderDashboard() : renderCustomInsights()}
       </div>
     </div>

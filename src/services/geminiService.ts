@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Use environment variable for API key
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBqEE3tx-mSDU3CvUy_ffTjb2TODb9u17I";
+// Use environment variable for API key with fallback
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCUU5SkCDqqiSIQbPBHhhrQaoPTTHJyOEA';
 
 class GeminiService {
   private genAI: GoogleGenerativeAI;
@@ -12,7 +12,7 @@ class GeminiService {
       console.warn("⚠️ GEMINI_API_KEY not found in environment variables");
     }
     this.genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    this.model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
+    this.model = this.genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   }
 
   async generateInterviewQuestions(role: string, difficulty: string = "intermediate"): Promise<string[]> {

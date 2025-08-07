@@ -52,6 +52,8 @@ const InterviewPractice = React.lazy(() => import('./pages/InterviewPractice'));
 const HowItWorks = React.lazy(() => import('./pages/HowItWorks'));
 const ResumeBuilder = React.lazy(() => import('./pages/ResumeBuilder'));
 const Login = React.lazy(() => import('./pages/Login'));
+const Insights = React.lazy(() => import('./pages/Insights'));
+const Chat = React.lazy(() => import('./pages/Chat'));
 
 // Loading component
 const Loading = () => (
@@ -82,6 +84,8 @@ function App() {
                 <Route path="/resume-builder" element={<ResumeBuilder />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/insights" element={<Insights />} />
+                <Route path="/chat" element={<Chat />} />
               </Routes>
             </React.Suspense>
           </main>

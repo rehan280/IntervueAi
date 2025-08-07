@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 interface GeminiRequest {
   contents: Array<{
     parts: Array<{
@@ -17,8 +19,8 @@ interface GeminiResponse {
 }
 
 export class DirectGeminiService {
-  private apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
-  private baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+  private apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCUU5SkCDqqiSIQbPBHhhrQaoPTTHJyOEA';
+  private baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
   async analyzeAnswer(question: string, answer: string, role: string): Promise<string> {
     const prompt = `You're an interview coach.
@@ -97,7 +99,42 @@ IMPORTANT:
 - Short answers (less than 50 characters) should get 1-3/10
 - Medium answers (50-200 characters) should get 4-6/10
 - Long, detailed answers (200+ characters) should get 7-10/10
-- Provide RATING-BASED feedback appropriate to the score level
+- Provide RATING-BASED feedback appropriate to the score level`;
+
+    try {
+      console.log("Calling Gemini API with:", { question, answer, role });
+      
+      // Using axios imported at the top level
+      const response = await axios.post(this.baseUrl, {
+        contents: [
+          {
+            parts: [
+              { text: prompt }
+            ]
+          }
+        ]
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": this.apiKey
+        }
+      });
+
+      console.log("Gemini API Response:", response.data);
+      
+      const analysis = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      
+      if (!analysis || analysis.includes("No response")) {
+        throw new Error("No valid analysis received from AI");
+      }
+      
+      return analysis;
+    } catch (error) {
+      console.error("Error calling Gemini API:", error);
+      
+      // Return a detailed fallback analysis based on the answer content
+      return this.generateFallbackAnalysis(question, answer, role);
+    }
 - Be specific about what was said and what was missing
 - Provide unique feedback that reflects the particular answer given
 - Don't give generic feedback - analyze the specific response
@@ -109,10 +146,11 @@ IMPORTANT:
     try {
       console.log("Calling Gemini API with:", { question, answer, role });
       
-      const response = await fetch(`${this.baseUrl}?key=${this.apiKey}`, {
+      const response = await fetch(this.baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-goog-api-key": this.apiKey
         },
         body: JSON.stringify({
           contents: [
@@ -294,4 +332,4 @@ ${detailedAnalysis} Your answer has ${charCount} characters and ${wordCount} wor
   }
 }
 
-export const directGeminiService = new DirectGeminiService(); 
+export const directGeminiService = new DirectGeminiService();

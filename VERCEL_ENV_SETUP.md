@@ -66,7 +66,54 @@ npm i -g vercel
 vercel login
 
 # Add environment variables
-vercel env add VITE_API_BASE_URL
+vercel env add ​
+3:55:38 PM: "build.command" failed                                        
+3:55:38 PM: ────────────────────────────────────────────────────────────────
+3:55:38 PM: ​
+3:55:38 PM:   Error message
+3:55:38 PM:   Command failed with exit code 127: npm run build:netlify (https://ntl.fyi/exit-code-127)
+3:55:38 PM: ​
+3:55:38 PM:   Error location
+3:55:38 PM:   In build.command from netlify.toml:
+3:55:38 PM:   npm run build:netlify
+3:55:38 PM: ​
+3:55:38 PM:   Resolved config
+3:55:38 PM:   build:
+3:55:38 PM:     base: /opt/build/repo
+3:55:38 PM:     command: npm run build:netlify
+3:55:38 PM:     commandOrigin: config
+3:55:38 PM:     environment:
+3:55:38 PM:       - VITE_API_BASE_URL
+3:55:38 PM:       - NODE_VERSION
+3:55:38 PM:       - NODE_ENV
+3:55:38 PM:       - NPM_FLAGS
+3:55:38 PM:     publish: /opt/build/repo/dist
+3:55:38 PM:     publishOrigin: config
+3:55:38 PM:   headers:
+3:55:38 PM:     - for: /*
+      values:
+        Referrer-Policy: strict-origin-when-cross-origin
+        X-Content-Type-Options: nosniff
+        X-Frame-Options: DENY
+        X-XSS-Protection: 1; mode=block
+    - for: /assets/*
+      values:
+        Cache-Control: public, max-age=31536000, immutable
+    - for: "*.js"
+      values:
+        Cache-Control: public, max-age=31536000, immutable
+    - for: "*.css"
+      values:
+        Cache-Control: public, max-age=31536000, immutable
+  headersOrigin: config
+  redirects:
+    - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+3:55:38 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+3:55:38 PM: Failing build: Failed to build site
+3:55:38 PM: Finished processing build request in 26.278sVITE_API_BASE_URL
 vercel env add JWT_SECRET
 vercel env add GEMINI_API_KEY
 

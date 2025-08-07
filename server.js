@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Your Gemini API key (store this in environment variables in production)
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Piston API configuration for code execution
 const PISTON_API_URL = 'https://emkc.org/api/v2/piston/execute';
@@ -110,7 +110,7 @@ IMPORTANT:
 - Be honest and accurate in your assessment`;
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         contents: [
           {
@@ -323,4 +323,4 @@ app.listen(PORT, () => {
   console.log(`💻 Code execution service available at http://localhost:${PORT}/api/execute-code`);
   console.log(`🌐 Using Piston API for secure code execution`);
   console.log(`📚 Supporting ${Object.keys(LANGUAGE_VERSIONS).length} programming languages`);
-}); 
+});

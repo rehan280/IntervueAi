@@ -25,8 +25,8 @@ interface SkillTrendChartProps {
 
 export const SkillTrendChart: React.FC<SkillTrendChartProps> = ({ data }) => {
   return (
-    <div className="p-6 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-lg shadow-sm">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Skill Trends (Last 30 Days)</h3>
+    <div className="p-6 bg-card/90 backdrop-blur-sm border border-border rounded-lg shadow-sm">
+      <h3 className="text-xl font-bold text-foreground mb-4">Skill Trends (Last 30 Days)</h3>
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -39,14 +39,15 @@ export const SkillTrendChart: React.FC<SkillTrendChartProps> = ({ data }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-            <XAxis dataKey="day" />
-            <YAxis />
+            <XAxis dataKey="day" stroke="#888" />
+            <YAxis stroke="#888" />
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                backgroundColor: 'rgba(30, 41, 59, 0.9)', 
                 borderRadius: '8px',
-                border: '1px solid #e2e8f0',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                border: '1px solid hsl(var(--border))',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
+                color: 'hsl(var(--foreground))'
               }} 
             />
             <Legend />

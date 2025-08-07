@@ -64,6 +64,12 @@ const Header: React.FC = () => {
                 <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base">
                   How It Works
                 </Link>
+                <Link to="/insights" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base">
+                  Insights
+                </Link>
+                <Link to="/chat" className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base">
+                  Chat
+                </Link>
                 <div className="relative" onMouseEnter={handleDropdownMouseEnter} onMouseLeave={handleDropdownMouseLeave}>
                   <button
                     className="flex items-center text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base"
@@ -180,6 +186,20 @@ const Header: React.FC = () => {
                 onClick={() => setShowMobileMenu(false)}
               >
                 How It Works
+              </Link>
+              <Link 
+                to="/insights" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Insights
+              </Link>
+              <Link 
+                to="/chat" 
+                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Chat
               </Link>
               <div className="space-y-2 w-full">
                 <button

@@ -28,44 +28,45 @@ export const SkillDemandTable: React.FC<SkillDemandTableProps> = ({ skills }) =>
   const getLevelColor = (level: string) => {
     switch (level) {
       case 'Beginner':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100/20 text-blue-500';
       case 'Intermediate':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100/20 text-green-500';
       case 'Advanced':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-purple-100/20 text-purple-500';
       case 'Expert':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100/20 text-red-500';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100/20 text-gray-500';
     }
   };
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div className="overflow-x-auto rounded-lg border border-border bg-card/90 backdrop-blur-sm shadow-sm p-6">
+      <h3 className="text-xl font-bold text-foreground mb-4">Skill Demand</h3>
+      <table className="min-w-full divide-y divide-border">
+        <thead className="bg-muted/50">
           <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Skill
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Growth %
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Level
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Trend
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-card divide-y divide-border">
           {skills.map((skill) => (
-            <tr key={skill.id} className="hover:bg-gray-50 transition-colors">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+            <tr key={skill.id} className="hover:bg-muted/20 transition-colors">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                 {skill.name}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                 {skill.growthPercentage}%
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -73,7 +74,7 @@ export const SkillDemandTable: React.FC<SkillDemandTableProps> = ({ skills }) =>
                   {skill.level}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground flex items-center">
                 {getTrendIcon(skill.trend)}
                 <span className="ml-1 capitalize">{skill.trend}</span>
               </td>

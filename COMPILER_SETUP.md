@@ -22,9 +22,11 @@ Piston API is completely free and doesn't require any API key or registration. T
 
 Create a `.env` file in your project root (optional, for Gemini API only):
 
+```
 ```env
-# Gemini API Key (already configured)
-GEMINI_API_KEY=AIzaSyDFM8qiKycEK_x0nbMNGgTaKK8wCwI-gKE
+# API configuration
+# Add your API keys here if needed
+```
 ```
 
 ### 3. Install Dependencies
@@ -189,4 +191,4 @@ Once set up, your IntervueAi platform will have a fully functional code compiler
 - ✅ Works seamlessly with your interview system
 - ✅ **Completely free** - no API keys or costs
 
-The compiler is now ready to enhance your interview practice platform with real coding challenges! 
+The compiler is now ready to enhance your interview practice platform with real coding challenges!
