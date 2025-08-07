@@ -5,6 +5,21 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 
+// Google OAuth Types
+declare global {
+  interface Window {
+    google: {
+      accounts: {
+        id: {
+          initialize: (config: any) => void;
+          prompt: () => void;
+          renderButton: (element: HTMLElement, options: any) => void;
+        };
+      };
+    };
+  }
+}
+
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -96,41 +111,52 @@ const Login = () => {
     setError('');
 
     try {
-      // Simulate Google Sign-In for now (works immediately)
-      const mockGoogleUser = {
-        name: 'Demo User',
-        email: 'demo@example.com',
-        picture: 'https://via.placeholder.com/150',
-        sub: 'demo-user-id'
-      };
+      // Your Google OAuth Client ID
+      const GOOGLE_CLIENT_ID = '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
+      
+      // Initialize Google Sign-In
+      if (typeof window !== 'undefined' && window.google) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCallback,
+          auto_select: false,
+          cancel_on_tap_outside: true,
+        });
+        window.google.accounts.id.prompt();
+      } else {
+        // Fallback: redirect to Google OAuth
+        window.location.href = '/api/auth/google';
+      }
+    } catch (err) {
+      setError('Google Sign-In failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      // Call our backend with mock Google data
+  const handleGoogleCallback = async (response: any) => {
+    try {
       const result = await fetch('/api/auth/google/callback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          credential: btoa(JSON.stringify(mockGoogleUser)) // Mock credential
+          credential: response.credential
         })
       });
 
       const data = await result.json();
 
       if (result.ok) {
-        // Store user data in localStorage
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('token', data.token);
-        
-        // Redirect to home page
         navigate('/');
       } else {
         setError(data.message || 'Google Sign-In failed');
       }
     } catch (err) {
       setError('Google Sign-In failed. Please try again.');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -198,7 +224,7 @@ const Login = () => {
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                {isLoading ? 'Signing in...' : `Continue with Google (Demo)`}
+                {isLoading ? 'Signing in...' : `Continue with Google`}
               </Button>
 
               {/* Divider */}

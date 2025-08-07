@@ -210,7 +210,7 @@ router.post('/google/callback', async (req, res) => {
 
 // Google OAuth redirect (for server-side flow)
 router.get('/google', (req, res) => {
-  const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+  const GOOGLE_CLIENT_ID = '816016163258-kqdbmk05mo8t5nmdu8s3e18lirovd31l.apps.googleusercontent.com';
   const REDIRECT_URI = `${req.protocol}://${req.get('host')}/api/auth/google/callback`;
   
   const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
