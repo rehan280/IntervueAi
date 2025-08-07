@@ -346,7 +346,7 @@ const InterviewPractice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero pt-16">
       {currentPhase === "role-selection" && <RoleSelector />}
       {currentPhase === "interview" && <InterviewSession />}
       {currentPhase === "results" && <InterviewResults />}

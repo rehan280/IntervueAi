@@ -49,7 +49,7 @@ const Hero = () => {
       ></div>
       
       {/* Hero section */}
-      <section className="relative pt-2 pb-6 sm:pt-4 sm:pb-8 md:pt-6 md:pb-10 px-3 sm:px-4 md:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center w-full">
+      <section className="relative pt-20 pb-6 sm:pt-24 sm:pb-8 md:pt-28 md:pb-10 px-3 sm:px-4 md:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center w-full">
         <div className="w-full max-w-6xl mx-auto text-center">
           <Badge variant="secondary" className="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-xs sm:text-sm md:text-base lg:text-lg font-medium px-3 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-white/10 text-white border-white/20">
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 mr-1.5 sm:mr-2 md:mr-2.5 lg:mr-3" />
@@ -58,7 +58,7 @@ const Hero = () => {
           </Badge>
           
           <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 lg:mb-10 px-2">
-            <img src="/logo.png" alt="IntervueAi Logo" className="w-20 h-12 sm:w-24 sm:h-14 md:w-32 md:h-18 lg:w-40 lg:h-22 xl:w-48 xl:h-27 object-contain mx-auto" />
+            <img src="/logo.png" alt="IntervueAi Logo" className="w-16 h-10 sm:w-24 sm:h-14 md:w-32 md:h-18 lg:w-40 lg:h-22 xl:w-48 xl:h-27 object-contain mx-auto" />
           </div>
           
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-white/90 leading-tight px-2 sm:px-4">
