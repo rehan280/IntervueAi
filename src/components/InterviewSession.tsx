@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Loader2, Volume2, VolumeX, TestTube, Star, Mic, Settings, Keyboard, MessageSquare, Target, Lightbulb, BarChart3 } from "lucide-react";
-import { directGeminiService } from "@/services/directIntervueAIService";
 import VoiceRecorder from "./VoiceRecorder";
 
 interface InterviewSessionProps {
@@ -1072,26 +1071,17 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
 
   const handleAnswerSubmit = async () => {
     if (!currentAnswer.trim()) return;
-    
     setGeneratingFeedback(true);
     try {
-      console.log("Calling Gemini API for analysis...");
-      const result = await directGeminiService.analyzeAnswer(
-        questions[currentQuestionIndex],
-        currentAnswer,
-        role
-      );
-      console.log("Gemini API response:", result);
-      
+      // Fallback: No AI analysis, just a static message
+      const result = "AI feedback is currently unavailable. Please review your answer and compare with best practices.";
       const scores = parseScores(result);
       setParsedScores(scores);
       setFeedback(result);
-      
       // Add answer to answers array
       const newAnswers = [...answers];
       newAnswers[currentQuestionIndex] = currentAnswer;
       setAnswers(newAnswers);
-      
     } catch (error) {
       console.error("Analysis failed:", error);
       setFeedback("Analysis failed. Please try again.");
@@ -1120,16 +1110,10 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
 
   const handleTestEvaluation = async () => {
     if (!testQuestion.trim() || !testAnswer.trim()) return;
-    
     setGeneratingTestFeedback(true);
     try {
-      console.log("Calling Gemini API for test analysis...");
-      const result = await directGeminiService.analyzeAnswer(
-        testQuestion,
-        testAnswer,
-        role
-      );
-      console.log("Test analysis result:", result);
+      // Fallback: No AI analysis, just a static message
+      const result = "AI feedback is currently unavailable. Please review your answer and compare with best practices.";
       setTestFeedback(result);
     } catch (error) {
       console.error("Test analysis failed:", error);
@@ -2050,4 +2034,4 @@ const InterviewSession = ({ role, onComplete, onBack }: InterviewSessionProps) =
   );
 };
 
-export default InterviewSession;
+export default InterviewSession; 
