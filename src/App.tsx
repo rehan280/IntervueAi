@@ -54,6 +54,7 @@ const ResumeBuilder = React.lazy(() => import('./pages/ResumeBuilder'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Insights = React.lazy(() => import('./pages/Insights'));
 const Chat = React.lazy(() => import('./pages/Chat'));
+const NotFound = React.lazy(() => import('./components/NotFound'));
 
 // Loading component
 const Loading = () => (
@@ -86,6 +87,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </React.Suspense>
           </main>
