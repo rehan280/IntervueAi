@@ -75,7 +75,7 @@ const Insights: React.FC = () => {
         
         // Using axios to call the Gemini API directly
         const response = await axios.post(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
           {
             contents: [
               {
@@ -88,12 +88,6 @@ const Insights: React.FC = () => {
           {
             headers: {
               'Content-Type': 'application/json'
-            }
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': API_KEY
             }
           }
         );
