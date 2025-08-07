@@ -73,7 +73,7 @@ function App() {
           <React.Suspense fallback={<Loading />}>
             <Header />
           </React.Suspense>
-          <main className="w-full overflow-x-hidden">
+          <main className="w-full overflow-x-hidden pt-16">
             <React.Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Hero />} />
