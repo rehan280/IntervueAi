@@ -22,7 +22,7 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="min-h-screen w-full bg-gray-900 text-white flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4 text-red-400">Error</h1>
             <p className="text-xl">Something went wrong</p>
@@ -57,7 +57,7 @@ const Chat = React.lazy(() => import('./pages/Chat'));
 
 // Loading component
 const Loading = () => (
-  <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+  <div className="min-h-screen w-full bg-gray-900 text-white flex items-center justify-center">
     <div className="text-center">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
       <p>Loading...</p>
@@ -73,7 +73,7 @@ function App() {
           <React.Suspense fallback={<Loading />}>
             <Header />
           </React.Suspense>
-          <main className="pt-16 w-full max-w-full overflow-x-hidden">
+          <main className="w-full overflow-x-hidden">
             <React.Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Hero />} />

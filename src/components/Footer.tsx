@@ -22,7 +22,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#0F172A] text-white w-full">
       {/* Main Footer Content */}
-      <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
           {/* Company Information */}
           <div className="space-y-3 sm:space-y-4 md:space-y-6">
@@ -102,15 +102,20 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/contact" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base">
-                  Contact
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/insights" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base">
+                  Insights
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Our Tools */}
+          {/* Services */}
           <div className="space-y-3 sm:space-y-4 md:space-y-6">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Our Tools</h3>
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Services</h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link to="/interview-practice" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base">
@@ -127,41 +132,52 @@ const Footer = () => {
                   Resume Builder
                 </Link>
               </li>
+              <li>
+                <Link to="/chat" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base">
+                  AI Chat Assistant
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Support */}
           <div className="space-y-3 sm:space-y-4 md:space-y-6">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Contact Us</h3>
-            <div className="space-y-2 sm:space-y-3 md:space-y-4">
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-300 text-xs sm:text-sm md:text-base break-all">youtech280@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-300 text-xs sm:text-sm md:text-base">+91-8668980389</span>
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-300 text-xs sm:text-sm md:text-base">India</span>
-              </div>
-            </div>
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Support</h3>
+            <ul className="space-y-2 sm:space-y-3">
+              <li>
+                <a href="mailto:rehankadri09@gmail.com" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base flex items-center gap-2">
+                  <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
+                  Email Support
+                </a>
+              </li>
+              <li>
+                <a href="tel:+1234567890" className="text-gray-300 hover:text-white transition-colors duration-200 text-xs sm:text-sm md:text-base flex items-center gap-2">
+                  <Phone className="w-3 h-3 sm:w-4 sm:h-4" />
+                  Phone Support
+                </a>
+              </li>
+              <li>
+                <span className="text-gray-300 text-xs sm:text-sm md:text-base flex items-center gap-2">
+                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
+                  Remote Support
+                </span>
+              </li>
+            </ul>
           </div>
 
           {/* Newsletter */}
           <div className="space-y-3 sm:space-y-4 md:space-y-6">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Newsletter</h3>
-            <p className="text-gray-300 text-xs sm:text-sm md:text-base">
-              Subscribe to get updates and receive news about new features.
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold">Stay Updated</h3>
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+              Get the latest updates on new features and interview tips.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-0">
+            <div className="flex">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-2 sm:px-3 py-2 bg-gray-700 border border-gray-600 rounded-md sm:rounded-l-md sm:rounded-r-none text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 text-xs sm:text-sm"
+                className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-lg text-white text-xs sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="px-3 sm:px-4 py-2 bg-gradient-to-r from-purple-500 to-orange-500 rounded-md sm:rounded-l-none sm:rounded-r-md hover:from-purple-600 hover:to-orange-600 transition-all duration-200 flex items-center justify-center">
+              <button className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-lg transition-colors duration-200">
                 <Send className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             </div>
@@ -170,14 +186,19 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-700 w-full">
-        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0 text-center sm:text-left">
-            <div className="text-gray-300 text-xs sm:text-sm">
-              © {currentYear} IntervueAi. All Rights Reserved.
-            </div>
-            <div className="text-gray-300 text-xs sm:text-sm">
-              Designed and Developed by Rehan Kadri
+      <div className="border-t border-gray-800 w-full">
+        <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+            <p className="text-gray-400 text-xs sm:text-sm">
+              © {currentYear} IntervueAi. All rights reserved.
+            </p>
+            <div className="flex space-x-4 sm:space-x-6">
+              <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm">
+                Terms of Service
+              </Link>
             </div>
           </div>
         </div>
@@ -187,10 +208,10 @@ const Footer = () => {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg z-50"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl"
           aria-label="Scroll to top"
         >
-          <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       )}
     </footer>

@@ -102,6 +102,27 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+
+  /* Force full width for all main containers */
+  .App {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Remove any container constraints */
+  .container, .max-w-7xl, .max-w-6xl, .max-w-4xl, .max-w-5xl, .max-w-3xl, .max-w-2xl, .max-w-xl, .max-w-lg, .max-w-md, .max-w-sm {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 }
 
 @layer components {
@@ -139,7 +160,7 @@
   
   /* Chat Interface Specific Styles */
   .chat-container {
-    @apply w-full h-full max-w-4xl mx-auto;
+    @apply w-full h-full;
   }
   
   .chat-card {
@@ -464,7 +485,7 @@
   }
   
   .container, .max-w-7xl, .max-w-6xl, .max-w-4xl {
-    max-width: 90%;
+    max-width: 100%;
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -482,7 +503,7 @@
   }
   
   .container, .max-w-7xl, .max-w-6xl, .max-w-4xl {
-    max-width: 1200px;
+    max-width: 100%;
     padding-left: 32px;
     padding-right: 32px;
   }

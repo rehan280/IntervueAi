@@ -209,7 +209,7 @@ const Chatbot: React.FC = () => {
                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-indigo-500/25' 
                 : isSystem
                   ? 'bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 text-amber-200 shadow-amber-500/10'
-                  : 'bg-gradient-to-r from-gray-800/80 to-gray-700/80 border border-gray-600/50 text-white backdrop-blur-sm shadow-gray-900/50'
+                  : 'bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 text-white shadow-gray-900/50'
             }`}
           >
             <div className="whitespace-pre-wrap leading-relaxed">{message.text}</div>
@@ -267,109 +267,99 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero relative">
-      {/* Background logo blend like home page */}
-      <div 
-        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/logo.png')`,
-          backgroundSize: '50%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      ></div>
-      
-      <div className="relative w-full h-full max-w-4xl mx-auto p-4">
-        <div className="w-full h-[calc(100vh-2rem)] flex flex-col bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl shadow-black/20">
-          {/* Header */}
-          <div className="border-b border-white/20 p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-t-2xl">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-              <div className="text-xl lg:text-2xl text-white flex items-center gap-3">
-                <ChatLogo />
-                <div className="flex flex-col">
-                  <span className="font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    AI Chat Assistant
-                  </span>
-                  <span className="text-xs text-white/70 font-normal flex items-center gap-1">
-                    <Zap className="w-3 h-3 text-indigo-400" />
-                    Powered by IntervueAI
-                  </span>
-                </div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      {/* Full width chat interface */}
+      <div className="w-full h-screen flex flex-col">
+        {/* Header */}
+        <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700/50 p-4 lg:p-6">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div className="text-xl lg:text-2xl text-white flex items-center gap-3">
+              <ChatLogo />
+              <div className="flex flex-col">
+                <span className="font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  AI Chat Assistant
+                </span>
+                <span className="text-xs text-gray-400 font-normal flex items-center gap-1">
+                  <Zap className="w-3 h-3 text-indigo-400" />
+                  Powered by IntervueAI
+                </span>
               </div>
-              
-              <Badge 
-                variant={isLoading ? "secondary" : "default"} 
-                className={`${
-                  isLoading 
-                    ? "bg-white/20 text-white" 
-                    : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-                } backdrop-blur-sm transition-all duration-200`}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-1">
-                    <Loader2 className="w-3 h-3 animate-spin" />
-                    Processing...
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    Ready
-                  </div>
-                )}
-              </Badge>
             </div>
-          </div>
-
-          {/* Messages Area */}
-          <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
-            <div className="space-y-6">
-              {messages.length === 0 && (
-                <div className="flex items-center justify-center h-32">
-                  <div className="text-center text-white/70">
-                    <MessageCircle className="w-12 h-12 mx-auto mb-3 text-white/50" />
-                    <p className="mb-2 font-medium">No messages yet</p>
-                    <p className="text-sm">Start a conversation by typing a message below</p>
-                  </div>
+            
+            <Badge 
+              variant={isLoading ? "secondary" : "default"} 
+              className={`${
+                isLoading 
+                  ? "bg-gray-700/80 text-gray-300" 
+                  : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+              } backdrop-blur-sm transition-all duration-200`}
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-1">
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                  Processing...
+                </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  Ready
                 </div>
               )}
-              {messages.map((message) => (
-                <MessageComponent key={message.id} message={message} />
-              ))}
-              {isLoading && (
-                <div className="flex gap-3 animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
-                    <Brain className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 max-w-[75%]">
-                    <div className="inline-block p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                      <div className="flex items-center gap-3">
-                        <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
-                        <div className="flex flex-col gap-1">
-                          <span className="text-sm text-white/80 font-medium">Thinking...</span>
-                          <div className="flex gap-1">
-                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
-                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                          </div>
+            </Badge>
+          </div>
+        </div>
+
+        {/* Messages Area */}
+        <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
+          <div className="space-y-6 max-w-4xl mx-auto">
+            {messages.length === 0 && (
+              <div className="flex items-center justify-center h-32">
+                <div className="text-center text-gray-500">
+                  <MessageCircle className="w-12 h-12 mx-auto mb-3 text-gray-600" />
+                  <p className="mb-2 font-medium">No messages yet</p>
+                  <p className="text-sm">Start a conversation by typing a message below</p>
+                </div>
+              </div>
+            )}
+            {messages.map((message) => (
+              <MessageComponent key={message.id} message={message} />
+            ))}
+            {isLoading && (
+              <div className="flex gap-3 animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                  <Brain className="w-5 h-5" />
+                </div>
+                <div className="flex-1 max-w-[75%]">
+                  <div className="inline-block p-4 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 shadow-lg">
+                    <div className="flex items-center gap-3">
+                      <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm text-gray-300 font-medium">Thinking...</span>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
+        </div>
 
-          {/* Input Area */}
-          <div className="border-t border-white/20 p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-b-2xl">
+        {/* Input Area */}
+        <div className="bg-gray-800/50 backdrop-blur-sm border-t border-gray-700/50 p-4 lg:p-6">
+          <div className="max-w-4xl mx-auto">
             <form onSubmit={handleSubmit} className="flex gap-3 items-end">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask anything... (Press Enter to send)"
-                className="flex-1 bg-white/10 border border-white/20 text-white h-12 lg:h-14 rounded-xl px-4 backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 placeholder:text-white/50"
+                className="flex-1 bg-gray-800/50 border border-gray-600/50 text-white h-12 lg:h-14 rounded-xl px-4 backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 placeholder:text-gray-500"
                 disabled={isLoading}
               />
               <Button
@@ -387,11 +377,11 @@ const Chatbot: React.FC = () => {
               </Button>
             </form>
             <div className="flex justify-between items-center mt-3">
-              <p className="text-xs text-white/60 flex items-center gap-1">
+              <p className="text-xs text-gray-500 flex items-center gap-1">
                 <Zap className="w-3 h-3 text-indigo-400" />
                 Powered by IntervueAI
               </p>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-gray-500">
                 {messages.length} message{messages.length !== 1 ? 's' : ''}
               </p>
             </div>

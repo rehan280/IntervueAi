@@ -36,7 +36,7 @@ const Header: React.FC = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-hero backdrop-blur-sm border-b border-white/10 w-full">
         <div className="bg-black/20 w-full">
-          <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 w-full">
               {/* Logo */}
               <Link to="/" className="flex items-center flex-shrink-0">
@@ -102,137 +102,128 @@ const Header: React.FC = () => {
                 </div>
               </nav>
 
-              {/* CTA Button / User Menu */}
-              <div className="flex items-center space-x-2 sm:space-x-3">
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-2 lg:space-x-4">
                 {isLoggedIn ? (
-                  <div className="flex items-center space-x-2 sm:space-x-3">
-                    <div className="hidden sm:flex items-center space-x-2 bg-gray-800/50 px-3 py-2 rounded-lg">
-                      <User className="h-4 w-4 text-blue-400" />
-                      <span className="text-sm text-white">{userName}</span>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleLogout}
-                      className="border-gray-600 text-gray-300 hover:text-white hover:border-gray-500 text-xs sm:text-sm"
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowMobileDropdown(!showMobileDropdown)}
+                      className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
                     >
-                      <LogOut className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span className="hidden sm:inline">Logout</span>
-                    </Button>
+                      <User className="h-5 w-5" />
+                      <span className="hidden lg:block text-sm">{userName}</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                    {showMobileDropdown && (
+                      <div className="absolute right-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50">
+                        <div className="py-2">
+                          <button
+                            onClick={handleLogout}
+                            className="w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors duration-200 flex items-center"
+                          >
+                            <LogOut className="h-4 w-4 mr-2" />
+                            Logout
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <Button
-                    onClick={() => navigate('/interview-practice')}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-2 sm:px-3 md:px-4 lg:px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis max-w-[80px] sm:max-w-none"
+                    onClick={() => navigate('/login')}
+                    variant="default"
+                    size="sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm lg:text-base"
                   >
-                    <span className="hidden sm:inline">Get Started</span>
-                    <span className="sm:hidden">Start</span>
+                    Start
                   </Button>
                 )}
-                
+
                 {/* Mobile Menu Button */}
                 <button
-                  className="md:hidden p-2 text-gray-300 hover:text-white transition-colors duration-200"
                   onClick={() => setShowMobileMenu(!showMobileMenu)}
+                  className="md:hidden p-2 text-gray-300 hover:text-white transition-colors duration-200"
                 >
-                  {showMobileMenu ? (
-                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
-                  ) : (
-                    <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
-                  )}
+                  {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Menu */}
-      {showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700 w-full">
-          <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4">
-            <nav className="flex flex-col space-y-3 sm:space-y-4 w-full">
-              <Link 
-                to="/" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+        {/* Mobile Menu */}
+        {showMobileMenu && (
+          <div className="md:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-700">
+            <div className="px-4 py-2 space-y-1">
+              <Link
+                to="/"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Home
               </Link>
-              <Link 
-                to="/interview-practice" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/interview-practice"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Interview Practice
               </Link>
-              <Link 
-                to="/coding-practice" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/coding-practice"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Coding Practice
               </Link>
-              <Link 
-                to="/resume-builder" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/resume-builder"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Resume Builder
               </Link>
-              <Link 
-                to="/how-it-works" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/how-it-works"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 How It Works
               </Link>
-              <Link 
-                to="/insights" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/insights"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Insights
               </Link>
-              <Link 
-                to="/chat" 
-                className="text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg w-full"
+              <Link
+                to="/chat"
+                className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Chat
               </Link>
-              <div className="space-y-2 w-full">
-                <button
-                  className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors duration-200 py-2 text-base sm:text-lg"
-                  onClick={() => setShowMobileDropdown(!showMobileDropdown)}
+              <div className="border-t border-gray-700 pt-2 mt-2">
+                <Link
+                  to="/about"
+                  className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
+                  onClick={() => setShowMobileMenu(false)}
                 >
-                  <span>Our Pages</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showMobileDropdown ? 'rotate-180' : ''}`} />
-                </button>
-                {showMobileDropdown && (
-                  <div className="pl-4 space-y-2 border-l border-gray-700 w-full">
-                    <Link 
-                      to="/about" 
-                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base w-full"
-                      onClick={() => setShowMobileMenu(false)}
-                    >
-                      About Us
-                    </Link>
-                    <Link 
-                      to="/contact" 
-                      className="block text-gray-300 hover:text-white transition-colors duration-200 py-2 text-sm sm:text-base w-full"
-                      onClick={() => setShowMobileMenu(false)}
-                    >
-                      Contact Us
-                    </Link>
-                  </div>
-                )}
+                  About Us
+                </Link>
+                <Link
+                  to="/contact"
+                  className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md transition-colors duration-200"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  Contact Us
+                </Link>
               </div>
-            </nav>
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
+      </header>
     </>
   );
 };
