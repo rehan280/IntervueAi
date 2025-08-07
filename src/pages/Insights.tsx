@@ -5,7 +5,7 @@ import { InsightCard } from '../components/InsightCard';
 import { NewsCard } from '../components/NewsCard';
 import { StatsChart } from '../components/StatsChart';
 import { insightsService, IndustryInsight, NewsItem, IndustryStats } from '../services/insightsService';
-import { Loader2, TrendingUp, Sparkles, RefreshCw, Newspaper, BarChart3, Target, Briefcase, LineChart, MapPin, BookOpen, Lightbulb } from 'lucide-react';
+import { Loader2, TrendingUp, Sparkles, RefreshCw, Newspaper, BarChart3, Target, Briefcase, LineChart, MapPin, BookOpen, Lightbulb, Globe } from 'lucide-react';
 
 // Import new components
 import { JobRolesCard, JobRole } from '../components/JobRolesCard';
@@ -15,6 +15,7 @@ import { HiringCitiesChart, CityHiringData } from '../components/HiringCitiesCha
 import { RolePreparationCard, PrepResource } from '../components/RolePreparationCard';
 import { AIAdviceCard, AIAdvice } from '../components/AIAdviceCard';
 import { techInsightsService } from '../services/techInsightsService';
+import { indiaInsightsService } from '../services/indiaInsightsService';
 
 const Insights: React.FC = () => {
   // Original state for the simple insights form
@@ -40,6 +41,9 @@ const Insights: React.FC = () => {
   const [hiringCities, setHiringCities] = useState<CityHiringData[]>([]);
   const [prepResources, setPrepResources] = useState<PrepResource[]>([]);
   const [aiAdvice, setAiAdvice] = useState<AIAdvice[]>([]);
+  
+  // Country selection state
+  const [selectedCountry, setSelectedCountry] = useState('global'); // 'global' or 'india'
 
   const handleIndustryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIndustry(e.target.value);
@@ -142,24 +146,51 @@ const Insights: React.FC = () => {
         setLoading(true);
       }
 
+      // Determine which service to use based on selected country
+      const service = selectedCountry === 'india' ? indiaInsightsService : insightsService;
+      const techService = selectedCountry === 'india' ? indiaInsightsService : techInsightsService;
+
       // Fetch all data in parallel
       const [insightsData, newsData, statsData] = await Promise.all([
-        insightsService.getIndustryInsights(),
-        insightsService.getLatestNews(),
-        insightsService.getIndustryStats()
+        selectedCountry === 'india' 
+          ? indiaInsightsService.getIndiaIndustryInsights() 
+          : insightsService.getIndustryInsights(),
+        selectedCountry === 'india' 
+          ? indiaInsightsService.getIndiaLatestNews() 
+          : insightsService.getLatestNews(),
+        selectedCountry === 'india' 
+          ? indiaInsightsService.getIndiaIndustryStats() 
+          : insightsService.getIndustryStats()
       ]);
 
       setInsights(insightsData);
       setNews(newsData);
       setStats(statsData);
       
-      // Fetch data for new sections
-      const jobRolesData = techInsightsService.getTopJobRoles();
-      const skillDemandData = techInsightsService.getSkillDemand();
-      const skillTrendsData = techInsightsService.getSkillTrends();
-      const hiringCitiesData = techInsightsService.getHiringCitiesByRole(selectedRole);
-      const prepResourcesData = techInsightsService.getRolePreparationResources(selectedRole);
-      const aiAdviceData = techInsightsService.getAICareerAdvice();
+      // Fetch data for new sections based on selected country
+      const jobRolesData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaTopJobRoles() 
+        : techInsightsService.getTopJobRoles();
+        
+      const skillDemandData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaSkillDemand() 
+        : techInsightsService.getSkillDemand();
+        
+      const skillTrendsData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaSkillTrends() 
+        : techInsightsService.getSkillTrends();
+        
+      const hiringCitiesData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaHiringCitiesByRole(selectedRole) 
+        : techInsightsService.getHiringCitiesByRole(selectedRole);
+        
+      const prepResourcesData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaRolePreparationResources(selectedRole) 
+        : techInsightsService.getRolePreparationResources(selectedRole);
+        
+      const aiAdviceData = selectedCountry === 'india' 
+        ? indiaInsightsService.getIndiaAICareerAdvice() 
+        : techInsightsService.getAICareerAdvice();
       
       setJobRoles(jobRolesData);
       setSkillDemand(skillDemandData);
@@ -179,14 +210,24 @@ const Insights: React.FC = () => {
     fetchAllData();
   }, []);
   
+  // Refetch data when country selection changes
+  useEffect(() => {
+    fetchAllData(true);
+  }, [selectedCountry]);
+  
   useEffect(() => {
     // Update hiring cities and prep resources when selected role changes
-    const hiringCitiesData = techInsightsService.getHiringCitiesByRole(selectedRole);
-    const prepResourcesData = techInsightsService.getRolePreparationResources(selectedRole);
+    const hiringCitiesData = selectedCountry === 'india'
+      ? indiaInsightsService.getIndiaHiringCitiesByRole(selectedRole)
+      : techInsightsService.getHiringCitiesByRole(selectedRole);
+      
+    const prepResourcesData = selectedCountry === 'india'
+      ? indiaInsightsService.getIndiaRolePreparationResources(selectedRole)
+      : techInsightsService.getRolePreparationResources(selectedRole);
     
     setHiringCities(hiringCitiesData);
     setPrepResources(prepResourcesData);
-  }, [selectedRole]);
+  }, [selectedRole, selectedCountry]);
 
   const selectedIndustry = industriesData.find((ind: any) => ind.name === industry);
 
@@ -205,25 +246,51 @@ const Insights: React.FC = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-foreground flex items-center">
             <TrendingUp className="h-6 w-6 mr-2 text-primary" />
-            Industry Insights Dashboard
+            {selectedCountry === 'india' ? 'India Tech Industry Dashboard' : 'Industry Insights Dashboard'}
           </h2>
-          <button
-            onClick={() => fetchAllData(true)}
-            disabled={refreshing}
-            className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-colors"
-          >
-            {refreshing ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Refreshing...
-              </>
-            ) : (
-              <>
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Refresh Data
-              </>
-            )}
-          </button>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center bg-card border border-border rounded-md overflow-hidden">
+              <button
+                onClick={() => {
+                  if (selectedCountry !== 'global') {
+                    setSelectedCountry('global');
+                  }
+                }}
+                className={`flex items-center px-3 py-1.5 ${selectedCountry === 'global' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}`}
+              >
+                <Globe className="h-4 w-4 mr-1.5" />
+                Global
+              </button>
+              <button
+                onClick={() => {
+                  if (selectedCountry !== 'india') {
+                    setSelectedCountry('india');
+                  }
+                }}
+                className={`flex items-center px-3 py-1.5 ${selectedCountry === 'india' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}`}
+              >
+                <Globe className="h-4 w-4 mr-1.5" />
+                India
+              </button>
+            </div>
+            <button
+              onClick={() => fetchAllData(true)}
+              disabled={refreshing}
+              className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-colors"
+            >
+              {refreshing ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Refreshing...
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Refresh Data
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Top In-Demand Tech Job Roles Section */}
@@ -433,7 +500,16 @@ const Insights: React.FC = () => {
     <div className="max-w-7xl mx-auto p-6">
       <div className="flex items-center justify-center bg-card text-card-foreground py-4 px-6 rounded-lg mb-6 border border-border">
         <Sparkles className="h-6 w-6 mr-3 text-primary" />
-        <h1 className="text-3xl font-bold">Industry Insights <span className="text-lg text-muted-foreground">(Powered by Gemini)</span></h1>
+        <h1 className="text-3xl font-bold">
+          {selectedCountry === 'india' ? 'India Industry Insights' : 'Industry Insights'} 
+          <span className="text-lg text-muted-foreground">(Powered by Gemini)</span>
+          {selectedCountry === 'india' && (
+            <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary">
+              <Globe className="h-3 w-3 mr-1" />
+              Real-time India Data
+            </span>
+          )}
+        </h1>
       </div>
       
       <div className="mb-8 flex justify-center">
